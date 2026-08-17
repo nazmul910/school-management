@@ -1,110 +1,83 @@
 "use client";
 
 import { useState } from "react";
-import { FiPlus, FiMinus } from "react-icons/fi";
+import { FaChevronDown } from "react-icons/fa";
+import { LuCircleHelp } from "react-icons/lu";
 
 const faqs = [
   {
-    question: "একাডেমিতে কীভাবে ভর্তি হওয়া যাবে?",
-    answer:
-      "আমাদের একাডেমিতে ভর্তির জন্য আপনাকে আমাদের ওয়েবসাইটে নিবন্ধন ফর্ম পূরণ করতে হবে অথবা সরাসরি আমাদের সাথে যোগাযোগ করতে পারেন। ভর্তির পর একজন অভিজ্ঞ শিক্ষক আপনার সাথে যোগাযোগ করবেন।",
+    q: "বিদ্যালয়ে কোন কোন শ্রেণিতে পাঠদান করানো হয়?",
+    a: "আমাদের বিদ্যালয়ে বাংলাদেশ জাতীয় শিক্ষাক্রম অনুযায়ী ৬ষ্ঠ শ্রেণি থেকে ১০ম শ্রেণি (এসএসসি পর্যন্ত) মানসম্মত পাঠদান করানো হয়। ৯ম ও ১০ম শ্রেণিতে বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা গ্রুপ রয়েছে।",
   },
   {
-    question: "ক্লাসগুলো কখন ও কীভাবে পরিচালিত হয়?",
-    answer:
-      "আমাদের ক্লাসগুলো সম্পূর্ণ অনলাইনে পরিচালিত হয়। শিক্ষার্থীদের সুবিধামতো সময়সূচি নির্ধারণ করা হয় এবং সপ্তাহে নির্দিষ্ট দিনে লাইভ সেশন অনুষ্ঠিত হয়।",
+    q: "নবম ও দশম শ্রেণিতে কি কি বিভাগ বা গ্রুপ রয়েছে?",
+    a: "নবম এবং দশম শ্রেণির শিক্ষার্থীদের জন্য বিজ্ঞান (Science), মানবিক (Humanities) এবং ব্যবসায় শিক্ষা (Business Studies) তিনটি গ্রুপেরই সুযোগ রয়েছে। ষষ্ঠ, সপ্তম ও অষ্টম শ্রেণিতে সাধারণ পাঠ্যক্রম পরিচালিত হয়।",
   },
   {
-    question: "শিশুদের জন্য কি আলাদা কোর্স রয়েছে?",
-    answer:
-      "হ্যাঁ, আমাদের কাছে শিশু ও কিশোর-কিশোরীদের জন্য বিশেষভাবে তৈরি কোর্স রয়েছে। অভিজ্ঞ ও দক্ষ শিক্ষকমণ্ডলী শিশুদের বয়স ও মেধা অনুযায়ী পাঠদান করে থাকেন।",
+    q: "পরীক্ষার ফলাফল কীভাবে দেখা যাবে?",
+    a: "আমাদের ওয়েবসাইটের 'ফলাফল' মেন্যুতে গিয়ে শ্রেণি এবং রোল নম্বর দিয়ে সার্চ করলেই বিস্তারিত বিষয়ভিত্তিক নম্বরপত্র ও গ্রেড পাওয়া যাবে। এছাড়া 'সেরা ১০ শিক্ষার্থী' মেন্যুতে প্রতিটি শ্রেণির ১ম থেকে ১০ম স্থান অধিকারীদের তালিকা দেখা যাবে।",
   },
   {
-    question: "কোর্সের মেয়াদ ও ফি কত?",
-    answer:
-      "কোর্সের মেয়াদ ও ফি কোর্সের ধরন অনুযায়ী ভিন্ন হয়। বিস্তারিত জানতে আমাদের সাথে সরাসরি যোগাযোগ করুন। আমরা সাশ্রয়ী মূল্যে মানসম্পন্ন শিক্ষা প্রদান করে থাকি।",
+    q: "বিদ্যালয়ের নিয়মিত সময়সূচী বা ক্লাস টাইম কি?",
+    a: "প্রতি রবিবার থেকে বৃহস্পতিবার সকাল ৮:০০ টা থেকে দুপুর ২:০০ টা পর্যন্ত নিয়মিত ক্লাস পরিচালিত হয়। শুক্রবার ও শনিবার সাপ্তাহিক ছুটি থাকে।",
   },
   {
-    question: "বিদেশ থেকে কি ক্লাস করা সম্ভব?",
-    answer:
-      "অবশ্যই। আমাদের একাডেমি বিশ্বের যেকোনো প্রান্ত থেকে অংশগ্রহণের সুবিধা দেয়। আমেরিকা, কানাডা, অস্ট্রেলিয়াসহ বিশ্বের বিভিন্ন দেশে আমাদের শিক্ষার্থীরা সফলভাবে ক্লাস করছেন।",
+    q: "স্কুলে কি সহপাঠ্য কার্যক্রম এবং খেলাধুলার সুযোগ রয়েছে?",
+    a: "হ্যাঁ, আমাদের বিদ্যালয়ে রয়েছে প্রশস্ত খেলার মাঠ, সায়েন্স ক্লাব, আইসিটি ক্লাব, ডিবেটিং ক্লাব, স্কাউট এবং বার্ষিক ক্রীড়া ও সাংস্কৃতিক প্রতিযোগিতা।",
   },
 ];
 
-const toBanglaNum = (n: number) =>
-  n.toString().replace(/[0-9]/g, (d) => "০১২৩৪৫৬৭৮৯"[+d]);
-
-const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
-  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i);
+export default function FAQ() {
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <section className="bg-[#f0f0f5] py-20 lg:py-28">
-      <div className="container1 px-4 ">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.4fr] gap-12 items-start">
-
-          {/* Left */}
-          <div className="pt-2">
-            <p className="flex items-center gap-2 text-[16px] uppercase tracking-[2px] text-gray-400 mb-4">
-              <span>🕌</span> সাধারণ জিজ্ঞাসা
-            </p>
-            <h2 className="text-xl lg:text-3xl font-extrabold text-primary leading-snug">
-              আমাদের প্রোগ্রাম সম্পর্কে প্রায়শই জিজ্ঞাসিত প্রশ্নসমূহ
-            </h2>
-            <p className="mt-5 text-sm text-gray-500 leading-7">
-              কোনো প্রশ্ন থাকলে আমাদের সাথে যোগাযোগ করুন। আমরা সর্বদা আপনাকে
-              সাহায্য করতে প্রস্তুত।
-            </p>
+    <section className="py-20 bg-[#F3F8FC]">
+      <div className="max-w-[1000px] mx-auto px-4 md:px-6">
+        {/* Section Header */}
+        <div className="text-center mb-14 space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B4E1EB]/50 text-[#1e3a5f] text-xs font-bold">
+            <LuCircleHelp />
+            <span>সচরাচর জিজ্ঞাসা</span>
           </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a5f]">
+            প্রয়োজনীয় প্রশ্নোত্তর (FAQ)
+          </h2>
+          <p className="text-gray-600 text-sm md:text-base">
+            বিদ্যালয় ও ভর্তি সংক্রান্ত সাধারণ প্রশ্নের উত্তর জেনে নিন।
+          </p>
+        </div>
 
-          {/* Right — FAQ accordion */}
-          <div className="flex flex-col gap-3">
-            {faqs.map((faq, i) => {
-              const isOpen = openIndex === i;
-              return (
-                <div
-                  key={i}
-                  className="bg-white rounded-2xl border border-gray-100 overflow-hidden"
+        {/* Accordion List */}
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => {
+            const isOpen = openIdx === idx;
+            return (
+              <div
+                key={idx}
+                className="bg-white rounded-2xl border border-[#B4E1EB]/60 overflow-hidden shadow-sm transition-all"
+              >
+                <button
+                  onClick={() => setOpenIdx(isOpen ? null : idx)}
+                  className="w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-base md:text-lg text-[#1e3a5f] hover:text-[#78A4CB] transition-colors"
                 >
-                  <button
-                    onClick={() => toggle(i)}
-                    className="w-full flex items-center lg:gap-4 px-6 py-5 text-left"
-                  >
-                    <span className="text-[20px] font-bold text-primary min-w-[24px]">
-                      {toBanglaNum(i + 1)}.
-                    </span>
-                    <span className="flex-1 text-[16px] lg:text-[20px] font-semibold text-primary leading-snug">
-                      {faq.question}
-                    </span>
-                    <span
-                      className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                        isOpen
-                          ? "bg-primary text-white"
-                          : "bg-gray-100 text-gray-500"
-                      }`}
-                    >
-                      {isOpen ? <FiMinus size={14} /> : <FiPlus size={14} />}
-                    </span>
-                  </button>
+                  <span>{faq.q}</span>
+                  <FaChevronDown
+                    className={`shrink-0 text-sm text-[#78A4CB] transition-transform duration-300 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
 
-                  {isOpen && (
-                    <>
-                      <div className="mx-6 mb-0 h-px bg-gray-100" />
-                      <p className="px-6 pl-[52px] py-4 text-sm text-gray-500 leading-7">
-                        {faq.answer}
-                      </p>
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
+                {isOpen && (
+                  <div className="px-6 pb-6 text-gray-600 text-sm md:text-base leading-relaxed border-t border-gray-100 pt-4">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-};
-
-export default FAQ;
+}

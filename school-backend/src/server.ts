@@ -1,12 +1,14 @@
 import app from "./app";
 import { config } from "./app/config";
 import { connectDB } from "./app/config/database";
+import { seedDatabase } from "./app/utils/seed";
 import { Server } from "http";
 
 let server: Server;
 async function main() {
   try {
     await connectDB();
+    await seedDatabase();
     server = app.listen(config.port, () => {
       console.log(`✅ Server is running on port ${config.port}`);
     });

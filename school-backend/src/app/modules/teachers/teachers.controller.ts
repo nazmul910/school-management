@@ -1,30 +1,21 @@
-import httpStatus from "http-status";
+import { Request, Response } from "express";
 import { catchAsync } from "../../utils/CatchAsync";
 import sendResponse from "../../utils/SendResponse";
+import httpStatus from "http-status";
 import { TeacherServices } from "./teachers.service";
-import { Request, Response } from "express";
 
 const createTeacher = catchAsync(async (req: Request, res: Response) => {
-  console.log("Teacher add request: ", req.body);
-
-
-  const payload = { ...req.body };
-  if (typeof payload.subject === "string") {
-    payload.subject = JSON.parse(payload.subject);
-  }
-
-  const result = await TeacherServices.createTeacherDB(payload, req.file);
-
+  const result = await TeacherServices.createTeacherToDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: "Teacher created successfully",
+    message: "Teacher added successfully",
     data: result,
   });
 });
 
 const getAllTeachers = catchAsync(async (req: Request, res: Response) => {
-  const result = await TeacherServices.getAllTeachersDB();
+  const result = await TeacherServices.getAllTeachersFromDB();
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -33,10 +24,9 @@ const getAllTeachers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
 const getSingleTeacher = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const result = await TeacherServices.getSingleTeacherDB(id);
+  const { id } = req.params;
+  const result = await TeacherServices.getSingleTeacherFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -45,21 +35,9 @@ const getSingleTeacher = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
 const updateTeacher = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
-
-  const payload = { ...req.body };
-  if (typeof payload.subject === "string") {
-    payload.subject = JSON.parse(payload.subject);
-  }
-
-  const result = await TeacherServices.updateTeacherDB(
-    id,
-    payload,
-    req.file
-  );
-
+  const { id } = req.params;
+  const result = await TeacherServices.updateSingleTeacherToDB(id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -68,10 +46,9 @@ const updateTeacher = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
 const deleteTeacher = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const result = await TeacherServices.DeleteSingleTeacherDB(id);
+  const { id } = req.params;
+  const result = await TeacherServices.deleteSingleTeacherToDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -2,17 +2,15 @@ import express from "express";
 import { StudentController } from "./student.controller";
 import auth from "../../middleware/auth";
 import USER_ROLE from "../../constants/userRole";
+
 const router = express.Router();
 
-router.get("/", auth(USER_ROLE.admin), StudentController.getAllStudents);
+router.get("/online-count", StudentController.getOnlineStudentsCount);
 router.post("/", auth(USER_ROLE.admin), StudentController.createStudent);
-router.get("/:id", auth(USER_ROLE.admin), StudentController.getSingleStudent);
-router.get(
-  "/user/:userId",
-  auth(USER_ROLE.admin),
-  StudentController.getSingleStudentUser
-);
+router.get("/", StudentController.getAllStudents);
+router.get("/user/:id", auth(USER_ROLE.admin, USER_ROLE.student), StudentController.getSingleStudentUser);
+router.get("/:id", StudentController.getSingleStudent);
+router.put("/:id", auth(USER_ROLE.admin, USER_ROLE.student), StudentController.updateStudent);
 router.delete("/:id", auth(USER_ROLE.admin), StudentController.deleteStudent);
-router.patch("/:id", auth(USER_ROLE.admin), StudentController.updateStudent);
 
 export const StudentRouter = router;

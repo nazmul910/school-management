@@ -1,21 +1,77 @@
-import { useQuery } from "@tanstack/react-query";
+"use client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "./useAxios";
 
-const useStudent = () => {
-  const axiosSecure = useAxios();
-  const {
-    data: studentData = [],
-    isLoading: studentsLoading,
-    refetch: studentsRefetch,
-  } = useQuery({
-    queryKey: ["studentData"],
+export default function useStudent(filters: Record<string, any> = {}) {
+  const axios = useAxios();
+  const queryClient = useQueryClient();
+
+  const { data: studentData, isLoading, refetch } = useQuery({
+    queryKey: ["students", filters],
     queryFn: async () => {
-      const res = await axiosSecure.get("/students");
+      const params = new URLSearchParams();
+      if (filters.class && filters.class !== "all" && filters.class !== "সকল") {
+        params.append("class", filters.class);
+      }
+      if (filters.section && filters.section !== "all") {
+        params.append("section", filters.section);
+      }
+      if (filters.group && filters.group !== "all") {
+        params.append("group", filters.group);
+      }
+      if (filters.roll) {
+        params.append("roll", filters.roll);
+      }
+      if (filters.searchTerm) {
+        params.append("searchTerm", filters.searchTerm);
+      }
+
+      const queryString = params.toString();
+      const url = queryString ? `/students?${queryString}` : "/students";
+      const res = await axios.get(url);
       return res.data;
     },
-    enabled: typeof window !== "undefined",
   });
-  return { studentData, studentsLoading, studentsRefetch };
-};
 
-export default useStudent;
+  const addStudent = useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await axios.post("/students", payload);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["students"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
+    },
+  });
+
+  const updateStudent = useMutation({
+    mutationFn: async ({ id, payload }: { id: string; payload: any }) => {
+      const res = await axios.put(`/students/${id}`, payload);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["students"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
+    },
+  });
+
+  const deleteStudent = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await axios.delete(`/students/${id}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["students"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboardStats"] });
+    },
+  });
+
+  return {
+    studentData,
+    isLoading,
+    refetch,
+    addStudent,
+    updateStudent,
+    deleteStudent,
+  };
+}

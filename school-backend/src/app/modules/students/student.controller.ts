@@ -1,22 +1,21 @@
-import httpStatus from "http-status";
+import { Request, Response } from "express";
 import { catchAsync } from "../../utils/CatchAsync";
 import sendResponse from "../../utils/SendResponse";
+import httpStatus from "http-status";
 import { StudentServices } from "./student.service";
-import { Request, Response } from "express";
 
 const createStudent = catchAsync(async (req: Request, res: Response) => {
   const result = await StudentServices.createStudentToDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: "Student created successfully",
+    message: "Student added successfully",
     data: result,
   });
 });
 
-// Get All
 const getAllStudents = catchAsync(async (req: Request, res: Response) => {
-  const result = await StudentServices.getAllStudentsFromDB();
+  const result = await StudentServices.getAllStudentsFromDB(req.query);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -25,10 +24,9 @@ const getAllStudents = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// Get Single
 const getSingleStudent = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const result = await StudentServices.getSingleStudnetFromDB(id);
+  const { id } = req.params;
+  const result = await StudentServices.getSingleStudentFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -38,19 +36,18 @@ const getSingleStudent = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getSingleStudentUser = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.userId;
-  const result = await StudentServices.getSingleStudnetUserFromDB(id);
+  const { id } = req.params;
+  const result = await StudentServices.getSingleStudentUserFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Student retrieved successfully",
+    message: "Student profile retrieved successfully",
     data: result,
   });
 });
 
-// Update
 const updateStudent = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const result = await StudentServices.updateSingleStudentToDB(id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -60,14 +57,23 @@ const updateStudent = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// Soft‑Delete
 const deleteStudent = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const result = await StudentServices.deleteSingleStudentToDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Student deleted successfully",
+    data: result,
+  });
+});
+
+const getOnlineStudentsCount = catchAsync(async (req: Request, res: Response) => {
+  const result = await StudentServices.getOnlineStudentsCount();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Online student count retrieved successfully",
     data: result,
   });
 });
@@ -79,4 +85,5 @@ export const StudentController = {
   getSingleStudentUser,
   updateStudent,
   deleteStudent,
+  getOnlineStudentsCount,
 };

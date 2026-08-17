@@ -1,21 +1,21 @@
 import { Request, Response } from "express";
-import httpStatus from "http-status";
 import { catchAsync } from "../../utils/CatchAsync";
 import sendResponse from "../../utils/SendResponse";
+import httpStatus from "http-status";
 import { NoticeServices } from "./notice.service";
 
 const createNotice = catchAsync(async (req: Request, res: Response) => {
-  const result = await NoticeServices.createNoticeDB(req.body);
+  const result = await NoticeServices.createNoticeToDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: "Notice sent successfully",
+    message: "Notice created successfully",
     data: result,
   });
 });
 
 const getAllNotices = catchAsync(async (req: Request, res: Response) => {
-  const result = await NoticeServices.getAllNoticesDB();
+  const result = await NoticeServices.getAllNoticesFromDB();
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -26,7 +26,7 @@ const getAllNotices = catchAsync(async (req: Request, res: Response) => {
 
 const getSingleNotice = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await NoticeServices.getSingleNoticeDB(id);
+  const result = await NoticeServices.getSingleNoticeFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -37,7 +37,7 @@ const getSingleNotice = catchAsync(async (req: Request, res: Response) => {
 
 const updateNotice = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await NoticeServices.updateNoticeDB(id, req.body);
+  const result = await NoticeServices.updateSingleNoticeToDB(id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -47,7 +47,8 @@ const updateNotice = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteNotice = catchAsync(async (req: Request, res: Response) => {
-  const result = await NoticeServices.softDeleteNoticeDB(req.params.id);
+  const { id } = req.params;
+  const result = await NoticeServices.deleteSingleNoticeToDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

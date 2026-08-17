@@ -1,15 +1,27 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IStudent } from "./student.interface";
 
-const StudentSchema = new mongoose.Schema<IStudent>(
+const StudentSchema = new Schema<IStudent>(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    image: { type: String },
+    studentId: { type: String, required: true },
+    email: { type: String, default: "" },
+    contact: { type: String, default: "" },
+    roll: { type: Number, required: true },
+    class: { type: String, required: true },
+    section: { type: String, required: true, default: "A" },
+    group: { type: String, default: "" },
+    image: { type: String, default: "" },
+    imagePublicId: { type: String, default: "" },
+    fatherName: { type: String, default: "" },
+    motherName: { type: String, default: "" },
+    address: { type: String, default: "" },
+    dob: { type: String, default: "" },
+    gender: { type: String, enum: ["male", "female", "other"], default: "male" },
+    admissionDate: { type: String, default: () => new Date().toISOString().split("T")[0] },
+    isOnline: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
-    contact: { type: String },
-    address: { type: String },
   },
   {
     timestamps: true,

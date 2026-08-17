@@ -1,12 +1,9 @@
 "use client";
 
-import logo from "@/assets/logo1.jpeg";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { FaBook, FaHome, FaChalkboardTeacher } from "react-icons/fa";
-import { LuLogOut } from "react-icons/lu";
-
+import { FaHome, FaChalkboardTeacher, FaUserGraduate, FaImages, FaAward } from "react-icons/fa";
+import { LuLogOut, LuGraduationCap } from "react-icons/lu";
 import { IoMdMail, IoMdPerson } from "react-icons/io";
 import {
   MdKeyboardDoubleArrowLeft,
@@ -14,9 +11,10 @@ import {
   MdNotificationAdd,
   MdOutlineRateReview,
 } from "react-icons/md";
-import { SiGoogleclassroom } from "react-icons/si";
+import { RiLockPasswordFill } from "react-icons/ri";
 import { handleLogout } from "@/app/providers/AuthContext";
-interface StudentSidebarProps {
+
+interface AdminSidebarProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -24,94 +22,98 @@ interface StudentSidebarProps {
 export default function AdminSidebar({
   isOpen,
   setIsOpen,
-}: StudentSidebarProps) {
+}: AdminSidebarProps) {
   const router = useRouter();
   const pathname = usePathname();
+
   const menuItems = [
     {
       href: "/admin/admin-home",
-      label: "Admin Home",
+      label: "ড্যাশবোর্ড",
       Icon: FaHome,
     },
     {
+      href: "/admin/manage-students",
+      label: "শিক্ষার্থী ব্যবস্থাপনা",
+      Icon: FaUserGraduate,
+    },
+    {
+      href: "/admin/manage-teachers",
+      label: "শিক্ষক ব্যবস্থাপনা",
+      Icon: FaChalkboardTeacher,
+    },
+    {
+      href: "/admin/manage-notices",
+      label: "নোটিশ ব্যবস্থাপনা",
+      Icon: MdNotificationAdd,
+    },
+    {
+      href: "/admin/manage-gallery",
+      label: "গ্যালারি ব্যবস্থাপনা",
+      Icon: FaImages,
+    },
+    {
+      href: "/admin/manage-results",
+      label: "ফলাফল ও টপ ১০",
+      Icon: FaAward,
+    },
+    {
+      href: "/admin/manage-reviews",
+      label: "মতামত / রিভিউ",
+      Icon: MdOutlineRateReview,
+    },
+    {
       href: "/admin/all-users",
-      label: "All Users",
+      label: "ব্যবহারকারীগণ",
       Icon: IoMdPerson,
     },
     {
       href: "/admin/send-mail",
-      label: "Send Mail",
+      label: "ইমেইল পাঠান",
       Icon: IoMdMail,
     },
     {
-      href: "/admin/manage-notices",
-      label: "Add Notice",
-      Icon: MdNotificationAdd,
-    },
-    {
-      href: "/admin/manage-teachers",
-      label: "Manage Teachers",
-      Icon: FaChalkboardTeacher,
-    },
-    {
-      href: "/admin/manage-courses",
-      label: "Manage Courses",
-      Icon: SiGoogleclassroom,
-    },
-    {
-      href: "/admin/manage-books",
-      label: "Manage Books",
-      Icon: FaBook,
-    },
-    {
-      href: "/admin/manage-reviews",
-      label: "Manage Reviews",
-      Icon: MdOutlineRateReview,
+      href: "/admin/change-password",
+      label: "পাসওয়ার্ড পরিবর্তন",
+      Icon: RiLockPasswordFill,
     },
   ];
 
   return (
     <>
-      <aside className=" bg-primary fixed inset-y-0  overflow-visible z-10 lg:fixed lg:top-0 left-0 h-screen shadow-md  transition-all duration-300 ease-in-out">
+      <aside className="bg-[#102033] fixed inset-y-0 overflow-y-auto z-40 lg:fixed lg:top-0 left-0 h-screen shadow-xl transition-all duration-300 ease-in-out border-r border-gray-800">
         <div
-          className={` transition-all duration-300 ease-in-out relative overflow-visible ${
-            isOpen ? " w-52 px-2" : "w-28 px-5"
+          className={`transition-all duration-300 ease-in-out relative overflow-visible ${
+            isOpen ? "w-64 px-4" : "w-20 px-3"
           }`}
         >
+          {/* Sidebar Header */}
           {isOpen ? (
-            <div className="flex  pt-6 items-center justify-center relative">
-              <div
-                className={`flex flex-col items-start justify-start gap-2 ${
-                  isOpen ? "px-5" : "px-2"
-                }`}
-              >
-                <Link href="/">
-                  <Image
-                    src={logo}
-                    alt="logo"
-                    className="w-12 rounded cursor-pointer"
-                  />
-                </Link>
-                <p className="font-semibold text-white">Dawah Quran Academy</p>
-              </div>
-              {/* <span className="text-lg font-medium">DevKon School</span> */}
+            <div className="flex pt-6 pb-4 items-center justify-between relative border-b border-gray-800">
+              <Link href="/" className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md shrink-0">
+                  <LuGraduationCap />
+                </div>
+                <div className="leading-tight">
+                  <span className="font-bold text-white text-sm block">আইডিয়াল মডেল স্কুল</span>
+                  <span className="text-[11px] text-[#F9E8A2]">অ্যাডমিন প্যানেল</span>
+                </div>
+              </Link>
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute -right-4 top-2 z-50 bg-white border-2 border-[#ffd54f] text-primary rounded-full p-1 text-2xl cursor-pointer"
+                className="bg-[#1e3a5f] border border-[#78A4CB] text-[#F9E8A2] rounded-full p-1.5 text-lg hover:bg-[#78A4CB] hover:text-white transition-colors"
               >
                 <MdKeyboardDoubleArrowLeft />
               </button>
             </div>
           ) : (
-            <div className="pt-8">
-              <Image
-                src={logo}
-                alt="logo"
-                className="w-10 xl:w-12  rounded-lg  mx-auto cursor-pointer"
-              />
+            <div className="pt-6 pb-4 flex flex-col items-center gap-3 border-b border-gray-800">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-xl shadow-md">
+                <LuGraduationCap />
+              </div>
               <button
                 onClick={() => setIsOpen(true)}
-                className="absolute -right-2 top-2 z-50 bg-white border-2 border-[#ffd54f] text-primary rounded-full p-1 text-2xl cursor-pointer"
+                className="bg-[#1e3a5f] border border-[#78A4CB] text-[#F9E8A2] rounded-full p-1 text-base hover:bg-[#78A4CB] hover:text-white transition-colors"
               >
                 <MdKeyboardDoubleArrowRight />
               </button>
@@ -120,97 +122,72 @@ export default function AdminSidebar({
         </div>
 
         {/* Navigation links */}
-        <div
-          className={`mt-6 transition-all duration-300 ease-in-out ${
-            isOpen ? "px-5" : "px-2"
-          }`}
-        >
-          <nav className="flex flex-col gap-0 xl:gap-2">
+        <div className={`mt-4 pb-20 ${isOpen ? "px-3" : "px-2"}`}>
+          <nav className="flex flex-col gap-1.5">
             {menuItems.map(({ href, label, Icon }, idx) => {
               const isActive = pathname === href;
               return (
                 <Link
                   key={idx}
                   href={href}
-                  className={`flex items-center w-full transition-all duration-200 rounded-md p-2 hover:bg-light relative group ${
-                    isOpen ? "justify-between" : "justify-center"
-                  } ${isActive ? "bg-light border-l-4 border-white" : ""}`}
+                  className={`flex items-center w-full transition-all duration-200 rounded-xl p-3 relative group ${
+                    isOpen ? "justify-start gap-3" : "justify-center"
+                  } ${
+                    isActive
+                      ? "bg-[#78A4CB] text-white font-bold shadow-md shadow-[#78A4CB]/30"
+                      : "text-gray-300 hover:bg-white/10 hover:text-white"
+                  }`}
                 >
+                  <Icon
+                    size={20}
+                    className={`shrink-0 ${isActive ? "text-white" : "text-[#95BDD7]"}`}
+                  />
                   {isOpen ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <Icon
-                        size={20}
-                        className={`${isActive ? "text-white" : "text-white"}`}
-                      />
-                      <span
-                        className={`font-medium text-sm lg:text-sm xl:text-md ${
-                          isActive ? "text-white" : "text-white"
-                        }`}
-                      >
-                        {label}
-                      </span>
-                    </div>
+                    <span className="text-sm truncate">{label}</span>
                   ) : (
-                    <div className="relative">
-                      <Icon
-                        size={22}
-                        className={`${isActive ? "text-light" : "text-white"}`}
-                      />
-                      <span className="absolute top-1/2 left-full ml-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-gray-100 z-50 text-black text-sm rounded px-2 py-1 whitespace-nowrap">
-                        {label}
-                      </span>
-                    </div>
+                    <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-[#1e3a5f] text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
+                      {label}
+                    </span>
                   )}
                 </Link>
               );
             })}
           </nav>
+
           {/* Section break */}
-          <div className="border-t border-gray-700"></div>
-          {/*  Go to Home Button */}
+          <div className="border-t border-gray-800 my-4"></div>
+
+          {/* Go to Home */}
           <Link
             href="/"
-            className={`flex items-center w-full transition-all duration-200 mt-3 rounded-md p-2 bg-light hover:bg-lighttext-white relative group ${
-              isOpen ? "justify-between" : "justify-center"
+            className={`flex items-center w-full transition-all duration-200 rounded-xl p-3 bg-white/5 hover:bg-white/10 text-gray-300 relative group ${
+              isOpen ? "justify-start gap-3" : "justify-center"
             }`}
           >
+            <FaHome size={18} className="text-[#F9E8A2]" />
             {isOpen ? (
-              <div className="flex items-center justify-center gap-2">
-                <FaHome size={20} className="text-white" />
-                <span className="font-medium text-sm lg:text-sm xl:text-md text-white">
-                  Go to Home 
-                </span>
-              </div>
+              <span className="text-sm font-medium">মূল ওয়েবসাইটে যান</span>
             ) : (
-              <div className="relative">
-                <FaHome size={22} className="text-white" />
-                <span className="absolute top-1/2 left-full ml-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-gray-100 text-black text-sm rounded px-2 py-1 whitespace-nowrap">
-                  Go to Home 
-                </span>
-              </div>
+              <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-[#1e3a5f] text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
+                মূল ওয়েবসাইট
+              </span>
             )}
           </Link>
+
           {/* Logout button */}
           <button
             onClick={() => handleLogout(router)}
-            className={`flex items-center w-full transition-all duration-200 rounded-md mt-3 p-2 bg-red-500 hover:bg-red-600 text-white relative group ${
-              isOpen ? "justify-between" : "justify-center"
+            className={`flex items-center w-full transition-all duration-200 rounded-xl mt-2 p-3 bg-red-600/80 hover:bg-red-600 text-white relative group ${
+              isOpen ? "justify-start gap-3" : "justify-center"
             }`}
           >
+            <LuLogOut size={18} className="text-white" />
             {isOpen ? (
-              <div className="flex items-center justify-center gap-2">
-                <LuLogOut size={20} className="text-white" />
-                <span className="font-medium text-sm lg:text-sm xl:text-md text-white">
-                  Logout
-                </span>
-              </div>
+              <span className="text-sm font-semibold">লগআউট</span>
             ) : (
-              <div className="relative">
-                <LuLogOut size={22} className="text-white" />
-                <span className="absolute top-1/2 left-full ml-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-gray-100 text-black text-sm rounded px-2 py-1 whitespace-nowrap">
-                  Logout
-                </span>
-              </div>
+              <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-red-600 text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
+                লগআউট
+              </span>
             )}
           </button>
         </div>

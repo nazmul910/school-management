@@ -1,27 +1,29 @@
 "use client";
 
-import Hero from "@/components/home/Hero";
+import HeroNew from "@/components/home/Hero-New";
+import NoticeTicker from "@/components/home/NoticeTicker";
+import TopStudentsPreview from "@/components/home/TopStudentsPreview";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
-import StudentStatus from "@/components/home/StudentStatus";
+import TeacherCard from "@/components/home/TeacherCard";
+import GalleryPreview from "@/components/home/GalleryPreview";
 import AdmissionProcess from "@/components/home/AdmissionProcess";
 import Testimonial from "@/components/home/Testimonial";
-import GetInTouch from "@/utils/GetInTouch";
-import FeatureCourses from "@/components/home/FeatureCourses";
-import HeroNew from "@/components/home/Hero-New";
 import FAQ from "@/components/home/FAQ";
+import GetInTouch from "@/utils/GetInTouch";
 
 export default function HomePage() {
   return (
-    <>
-      {/* <Hero /> */}
-      <HeroNew/>
+    <main className="min-h-screen">
+      <NoticeTicker />
+      <HeroNew />
+      <TopStudentsPreview />
       <WhyChooseUs />
-      <FeatureCourses />
-      <StudentStatus />
+      <TeacherCard />
+      <GalleryPreview />
       <AdmissionProcess />
-      {/* <Testimonial /> */}
-      <FAQ/>
+      <Testimonial />
+      <FAQ />
       <GetInTouch />
-    </>
+    </main>
   );
 }

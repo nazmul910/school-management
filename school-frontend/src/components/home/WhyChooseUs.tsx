@@ -1,196 +1,88 @@
 "use client";
 
-import bg from "@/assets/topography.svg";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import bgCard from "@/assets/Home-Hero/bg-img2.png";
-import { FaChalkboardTeacher, FaWifi } from "react-icons/fa";
-import { PiPersonSimpleHikeBold } from "react-icons/pi";
+import { FaMicroscope, FaLaptopCode, FaBookReader, FaFutbol, FaShieldAlt, FaAward } from "react-icons/fa";
+import { LuGraduationCap } from "react-icons/lu";
 
-const WhyChooseUs = () => {
+const facilities = [
+  {
+    icon: FaMicroscope,
+    title: "আধুনিক বিজ্ঞান গবেষণাগার",
+    desc: "পদার্থবিজ্ঞান, রসায়ন ও জীববিজ্ঞানের ব্যবহারিক পরীক্ষণ সম্পন্ন করার জন্য উন্নত যন্ত্রপাতি সমৃদ্ধ ল্যাব।",
+    color: "bg-[#B4E1EB]/30 text-[#1e3a5f]",
+  },
+  {
+    icon: FaLaptopCode,
+    title: "ডিজিটাল কম্পিউটার ল্যাব",
+    desc: "উচ্চগতির ব্রডব্যান্ড ইন্টারনেট এবং আধুনিক কম্পিউটার সমৃদ্ধ আইসিটি ল্যাবে ব্যবহারিক প্রশিক্ষণ।",
+    color: "bg-[#78A4CB]/20 text-[#1e3a5f]",
+  },
+  {
+    icon: FaBookReader,
+    title: "সমৃদ্ধ কেন্দ্রীয় লাইব্রেরি",
+    desc: "পাঠ্যপুস্তক, রেফারেন্স বুক, বিজ্ঞান সাময়িকী ও সাধারণ জ্ঞানের বিশাল সংগ্রহশালা।",
+    color: "bg-[#F9E8A2]/50 text-[#5c4300]",
+  },
+  {
+    icon: FaFutbol,
+    title: "ক্রীড়া ও সহপাঠ্য কার্যক্রম",
+    desc: "বিশাল খেলার মাঠ, বার্ষিক ক্রীড়া প্রতিযোগিতা, স্কাউটিং, বিতর্ক ও সাংস্কৃতিক ক্লাব।",
+    color: "bg-emerald-50 text-emerald-700",
+  },
+  {
+    icon: FaShieldAlt,
+    title: "নিরাপদ ক্যাম্পাস ও সিসিটিভি",
+    desc: "সম্পূর্ণ ক্যাম্পাস সার্বক্ষণিক সিসিটিভি ক্যামেরা ও প্রশিক্ষিত নিরাপত্তা কর্মীদের দ্বারা সুরক্ষিত।",
+    color: "bg-indigo-50 text-indigo-700",
+  },
+  {
+    icon: FaAward,
+    title: "এসএসসি ও জেএসসিতে শতভাগ সাফল্য",
+    desc: "নিয়মিত মডেল টেস্ট ও নিবিড় তত্ত্বাবধানে প্রতি বছর শতভাগ পাশের হার ও বিপুল সংখ্যক জিপিএ ৫ অর্জন।",
+    color: "bg-amber-50 text-amber-700",
+  },
+];
+
+export default function WhyChooseUs() {
   return (
-    // <section className="container  mx-auto my-20 lg:my-32">
-    //   <h2 className="text-3xl lg:text-4xl xl:text-5xl duration-200 text-center text-darker font-bold mt-12 mb-6 lg:mt-20 lg:mb-10">
-    //     <span className="text-primary">আমরাই</span> কেন?
-    //   </h2>
-    //   <div className="flex flex-col md:flex-row justify-center items-center gap-5 lg:gap-10 px-8 md:px-0">
-    //     <motion.div
-    //       whileHover={{ scale: 1.1 }}
-    //       whileTap={{ scale: 0.9 }}
-    //       className="relative basis-1/3 p-5 lg:p-8 rounded-3xl bg-primary hover:bg-dark text-white z-20 group duration-100"
-    //     >
-    //       <section className="absolute inset-0 -z-20">
-    //         <div className="w-full h-full bg-black/20 rounded-3xl"></div>
-    //         <Image
-    //           src={bg}
-    //           alt="Background"
-    //           fill
-    //           style={{
-    //             objectFit: "cover",
-    //           }}
-    //           quality={100}
-    //           className="rounded-3xl"
-    //         />
-    //       </section>
-    //       <div className="rounded-full p-4 border border-white w-fit mx-auto">
-    //         <FaChalkboardTeacher size={30} />
-    //       </div>
-    //       <h4 className="text-center font-semibold text-lg lg:text-2xl my-5">
-    //         অভিজ্ঞ শিক্ষকসমূহ
-    //       </h4>
-    //       <article className="text-center text-sm md:text-base text-white">
-    //         আমাদের দক্ষ ও অভিজ্ঞ শিক্ষকগণ প্রতিটি শিক্ষার্থীকে ব্যক্তিগত মনোযোগ
-    //         ও সর্বোচ্চ মানের শিক্ষা প্রদান করেন। তাদের গাইডেন্সের মাধ্যমে
-    //         শিক্ষার্থীরা তাদের লক্ষ্য অর্জনে এগিয়ে যায়।
-    //       </article>
-    //     </motion.div>
-
-    //     <motion.div
-    //       whileHover={{ scale: 1.1 }}
-    //       whileTap={{ scale: 0.9 }}
-    //       className="relative basis-1/3 p-5 lg:p-8 rounded-3xl bg-primary hover:bg-dark text-white z-20 group duration-100"
-    //     >
-    //       <section className="absolute inset-0 -z-20">
-    //         <div className="w-full h-full bg-black/20 rounded-3xl"></div>
-    //         <Image
-    //           src={bg}
-    //           alt="Background"
-    //           fill
-    //           style={{
-    //             objectFit: "cover",
-    //           }}
-    //           quality={100}
-    //           className="rounded-3xl"
-    //         />
-    //       </section>
-    //       <div className="rounded-full p-4 border border-white w-fit mx-auto">
-    //         <FaWifi size={30} />
-    //       </div>
-    //       <h4 className="text-center font-semibold text-lg lg:text-2xl my-5">
-    //         ঘরে বসে শিখার সুযোগ
-    //       </h4>
-    //       <article className="text-center text-sm md:text-base text-white">
-    //         যেকোনো স্থান থেকে সহজেই আমাদের অনলাইন কোর্সগুলোতে অংশ নিয়ে দক্ষতা
-    //         বৃদ্ধি করতে পারেন। আমাদের ইন্টারেক্টিভ ক্লাসের মাধ্যমে শিখা হবে সহজ
-    //         ও উপভোগ্য।
-    //       </article>
-    //     </motion.div>
-    //     <motion.div
-    //       whileHover={{ scale: 1.1 }}
-    //       whileTap={{ scale: 0.9 }}
-    //       className="relative basis-1/3 p-5 lg:p-8 rounded-3xl bg-primary hover:bg-dark text-white z-20 group duration-100"
-    //     >
-    //       <section className="absolute inset-0 -z-20">
-    //         <div className="w-full h-full bg-black/20 rounded-3xl"></div>
-    //         <Image
-    //           src={bg}
-    //           alt="Background"
-    //           fill
-    //           style={{
-    //             objectFit: "cover",
-    //           }}
-    //           quality={100}
-    //           className="rounded-3xl"
-    //         />
-    //       </section>
-    //       <div className="rounded-full p-4 border border-white w-fit mx-auto">
-    //         <PiPersonSimpleHikeBold size={30} />
-    //       </div>
-    //       <h4 className="text-center font-semibold text-lg lg:text-2xl my-5">
-    //         সকল বয়সের জন্যেই উপযোগী
-    //       </h4>
-    //       <article className="text-center text-sm md:text-base text-white">
-    //         আমাদের কোর্সগুলো শিশু থেকে প্রাপ্তবয়স্ক সকলের জন্যই উপযোগীভাবে
-    //         তৈরি। প্রতিটি কোর্সের পাঠ্যক্রম বয়স ও দক্ষতার ভিত্তিতে সাজানো
-    //         হয়েছে।
-    //       </article>
-    //     </motion.div>
-    //   </div>
-    // </section>
-    <section className="container1 py-14 lg:py-20">
-      <div className="">
-        <div>
-          <h2 className="text-3xl lg:text-4xl xl:text-5xl duration-200 text-darker font-bold mb-6  lg:mb-10">
-            <span className="text-primary">আমরাই</span> কেন?
+    <section className="py-20 bg-white">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6">
+        {/* Section Title */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B4E1EB]/40 text-[#1e3a5f] text-xs md:text-sm font-bold">
+            <LuGraduationCap />
+            <span>আমাদের বৈশিষ্ট্য ও সুবিধাসমূহ</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a5f]">
+            কেন আমাদের বিদ্যালয়কে বেছে নেবেন?
           </h2>
+          <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+            একটি আদর্শ শিক্ষা প্রতিষ্ঠানের সকল অত্যাধুনিক সুযোগ-সুবিধা ও নৈতিক পরিবেশ নিয়ে আমরা প্রস্তুত আপনার সন্তানের উজ্জ্বল ভবিষ্যৎ গঠনে।
+          </p>
         </div>
-        <div className="grid md:grid-cols-2 gap-5 lg:grid-cols-3 lg:gap-x-3">
-          <div className="card relative overflow-hidden flex flex-col gap-y-12 border group hover:bg-[#ffd54f] transition-all duration-500 ease-in-out border-primary rounded-2xl p-5 md:p-7 lg:p-10">
-            <Image
-              src={bgCard}
-              alt="bg"
-              className=" absolute -bottom-20 -right-10 opacity-20 w-[300px]"
-            />
-            <div className="flex justify-between items-center">
-              <div className="bg-primary w-[60px] h-[60px] xl:w-[80px] xl:h-[80px] text-white group-hover:text-primary transition-all duration-500 ease-in-out rounded-full relative overflow-hidden flex justify-center items-center">
-                <FaChalkboardTeacher size={30} className=" relative z-20" />
-                <div className=" absolute group-hover:h-full group-hover:w-full transition-all duration-500 ease-in-out h-0 rounded-full w-0 z-10 bg-white"></div>
+
+        {/* Feature Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {facilities.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={idx}
+                className="p-8 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+              >
+                <div className={`w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform`}>
+                  <Icon />
+                </div>
+                <h3 className="text-xl font-bold text-[#1e3a5f] mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="text-5xl text-[#7e7e7e]">০১</h3>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h4 className="font-semibold text-lg transition-all duration-500 ease-in-out hover:text-primary lg:text-2xl">
-                অভিজ্ঞ শিক্ষকসমূহ
-              </h4>
-              <p className=" text-sm md:text-base text-gray-500">
-                আমাদের দক্ষ ও অভিজ্ঞ শিক্ষকগণ প্রতিটি শিক্ষার্থীকে ব্যক্তিগত
-                মনোযোগ ও সর্বোচ্চ মানের শিক্ষা প্রদান করেন। তাদের গাইডেন্সের
-                মাধ্যমে শিক্ষার্থীরা তাদের লক্ষ্য অর্জনে এগিয়ে যায়।
-              </p>
-            </div>
-          </div>
-          <div className="card relative overflow-hidden flex flex-col gap-y-12 border group hover:bg-[#ffd54f] transition-all duration-500 ease-in-out border-primary rounded-2xl p-5 md:p-7 lg:p-10">
-            <Image
-              src={bgCard}
-              alt="bg"
-              className=" absolute -bottom-20 -right-10 opacity-20 w-[300px]"
-            />
-            <div className="flex justify-between items-center">
-              <div className="bg-primary w-[60px] h-[60px] xl:w-[80px] xl:h-[80px] text-white group-hover:text-primary transition-all duration-500 ease-in-out rounded-full relative overflow-hidden flex justify-center items-center">
-                <FaWifi size={30} className=" relative z-20" />
-                <div className=" absolute group-hover:h-full group-hover:w-full transition-all duration-500 ease-in-out h-0 rounded-full w-0 z-10 bg-white"></div>
-              </div>
-              <h3 className="text-5xl text-[#7e7e7e]">০২</h3>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h4 className="font-semibold text-lg transition-all duration-500 ease-in-out hover:text-primary lg:text-2xl">
-                ঘরে বসে শিখার সুযোগ
-              </h4>
-              <p className=" text-sm md:text-base text-gray-500">
-                যেকোনো স্থান থেকে সহজেই আমাদের অনলাইন কোর্সগুলোতে অংশ নিয়ে
-                দক্ষতা বৃদ্ধি করতে পারেন। আমাদের ইন্টারেক্টিভ ক্লাসের মাধ্যমে
-                শিখা হবে সহজ
-              </p>
-            </div>
-          </div>
-          <div className="card relative overflow-hidden flex flex-col gap-y-12 border group hover:bg-[#ffd54f] transition-all duration-500 ease-in-out border-primary rounded-2xl p-5 md:p-7 lg:p-10">
-            <Image
-              src={bgCard}
-              alt="bg"
-              className=" absolute -bottom-20 -right-10 opacity-20 w-[300px]"
-            />
-            <div className="flex justify-between items-center">
-              <div className="bg-primary w-[60px] h-[60px] xl:w-[80px] xl:h-[80px] text-white group-hover:text-primary transition-all duration-500 ease-in-out rounded-full relative overflow-hidden flex justify-center items-center">
-                <PiPersonSimpleHikeBold size={30} className=" relative z-20" />
-                <div className=" absolute group-hover:h-full group-hover:w-full transition-all duration-500 ease-in-out h-0 rounded-full w-0 z-10 bg-white"></div>
-              </div>
-              <h3 className="text-5xl text-[#7e7e7e]">০৩</h3>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h4 className="font-semibold text-lg transition-all duration-500 ease-in-out hover:text-primary lg:text-2xl">
-                সকল বয়সের জন্যেই উপযোগী
-              </h4>
-              <p className=" text-sm md:text-base text-gray-500">
-                আমাদের কোর্সগুলো শিশু থেকে প্রাপ্তবয়স্ক সকলের জন্যই উপযোগীভাবে
-                তৈরি। প্রতিটি কোর্সের পাঠ্যক্রম বয়স ও দক্ষতার ভিত্তিতে সাজানো
-                হয়েছে।
-              </p>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-};
-
-export default WhyChooseUs;
+}

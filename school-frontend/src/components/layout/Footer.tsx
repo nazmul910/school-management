@@ -1,167 +1,167 @@
 "use client";
 
-import logo from "@/assets/logo1.jpeg";
-import mckp from "@/assets/footer/mosqu1.png";
-
-import Image from "next/image";
 import Link from "next/link";
-import { BsFacebook, BsWhatsapp } from "react-icons/bs";
+import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
+import { IoLocationSharp } from "react-icons/io5";
+import { IoMdCall, IoMdMail } from "react-icons/io";
+import { LuGraduationCap } from "react-icons/lu";
 
 const quickLinks = [
-  { name: "হোম", href: "/" },
-  { name: "কোর্সসমূহ", href: "/courses" },
-  { name: "বইসমূহ", href: "/books" },
+  { name: "হোম পেজ", href: "/" },
+  { name: "শিক্ষার্থী তালিকা", href: "/students" },
   { name: "শিক্ষকমণ্ডলী", href: "/teachers" },
-  { name: "যোগাযোগ", href: "/contact" },
+  { name: "নোটিশ বোর্ড", href: "/notices" },
+  { name: "পরীক্ষার ফলাফল", href: "/results" },
+  { name: "সেরা ১০ শিক্ষার্থী", href: "/top-10" },
+  { name: "স্কুল গ্যালারি", href: "/gallery" },
+  { name: "যোগাযোগ ও মতামত", href: "/contact" },
 ];
 
-const resources = [
-  {
-    name: "ভর্তি",
-    href: "https://docs.google.com/forms/d/e/1FAIpQLSd-SCNJ6ay9vvFIGfSPQizD5YKd0GJqZljXSDTKy9oLeBks5g/viewform",
-  },
-  {
-    name: "গোপনীয়তা নীতি",
-    href: "/privacy-policy",
-  },
-  {
-    name: "শর্তাবলী",
-    href: "/terms-condition",
-  },
-  {
-    name: "সাধারণ জিজ্ঞাসা",
-    href: "/faq",
-  },
+const academicLinks = [
+  { name: "৬ষ্ঠ শ্রেণি", href: "/students?class=Class%206" },
+  { name: "৭ম শ্রেণি", href: "/students?class=Class%207" },
+  { name: "৮ম শ্রেণি", href: "/students?class=Class%208" },
+  { name: "৯ম শ্রেণি (বিজ্ঞান/মানবিক/ব্যবসায়)", href: "/students?class=Class%209" },
+  { name: "১০ম শ্রেণি (এসএসসি ব্যাচ)", href: "/students?class=Class%2010" },
+  { name: "ভর্তি নির্দেশিকা", href: "/contact" },
+  { name: "বার্ষিক পরীক্ষার রুটিন", href: "/notices" },
 ];
 
 const Footer = () => {
   return (
-    <footer className="relative bg-black text-light font-sans mt-28 lg:mt-72 xl:mt-60">
-     
-      <div className="pointer-events-none absolute bottom-52 left-0 hidden lg:block lg:w-[880px] lg:h-[1200px] xl:w-[1080px] xl:h-[780px] 2xl:w-[1360px] 2xl:h-[940px]">
-        <Image
-          src={mckp}
-          alt="Mosque Background"
-          fill
-          className="object-contain object-left-bottom"
-        />
-      </div>
-
+    <footer className="bg-[#102033] text-gray-300 font-sans mt-20 border-t-4 border-[#78A4CB]">
       {/* Main Footer */}
-      <section className="container relative z-10 mx-auto grid grid-cols-1 gap-10 px-5 py-14 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-        {/* Logo */}
-        <div>
-          <div className="mb-5 flex items-center gap-4">
-            <Image
-              src={logo}
-              alt="Logo"
-              className="h-16 w-16 rounded-md object-cover"
-            />
-
+      <section className="max-w-[1400px] mx-auto grid grid-cols-1 gap-10 px-6 py-16 md:grid-cols-2 lg:grid-cols-4">
+        {/* School Info */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md">
+              <LuGraduationCap />
+            </div>
             <div>
-              <h3 className="text-xl font-bold text-white">
-                দাওয়াহ কুরআন একাডেমি
+              <h3 className="text-xl font-bold text-white leading-tight">
+                আইডিয়াল মডেল স্কুল ও কলেজ
               </h3>
-
-              <p className="text-sm text-white">
-                ঘরে বসেই অনলাইনে কুরআন শিক্ষা
-              </p>
+              <p className="text-xs text-[#F9E8A2]">শিক্ষা • শৃঙ্খলা • নৈতিকতা</p>
             </div>
           </div>
 
-          <p className="leading-7 text-white">
-            অভিজ্ঞ শিক্ষকদের মাধ্যমে শিশু ও প্রাপ্তবয়স্কদের জন্য
-            এক-টু-ওয়ান লাইভ ক্লাস, নমনীয় সময়সূচি এবং ব্যক্তিগত
-            তত্ত্বাবধানে সহীহভাবে কুরআন শিক্ষা প্রদান করাই আমাদের
-            লক্ষ্য।
+          <p className="text-sm text-gray-300 leading-relaxed">
+            গুণগত মানসম্পন্ন আধুনিক ও নৈতিক শিক্ষাদানের মাধ্যমে শিক্ষার্থীদের মেধা বিকাশ, চরিত্র গঠন এবং দেশপ্রেমিক সুনাগরিক হিসেবে গড়ে তোলাই আমাদের মূল লক্ষ্য।
           </p>
+
+          <div className="flex items-center gap-3 pt-2">
+            <a
+              href="#"
+              className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-[#78A4CB] hover:text-white transition-colors"
+            >
+              <BsFacebook size={16} />
+            </a>
+            <a
+              href="#"
+              className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-red-600 hover:text-white transition-colors"
+            >
+              <BsYoutube size={16} />
+            </a>
+            <a
+              href="#"
+              className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-[#78A4CB] hover:text-white transition-colors"
+            >
+              <BsTwitter size={16} />
+            </a>
+            <a
+              href="#"
+              className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-[#78A4CB] hover:text-white transition-colors"
+            >
+              <BsLinkedin size={16} />
+            </a>
+          </div>
         </div>
 
         {/* Quick Links */}
-        <div className=" xl:col-span-2 xl:flex xl:flex-col xl:items-center">
-          <h4 className="mb-5 text-lg font-semibold text-white">
-            গুরুত্বপূর্ণ লিংক
+        <div>
+          <h4 className="text-base font-bold text-white mb-5 pb-2 border-b border-gray-700/60 inline-block">
+            প্রয়োজনীয় লিংক
           </h4>
-
-          <div className="flex flex-col gap-3">
+          <ul className="space-y-2.5 text-sm">
             {quickLinks.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="w-fit text-white transition-all duration-300 hover:translate-x-1 hover:text-[#ffd54f]"
-              >
-                {item.name}
-              </Link>
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className="text-gray-300 hover:text-[#F9E8A2] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-[#78A4CB]">›</span> {item.name}
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
-        {/* Resources */}
-        {/* <div>
-          <h4 className="mb-5 text-lg font-semibold text-white">
-            প্রয়োজনীয় তথ্য
+        {/* Academic Structure */}
+        <div>
+          <h4 className="text-base font-bold text-white mb-5 pb-2 border-b border-gray-700/60 inline-block">
+            একাডেমিক তথ্য (৬ষ্ঠ - ১০ম শ্রেণি)
           </h4>
-
-          <div className="flex flex-col gap-3">
-            {resources.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                target={item.href.startsWith("http") ? "_blank" : "_self"}
-                className="w-fit text-white transition-all duration-300 hover:translate-x-1 hover:text-[#ffd54f]"
-              >
-                {item.name}
-              </Link>
+          <ul className="space-y-2.5 text-sm">
+            {academicLinks.map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className="text-gray-300 hover:text-[#F9E8A2] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-[#78A4CB]">›</span> {item.name}
+                </Link>
+              </li>
             ))}
-          </div>
-        </div> */}
+          </ul>
+        </div>
 
-        {/* Social */}
-        <div className=" ">
-          <h4 className="mb-5 text-lg font-semibold text-white">
-            আমাদের সাথে যুক্ত থাকুন
+        {/* Contact Info */}
+        <div className="space-y-4">
+          <h4 className="text-base font-bold text-white mb-5 pb-2 border-b border-gray-700/60 inline-block">
+            বিদ্যালয়ের ঠিকানা ও যোগাযোগ
           </h4>
 
-          <p className="mb-5 leading-7 text-white">
-            আমাদের সর্বশেষ আপডেট, ঘোষণা এবং ইসলামিক
-            শিক্ষামূলক কনটেন্ট পেতে আমাদের সামাজিক
-            যোগাযোগমাধ্যমে যুক্ত থাকুন।
-          </p>
+          <div className="space-y-3 text-sm text-gray-300">
+            <div className="flex items-start gap-3">
+              <IoLocationSharp className="text-[#F9E8A2] text-xl shrink-0 mt-0.5" />
+              <span>বাড়ি নং ১২, রোড নং ৫, ব্লক-বি, মিরপুর-১০, ঢাকা-১২১৬, বাংলাদেশ।</span>
+            </div>
 
-          <div className="flex gap-5">
-            <Link
-              href="https://www.facebook.com/onlinequranacademy24"
-              target="_blank"
-              className="rounded-full border border-white p-3 text-white transition-all duration-300 hover:-translate-y-1 hover:border-[#ffd54f] hover:text-[#ffd54f]"
-            >
-              <BsFacebook size={22} />
-            </Link>
+            <div className="flex items-center gap-3">
+              <IoMdCall className="text-[#F9E8A2] text-lg shrink-0" />
+              <span>+৮৮০ ২-৯৮৭৬৫৪৩, +৮৮০ ১৭০০-০০০০০০</span>
+            </div>
 
-            <Link
-              href="https://wa.me/8801852955611"
-              target="_blank"
-              className="rounded-full border border-white p-3 text-white transition-all duration-300 hover:-translate-y-1 hover:border-[#ffd54f] hover:text-[#ffd54f]"
-            >
-              <BsWhatsapp size={22} />
-            </Link>
+            <div className="flex items-center gap-3">
+              <IoMdMail className="text-[#F9E8A2] text-lg shrink-0" />
+              <span>info@idealschool.edu.bd</span>
+            </div>
+          </div>
+
+          <div className="pt-2">
+            <div className="bg-[#1e3a5f] p-3 rounded-lg border border-[#78A4CB]/30 text-xs">
+              <p className="text-[#F9E8A2] font-semibold mb-1">অফিস চলাকালীন সময়:</p>
+              <p className="text-gray-300">রবিবার – বৃহস্পতিবার: সকাল ৮:০০ – বিকাল ৪:০০</p>
+              <p className="text-gray-400">শুক্রবার ও শনিবার: সাপ্তাহিক ছুটি</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Bottom */}
-      <section className="relative z-10 border-t border-white/10">
-        <div className="container mx-auto px-5 pb-5">
-          <p className="text-center text-sm text-white">
-            © {new Date().getFullYear()} দাওয়াহ কুরআন একাডেমি। সর্বস্বত্ব
-            সংরক্ষিত। নির্মাণ করেছে{" "}
-            <Link
-              href="https://www.returnhex.com/"
-              target="_blank"
-              className="font-medium text-white transition-colors duration-300 hover:underline"
-            >
-              Return Hex
-            </Link>
+      {/* Bottom Copyright */}
+      <section className="border-t border-gray-800 bg-[#0a1523] py-5">
+        <div className="max-w-[1400px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
+          <p>
+            © {new Date().getFullYear()} আইডিয়াল মডেল স্কুল ও কলেজ। সর্বস্বত্ব সংরক্ষিত।
           </p>
+          <div className="flex items-center gap-4">
+            <Link href="/notices" className="hover:text-white transition-colors">নোটিশ</Link>
+            <span>•</span>
+            <Link href="/results" className="hover:text-white transition-colors">ফলাফল</Link>
+            <span>•</span>
+            <Link href="/contact" className="hover:text-white transition-colors">যোগাযোগ</Link>
+          </div>
         </div>
       </section>
     </footer>

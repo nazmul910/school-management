@@ -5,7 +5,6 @@ import { Student } from "../students/student.model";
 import { IMailContact } from "./mails.interface";
 import { Mail } from "./mails.model";
 import httpStatus from "http-status";
-import nodemailer from "nodemailer";
 
 const getAllMails = async () => {
   const result = await Mail.find().sort({ createdAt: -1 });
@@ -14,8 +13,9 @@ const getAllMails = async () => {
 
 const createMail = async (subject: string, message: string) => {
   const students = await Student.find({}, "email").lean();
-  const emails = students.map((s) => s.email).filter(Boolean);
-  console.log("email ->", emails, "emails.length ->", emails.length);
+  const emails = students
+    .map((s) => s.email)
+    .filter((e): e is string => Boolean(e) && typeof e === "string");
 
   if (emails.length === 0) {
     throw new ApiError(
@@ -27,8 +27,7 @@ const createMail = async (subject: string, message: string) => {
   const accepted: string[] = [];
   for (const email of emails) {
     const info = await sendEmail(email, subject, message);
-    console.log("info", info);
-    if (info.accepted) {
+    if (info?.accepted) {
       const acceptedAddresses = Array.isArray(info.accepted)
         ? info.accepted
         : [info.accepted];
@@ -39,7 +38,7 @@ const createMail = async (subject: string, message: string) => {
       );
     }
   }
-  if (accepted.length === emails.length) {
+  if (accepted.length > 0) {
     await Mail.create({ subject, message });
   } else {
     throw new ApiError(
@@ -47,27 +46,21 @@ const createMail = async (subject: string, message: string) => {
       "Some emails were not sent successfully. Try again"
     );
   }
-  console.log(accepted);
   return {
-    ...accepted,
+    accepted,
   };
 };
 
-
 const createMailContact = async (payload: IMailContact) => {
-
   await sendEmailContact(payload);
-
-
   return {
     success: true,
     message: "Mail sent successfully",
   };
-
 };
 
 export const MailServices = {
   getAllMails,
   createMail,
-  createMailContact
+  createMailContact,
 };

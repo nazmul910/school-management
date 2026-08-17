@@ -1,201 +1,100 @@
-import img_01 from "@/assets/Admission/01.png";
-import img_02 from "@/assets/Admission/02.png";
-import img_03 from "@/assets/Admission/03.jpg";
-import img_04 from "@/assets/Admission/04.png";
-import img_05 from "@/assets/Admission/05.png";
-import student_bg from "@/assets/student-bg.png";
+"use client";
 
-import cardImg from "@/assets/Home-Hero/addmission/img-ab1.png";
-import bgImg from "@/assets/Home-Hero/addmission/img-bg1.png";
+import Link from "next/link";
+import { BsArrowRight } from "react-icons/bs";
+import { LuFileText, LuClipboardCheck, LuUserPlus, LuCircleCheck } from "react-icons/lu";
 
-import Image from "next/image";
+const steps = [
+  {
+    icon: LuFileText,
+    step: "০১",
+    title: "ভর্তি আবেদন ফরম সংগ্রহ",
+    desc: "বিদ্যালয় অফিস থেকে সরাসরি অথবা আমাদের অনলাইন ওয়েবসাইট থেকে নির্দিষ্ট শ্রেণির আবেদন ফরম পূরণ করুন।",
+  },
+  {
+    icon: LuClipboardCheck,
+    step: "০২",
+    title: "প্রয়োজনীয় কাগজপত্র সংযুক্তি",
+    desc: "শিক্ষার্থীর জন্ম নিবন্ধন সনদ, পূর্ববর্তী শ্রেণির ছাড়পত্র (টিসি), নম্বরপত্র এবং অভিভাবকের এনআইডি কার্ডের কপি জমা দিন।",
+  },
+  {
+    icon: LuUserPlus,
+    step: "০৩",
+    title: "ভর্তি পরীক্ষা / সাক্ষাৎকার",
+    desc: "নির্ধারিত তারিখে বাংলা, ইংরেজি ও গণিত বিষয়ের মূল্যায়ন পরীক্ষা অথবা উপস্থিত মৌখিক সাক্ষাৎকারে অংশগ্রহণ করুন।",
+  },
+  {
+    icon: LuCircleCheck,
+    step: "০৪",
+    title: "চূড়ান্ত ভর্তি ও রোল প্রাপ্তি",
+    desc: "মেধাতালিকার ভিত্তিতে ভর্তি ফি প্রদান সম্পন্ন করে নির্ধারিত শাখা, গ্রুপ ও রোল নম্বর সংগ্রহ করুন।",
+  },
+];
 
-const AdmissionProcess = () => {
+export default function AdmissionProcess() {
   return (
-    <>
-      {/* <section className="relative  my-20 lg:my-32">
-        <Image
-          className="absolute w-full h-min -z-10 -mt-5"
-          src={student_bg}
-          alt="Logo"
-        />
-        <section className="container mx-auto">
-          <h2 className="text-3xl lg:text-4xl xl:text-5xl duration-200 text-center text-darker font-bold mt-12 mb-6 lg:mt-20 lg:mb-10">
-            <span className="text-primary">এডমিশন</span> প্রক্রিয়া
-          </h2>
-          <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 lg:gap-10">
-            <section className="flex flex-col justify-center gap-5">
-              <div className="h-full flex justify-center items-center">
-                <Image
-                  src={img_01}
-                  alt="Course Choice"
-                  width={150}
-                  height={150}
-                  className="mx-auto"
-                />
-              </div>
-              <div className="flex justify-center items-center gap-3">
-                <p className="flex justify-center items-center px-2 bg-primary rounded-full text-white">
-                  1
-                </p>
-                <p className="text-center">কোর্স পছন্দ করুন</p>
-              </div>
-            </section>
-            <section className="flex flex-col justify-center gap-5">
-              <div className="h-full flex justify-center items-center">
-                <Image
-                  src={img_02}
-                  alt="Click Admission"
-                  width={150}
-                  height={150}
-                  className="mx-auto"
-                />
-              </div>
-              <div className="flex justify-center items-center gap-3">
-                <p className="flex justify-center items-center px-2 bg-primary rounded-full text-white">
-                  2
-                </p>
-                <p className="text-center">এডমিশন বাটনে ক্লিক করুন</p>
-              </div>
-            </section>
-            <section className="flex flex-col justify-center gap-5">
-              <div className="h-full flex justify-center items-center">
-                <Image
-                  src={img_03}
-                  alt="Fill up form"
-                  width={150}
-                  height={150}
-                  className="mx-auto"
-                />
-              </div>
-              <div className="flex justify-center items-center gap-3">
-                <p className="flex justify-center items-center px-2 bg-primary rounded-full text-white">
-                  3
-                </p>
-                <p className="text-center">ফর্ম পূরন করুণ</p>
-              </div>
-            </section>
-            <section className="flex flex-col justify-center gap-5">
-              <div className="h-full flex justify-center items-center">
-                <Image
-                  src={img_04}
-                  alt="Finalize schedule"
-                  width={150}
-                  height={150}
-                  className="mx-auto"
-                />
-              </div>
-              <div className="flex justify-center items-center gap-3">
-                <p className="flex justify-center items-center px-2 bg-primary rounded-full text-white">
-                  4
-                </p>
-                <p className="text-center">ক্লাস স্ক্যাজিউল ফাইনাল করুন</p>
-              </div>
-            </section>
-            <section className="flex flex-col justify-center gap-5">
-              <div className="h-full flex justify-center items-center">
-                <Image
-                  src={img_05}
-                  alt="Start class"
-                  width={150}
-                  height={150}
-                  className="mx-auto"
-                />
-              </div>
-              <div className="flex justify-center items-center gap-3">
-                <p className="flex justify-center items-center px-2 bg-primary rounded-full text-white">
-                  5
-                </p>
-                <p className="text-center">ক্লাস শুরু করুন</p>
-              </div>
-            </section>
-          </section>
-        </section>
-      </section> */}
-
-      <section className="container1 py-14 lg:py-20">
-        <div>
-          <div>
-            <h2 className="text-3xl lg:text-4xl xl:text-5xl duration-200 text-darker font-bold mb-6  lg:mb-10">
-              <span className="text-primary">এডমিশন</span> প্রক্রিয়া
-            </h2>
+    <section className="py-20 bg-white">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6">
+        {/* Section Title */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F9E8A2]/60 text-[#5c4300] text-xs font-bold">
+            <span>ভর্তি তথ্য ২০২৬</span>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-6 xl:grid-cols-5 gap-5">
-            <div className="bg-primary hover:bg-[#ffd54f] lg:col-span-2 xl:col-span-1 duration-300 transition-all ease-in-out hover:text-primary text-[#fff] relative p-10 rounded-2xl flex flex-col justify-center items-center gap-4">
-              <Image src={bgImg} alt="bg-img" className=" absolute " />
-              <div className="w-20 h-20  relative flex justify-center items-center">
-                <Image src={cardImg} alt="bg" className="" />
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a5f]">
+            ভর্তি প্রক্রিয়া ও প্রয়োজনীয় নির্দেশাবলী
+          </h2>
+          <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+            ৬ষ্ঠ থেকে ১০ম শ্রেণিতে (বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা গ্রুপ) নতুন শিক্ষাবর্ষে ভর্তির জন্য সহজ ৪টি ধাপ।
+          </p>
+        </div>
+
+        {/* Steps Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {steps.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={idx}
+                className="bg-[#F3F8FC] p-8 rounded-2xl border border-[#B4E1EB]/60 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group flex flex-col justify-between"
+              >
+                {/* Step Number Top Right */}
+                <div className="absolute top-4 right-4 text-2xl font-extrabold text-[#78A4CB]/40 group-hover:text-[#78A4CB] transition-colors">
+                  {item.step}
+                </div>
+
+                <div>
+                  <div className="w-13 h-13 rounded-xl bg-white text-[#78A4CB] shadow-sm flex items-center justify-center text-2xl mb-6 group-hover:bg-[#78A4CB] group-hover:text-white transition-all">
+                    <Icon />
+                  </div>
+                  <h3 className="text-lg font-bold text-[#1e3a5f] mb-2.5">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
-              <div className="flex relative z-10 flex-col gap-1">
-                <h4 className="font-semibold text-lg text-center transition-all duration-500 ease-in-out  lg:text-3xl">
-                  ধাপ ০১
-                </h4>
-                <p className=" text-sm md:text-lg text-center">
-                  কোর্স পছন্দ করুন
-                </p>
-              </div>
-            </div>
-            <div className="bg-primary hover:bg-[#ffd54f] lg:col-span-2 xl:col-span-1 duration-300 transition-all ease-in-out hover:text-primary text-[#fff] relative p-10 rounded-2xl flex flex-col justify-center items-center gap-4">
-              <Image src={bgImg} alt="bg-img" className=" absolute " />
-              <div className="w-20 h-20  relative flex justify-center items-center">
-                <Image src={cardImg} alt="bg" className="" />
-              </div>
-              <div className="flex relative z-10 flex-col gap-1">
-                <h4 className="font-semibold text-lg text-center transition-all duration-500 ease-in-out  lg:text-3xl">
-                  ধাপ ০২
-                </h4>
-                <p className=" text-sm md:text-lg text-center">
-                  এডমিশন বাটনে ক্লিক করুন
-                </p>
-              </div>
-            </div>
-            <div className="bg-primary hover:bg-[#ffd54f] lg:col-span-2 xl:col-span-1 duration-300 transition-all ease-in-out hover:text-primary text-[#fff] relative p-10 rounded-2xl flex flex-col justify-center items-center gap-4">
-              <Image src={bgImg} alt="bg-img" className=" absolute " />
-              <div className="w-20 h-20  relative flex justify-center items-center">
-                <Image src={cardImg} alt="bg" className="" />
-              </div>
-              <div className="flex relative z-10 flex-col gap-1">
-                <h4 className="font-semibold text-lg text-center transition-all duration-500 ease-in-out  lg:text-3xl">
-                  ধাপ ০৩
-                </h4>
-                <p className=" text-sm md:text-lg text-center">
-                  ফর্ম পূরন করুণ
-                </p>
-              </div>
-            </div>
-            <div className="bg-primary hover:bg-[#ffd54f] lg:col-span-3 xl:col-span-1 duration-300 transition-all ease-in-out hover:text-primary text-[#fff] relative p-10 rounded-2xl flex flex-col justify-center items-center gap-4">
-              <Image src={bgImg} alt="bg-img" className=" absolute " />
-              <div className="w-20 h-20  relative flex justify-center items-center">
-                <Image src={cardImg} alt="bg" className="" />
-              </div>
-              <div className="flex relative z-10 flex-col gap-1">
-                <h4 className="font-semibold text-lg text-center transition-all duration-500 ease-in-out  lg:text-3xl">
-                  ধাপ ০৪
-                </h4>
-                <p className=" text-sm md:text-lg text-center">
-                  ক্লাস স্ক্যাজিউল ফাইনাল করুন
-                </p>
-              </div>
-            </div>
-            <div className="bg-primary hover:bg-[#ffd54f] md:col-span-2 lg:col-span-3 xl:col-span-1 duration-300 transition-all ease-in-out hover:text-primary text-[#fff] relative p-10 rounded-2xl flex flex-col justify-center items-center gap-4">
-              <Image src={bgImg} alt="bg-img" className=" absolute " />
-              <div className="w-20 h-20  relative flex justify-center items-center">
-                <Image src={cardImg} alt="bg" className="" />
-              </div>
-              <div className="flex relative z-10 flex-col gap-1">
-                <h4 className="font-semibold text-lg text-center transition-all duration-500 ease-in-out  lg:text-3xl">
-                  ধাপ ০৫
-                </h4>
-                <p className=" text-sm md:text-lg text-center">
-                  ক্লাস শুরু করুন
-                </p>
-              </div>
-            </div>
+            );
+          })}
+        </div>
+
+        {/* Admission CTA Box */}
+        <div className="mt-14 p-8 rounded-3xl bg-gradient-to-r from-[#78A4CB] to-[#1e3a5f] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+          <div className="space-y-1 text-center md:text-left">
+            <h3 className="text-2xl font-bold">২০২৬ শিক্ষাবর্ষে ভর্তি চলছে!</h3>
+            <p className="text-sm text-[#F9E8A2]">সীমিত আসনে ৬ষ্ঠ থেকে ১০ম শ্রেণিতে ভর্তি হতে আজই যোগাযোগ করুন।</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/contact"
+              className="px-6 py-3 bg-[#F9E8A2] text-[#5c4300] font-bold rounded-xl text-sm hover:bg-[#fae488] shadow-md transition-all flex items-center gap-2 shrink-0"
+            >
+              <span>যোগাযোগ করুন</span>
+              <BsArrowRight />
+            </Link>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
-};
-
-export default AdmissionProcess;
+}

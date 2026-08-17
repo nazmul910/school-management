@@ -17,13 +17,22 @@ const createUserToDB = async (payload: IUser) => {
   payload.password = hashPassword;
 
   const result = await User.create(payload);
-  const userData = {
-    name: payload.name,
-    email: payload.email,
-    user: result._id,
-  };
+  if (payload.role === "student") {
+    const count = await Student.countDocuments();
+    const userData = {
+      name: payload.name,
+      email: payload.email,
+      user: result._id,
+      studentId: `STU-${new Date().getFullYear()}-${(count + 1).toString().padStart(4, "0")}`,
+      roll: (count % 50) + 1,
+      class: "Class 6",
+      section: "A",
+      address: "বাংলাদেশ",
+      isDeleted: false,
+    };
 
-  await Student.create(userData);
+    await Student.create(userData);
+  }
   return result;
 };
 
@@ -34,7 +43,6 @@ const getAllUsersFromDB = async () => {
 
 const getSingleUserFromDB = async (id: string) => {
   const result = await User.findById(id, { isDeleted: false });
-  console.log(result);
   if (!result) throw new ApiError(httpStatus.NOT_FOUND, "User Not Found");
   return result;
 };

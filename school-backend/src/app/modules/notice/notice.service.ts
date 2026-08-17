@@ -1,57 +1,59 @@
-import { Notice } from "./notice.model";
+import ApiError from "../../utils/AppError";
+import httpStatus from "http-status";
 import { INotice } from "./notice.interface";
+import { Notice } from "./notice.model";
 
-const getAllNoticesDB = async () => {
-  const result = await Notice.find({ isDeleted: false }).sort({
-    createdAt: -1,
+const createNoticeToDB = async (payload: INotice) => {
+  if (!payload.publishDate) {
+    payload.publishDate = new Date().toISOString().split("T")[0];
+  }
+  const result = await Notice.create(payload);
+  return result;
+};
+
+const getAllNoticesFromDB = async () => {
+  const result = await Notice.find({ isDeleted: false }).sort({ isPinned: -1, createdAt: -1 });
+  return result;
+};
+
+const getSingleNoticeFromDB = async (id: string) => {
+  const result = await Notice.findOne({ _id: id, isDeleted: false });
+  if (!result) throw new ApiError(httpStatus.NOT_FOUND, "Notice Not Found");
+  return result;
+};
+
+const updateSingleNoticeToDB = async (id: string, payload: Partial<INotice>) => {
+  const isNoticeExists = await Notice.findOne({ _id: id, isDeleted: false });
+  if (!isNoticeExists) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Notice Not Found!");
+  }
+  const result = await Notice.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
   });
   return result;
 };
 
-const getSingleNoticeDB = async (id: string) => {
-  const notice = await Notice.findOne({ _id: id, isDeleted: false });
-  if (!notice) {
-    throw new Error("Notice not found or has been deleted!");
+const deleteSingleNoticeToDB = async (id: string) => {
+  const isNoticeExists = await Notice.findOne({ _id: id, isDeleted: false });
+  if (!isNoticeExists) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Notice Not Found!");
   }
-  return notice;
-};
-
-const createNoticeDB = async (data: INotice) => {
-  const exists = await Notice.findOne({ heading: data.heading });
-  if (exists) {
-    throw new Error("A notice with this heading already exists!");
-  }
-  return Notice.create({ ...data, isDeleted: false });
-};
-
-const updateNoticeDB = async (id: string, data: Partial<INotice>) => {
-  const updated = await Notice.findOneAndUpdate(
-    { _id: id, isDeleted: false },
-    { $set: data },
-    { new: true }
+  const result = await Notice.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    {
+      new: true,
+      runValidators: true,
+    }
   );
-  if (!updated) {
-    throw new Error("Unable to update: notice not found or deleted!");
-  }
-  return updated;
-};
-
-const softDeleteNoticeDB = async (id: string) => {
-  const deleted = await Notice.findOneAndUpdate(
-    { _id: id, isDeleted: false },
-    { $set: { isDeleted: true } },
-    { new: true }
-  );
-  if (!deleted) {
-    throw new Error("Unable to delete: notice not found or already deleted!");
-  }
-  return deleted;
+  return result;
 };
 
 export const NoticeServices = {
-  getAllNoticesDB,
-  getSingleNoticeDB,
-  createNoticeDB,
-  updateNoticeDB,
-  softDeleteNoticeDB,
+  createNoticeToDB,
+  getAllNoticesFromDB,
+  getSingleNoticeFromDB,
+  updateSingleNoticeToDB,
+  deleteSingleNoticeToDB,
 };

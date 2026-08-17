@@ -1,21 +1,22 @@
+import { Request, Response } from "express";
 import httpStatus from "http-status";
 import { catchAsync } from "../../utils/CatchAsync";
 import sendResponse from "../../utils/SendResponse";
-import * as ReviewServices from "./review.service";
-import { Request, Response } from "express";
+import * as ReviewService from "./review.service";
 
 export const createReview = catchAsync(async (req: Request, res: Response) => {
-  const result = await ReviewServices.createReviewDB(req.body, req.user);
+  const result = await ReviewService.createReviewDB(req.body, req.user);
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
-    message: "Review created successfully",
+    message: "Feedback submitted successfully",
     data: result,
   });
 });
 
 export const getAllReviews = catchAsync(async (req: Request, res: Response) => {
-  const result = await ReviewServices.getAllReviewsDB();
+  const { status } = req.query;
+  const result = await ReviewService.getAllReviewsDB(status as string);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -23,24 +24,35 @@ export const getAllReviews = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
 export const getMyReviews = catchAsync(async (req: Request, res: Response) => {
-  console.log("getMyReviews -> ", req.user);
-  const result = await ReviewServices.getMyReviewsDB(req.user);
+  const result = await ReviewService.getMyReviewsDB(req.user);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "My Reviews retrieved successfully",
+    message: "My reviews retrieved successfully",
     data: result,
   });
 });
 
 export const changeStatus = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
-  const result = await ReviewServices.changeStatus(id, req.body);
+  const { id } = req.params;
+  const result = await ReviewService.changeStatus(id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Review Approved!",
+    message: "Status changed successfully",
+    data: result,
+  });
+});
+
+export const deleteReview = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await ReviewService.deleteReviewDB(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Review deleted successfully",
     data: result,
   });
 });
