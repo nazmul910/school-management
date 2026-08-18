@@ -9,7 +9,7 @@ export default function useGallery(category?: string) {
   const { data: galleryData, isLoading, refetch } = useQuery({
     queryKey: ["gallery", category],
     queryFn: async () => {
-      const url = category && category !== "all" && category !== "সকল"
+      const url = category && category !== "all"
         ? `/gallery?category=${encodeURIComponent(category)}`
         : "/gallery";
       const res = await axios.get(url);

@@ -6,24 +6,24 @@ import { LuCircleHelp } from "react-icons/lu";
 
 const faqs = [
   {
-    q: "বিদ্যালয়ে কোন কোন শ্রেণিতে পাঠদান করানো হয়?",
-    a: "আমাদের বিদ্যালয়ে বাংলাদেশ জাতীয় শিক্ষাক্রম অনুযায়ী ৬ষ্ঠ শ্রেণি থেকে ১০ম শ্রেণি (এসএসসি পর্যন্ত) মানসম্মত পাঠদান করানো হয়। ৯ম ও ১০ম শ্রেণিতে বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা গ্রুপ রয়েছে।",
+    q: "Which grades/classes are offered at the institution?",
+    a: "We provide comprehensive schooling from Class 6 to Class 10 (SSC Level). In Classes 9 and 10, students can enroll in Science, Humanities, or Business Studies streams.",
   },
   {
-    q: "নবম ও দশম শ্রেণিতে কি কি বিভাগ বা গ্রুপ রয়েছে?",
-    a: "নবম এবং দশম শ্রেণির শিক্ষার্থীদের জন্য বিজ্ঞান (Science), মানবিক (Humanities) এবং ব্যবসায় শিক্ষা (Business Studies) তিনটি গ্রুপেরই সুযোগ রয়েছে। ষষ্ঠ, সপ্তম ও অষ্টম শ্রেণিতে সাধারণ পাঠ্যক্রম পরিচালিত হয়।",
+    q: "What academic groups are available for Class 9 and 10?",
+    a: "Students in Class 9 and 10 can choose between Science, Humanities, and Business Studies groups. Classes 6, 7, and 8 follow a unified general national curriculum.",
   },
   {
-    q: "পরীক্ষার ফলাফল কীভাবে দেখা যাবে?",
-    a: "আমাদের ওয়েবসাইটের 'ফলাফল' মেন্যুতে গিয়ে শ্রেণি এবং রোল নম্বর দিয়ে সার্চ করলেই বিস্তারিত বিষয়ভিত্তিক নম্বরপত্র ও গ্রেড পাওয়া যাবে। এছাড়া 'সেরা ১০ শিক্ষার্থী' মেন্যুতে প্রতিটি শ্রেণির ১ম থেকে ১০ম স্থান অধিকারীদের তালিকা দেখা যাবে।",
+    q: "How can parents and students view exam results online?",
+    a: "You can visit the 'Results' page from our navigation menu and search by Class and Student Roll number to view subject-wise marksheets and GPAs. You can also view class rank lists on the 'Top 10 Students' page.",
   },
   {
-    q: "বিদ্যালয়ের নিয়মিত সময়সূচী বা ক্লাস টাইম কি?",
-    a: "প্রতি রবিবার থেকে বৃহস্পতিবার সকাল ৮:০০ টা থেকে দুপুর ২:০০ টা পর্যন্ত নিয়মিত ক্লাস পরিচালিত হয়। শুক্রবার ও শনিবার সাপ্তাহিক ছুটি থাকে।",
+    q: "What are the standard school operating hours?",
+    a: "Regular academic classes run from Sunday through Thursday, 8:00 AM to 2:00 PM. Friday and Saturday are weekly holidays.",
   },
   {
-    q: "স্কুলে কি সহপাঠ্য কার্যক্রম এবং খেলাধুলার সুযোগ রয়েছে?",
-    a: "হ্যাঁ, আমাদের বিদ্যালয়ে রয়েছে প্রশস্ত খেলার মাঠ, সায়েন্স ক্লাব, আইসিটি ক্লাব, ডিবেটিং ক্লাব, স্কাউট এবং বার্ষিক ক্রীড়া ও সাংস্কৃতিক প্রতিযোগিতা।",
+    q: "Are there co-curricular clubs and sports activities?",
+    a: "Yes, we have dedicated clubs for Science, ICT, Debate, Scouting, and Arts, alongside spacious athletic grounds for football, cricket, and annual tournaments.",
   },
 ];
 
@@ -37,13 +37,13 @@ export default function FAQ() {
         <div className="text-center mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B4E1EB]/50 text-[#1e3a5f] text-xs font-bold">
             <LuCircleHelp />
-            <span>সচরাচর জিজ্ঞাসা</span>
+            <span>Frequently Asked Questions</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a5f]">
-            প্রয়োজনীয় প্রশ্নোত্তর (FAQ)
+            Everything You Need to Know (FAQ)
           </h2>
           <p className="text-gray-600 text-sm md:text-base">
-            বিদ্যালয় ও ভর্তি সংক্রান্ত সাধারণ প্রশ্নের উত্তর জেনে নিন।
+            Find quick answers to common queries regarding admissions, curriculum, and campus life.
           </p>
         </div>
 

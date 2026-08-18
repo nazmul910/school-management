@@ -3,6 +3,7 @@
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 import { LuMessageSquare } from "react-icons/lu";
 import useReviews from "@/hooks/useReviews";
+import EmptyState from "@/components/common/EmptyState";
 
 export default function Testimonial() {
   const { reviewsData, isLoading } = useReviews("approved");
@@ -15,20 +16,20 @@ export default function Testimonial() {
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B4E1EB]/50 text-[#1e3a5f] text-xs font-bold">
             <LuMessageSquare />
-            <span>অভিভাবক ও শিক্ষার্থীদের মতামত</span>
+            <span>Guardian & Student Testimonials</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a5f]">
-            আমাদের সম্পর্কে শুভাকাঙ্ক্ষীদের মূল্যায়ন
+            What Our Community Says About Us
           </h2>
           <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-            বিদ্যালয়ের মানসম্মত শিক্ষা, সুশৃঙ্খল পরিবেশ ও সার্বিক ব্যবস্থাপনায় সন্তুষ্ট অভিভাবক ও শিক্ষার্থীদের মূল্যবান মতামত।
+            Heartfelt reviews from guardians, current students, and proud alumni on our academic standards and caring environment.
           </p>
         </div>
 
         {/* Testimonials Grid */}
         {isLoading ? (
           <div className="py-12 text-center text-gray-500 font-medium">
-            মতামত লোড হচ্ছে...
+            Loading testimonials...
           </div>
         ) : reviews.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -62,20 +63,23 @@ export default function Testimonial() {
                 {/* Author Info */}
                 <div className="pt-6 mt-6 border-t border-gray-100 flex items-center gap-3">
                   <div className="w-11 h-11 rounded-full bg-[#78A4CB] text-white font-bold flex items-center justify-center text-base">
-                    {review.name?.charAt(0) || "অ"}
+                    {review.name?.charAt(0) || "U"}
                   </div>
                   <div>
                     <h4 className="font-bold text-sm text-[#1e3a5f]">{review.name}</h4>
-                    <p className="text-xs text-gray-500">{review.designation || "অভিভাবক"}</p>
+                    <p className="text-xs text-gray-500">{review.designation || "Guardian"}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="py-12 text-center text-gray-500">
-            কোনো মতামত পাওয়া যায়নি।
-          </div>
+          <EmptyState
+            icon="message"
+            title="No Testimonials Yet"
+            description="Reviews and student feedback will appear here once approved."
+            size="md"
+          />
         )}
       </div>
     </section>

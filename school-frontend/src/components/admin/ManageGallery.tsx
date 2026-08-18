@@ -19,12 +19,12 @@ import useAxios from "@/hooks/useAxios";
 import ImageUploadField from "./ImageUploadField";
 
 const categories = [
-  "ক্যাম্পাস",
-  "ক্রীড়া",
-  "সাংস্কৃতিক",
-  "বিজ্ঞান মেলা",
-  "পুরস্কার বিতরণী",
-  "অন্যান্য",
+  "Campus",
+  "Sports",
+  "Cultural",
+  "Science Fair",
+  "Prize Giving",
+  "Other",
 ];
 
 interface SelectedFilePreview {
@@ -48,12 +48,12 @@ export default function ManageGallery() {
   const [singleFormData, setSingleFormData] = useState({
     title: "",
     caption: "",
-    category: "ক্যাম্পাস",
+    category: "Campus",
     imageUrl: "",
   });
 
   // Multi-upload state (for adding multiple images)
-  const [batchCategory, setBatchCategory] = useState("ক্যাম্পাস");
+  const [batchCategory, setBatchCategory] = useState("Campus");
   const [batchTitle, setBatchTitle] = useState("");
   const [batchCaption, setBatchCaption] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<SelectedFilePreview[]>([]);
@@ -69,10 +69,10 @@ export default function ManageGallery() {
     setSingleFormData({
       title: "",
       caption: "",
-      category: "ক্যাম্পাস",
+      category: "Campus",
       imageUrl: "",
     });
-    setBatchCategory("ক্যাম্পাস");
+    setBatchCategory("Campus");
     setBatchTitle("");
     setBatchCaption("");
     // Revoke object URLs to avoid memory leaks
@@ -92,7 +92,7 @@ export default function ManageGallery() {
     setSingleFormData({
       title: item.title || "",
       caption: item.caption || "",
-      category: item.category || "ক্যাম্পাস",
+      category: item.category || "Campus",
       imageUrl: item.imageUrl || "",
     });
     setIsEditing(true);
@@ -129,7 +129,7 @@ export default function ManageGallery() {
     if (isEditing && editingId) {
       // Single edit submit
       if (!singleFormData.imageUrl) {
-        Swal.fire("সতর্কতা", "অনুগ্রহ করে একটি ছবি নির্বাচন করুন।", "warning");
+        Swal.fire("Warning", "Please select an image.", "warning");
         return;
       }
 
@@ -137,24 +137,24 @@ export default function ManageGallery() {
         { id: editingId, payload: singleFormData },
         {
           onSuccess: () => {
-            Swal.fire("সফল", "গ্যালারির তথ্য সফলভাবে আপডেট হয়েছে।", "success");
+            Swal.fire("Success", "Gallery item updated successfully.", "success");
             setIsModalOpen(false);
             resetForm();
           },
           onError: (err: any) => {
-            Swal.fire("ত্রুটি", err?.response?.data?.message || "আপডেট ব্যর্থ হয়েছে।", "error");
+            Swal.fire("Error", err?.response?.data?.message || "Failed to update item.", "error");
           },
         }
       );
     } else {
       // Multi-image / Batch add submit
       if (selectedFiles.length === 0) {
-        Swal.fire("সতর্কতা", "অনুগ্রহ করে অন্তত একটি ছবি সিলেক্ট করুন।", "warning");
+        Swal.fire("Warning", "Please select at least one image.", "warning");
         return;
       }
 
       if (!batchTitle.trim()) {
-        Swal.fire("সতর্কতা", "ছবির শিরোনাম প্রদান করুন।", "warning");
+        Swal.fire("Warning", "Please provide an image title.", "warning");
         return;
       }
 
@@ -200,20 +200,20 @@ export default function ManageGallery() {
             setUploadProgress(100);
             Swal.fire({
               icon: "success",
-              title: "সফলভাবে আপলোড সম্পন্ন!",
-              text: `${newGalleryItems.length} টি ছবি গ্যালারিতে যোগ করা হয়েছে।`,
+              title: "Upload Successful!",
+              text: `${newGalleryItems.length} photos added to gallery.`,
               confirmButtonColor: "#78A4CB",
             });
             setIsModalOpen(false);
             resetForm();
           },
           onError: (err: any) => {
-            Swal.fire("ত্রুটি", err?.response?.data?.message || "গ্যালারিতে যোগ করা সম্ভব হয়নি।", "error");
+            Swal.fire("Error", err?.response?.data?.message || "Could not add photos to gallery.", "error");
           },
         });
       } catch (err: any) {
         console.error("Batch upload error:", err);
-        Swal.fire("আপলোড ব্যর্থ", err?.response?.data?.message || "ছবি আপলোড করা যায়নি।", "error");
+        Swal.fire("Upload Failed", err?.response?.data?.message || "Failed to upload images.", "error");
       } finally {
         setIsUploading(false);
       }
@@ -222,19 +222,19 @@ export default function ManageGallery() {
 
   const handleDelete = (id: string, title: string) => {
     Swal.fire({
-      title: "আপনি কি নিশ্চিত?",
-      text: `"${title}" ছবিটি গ্যালারি থেকে মুছে ফেলা হবে!`,
+      title: "Are you sure?",
+      text: `"${title}" will be permanently removed from gallery!`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#78A4CB",
-      confirmButtonText: "হ্যাঁ, মুছুন",
-      cancelButtonText: "বাতিল",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
     }).then((res) => {
       if (res.isConfirmed) {
         deleteGalleryItem.mutate(id, {
           onSuccess: () => {
-            Swal.fire("মুছে ফেলা হয়েছে!", "ছবি সফলভাবে ডিলিট হয়েছে।", "success");
+            Swal.fire("Deleted!", "Photo removed successfully.", "success");
           },
         });
       }
@@ -248,10 +248,10 @@ export default function ManageGallery() {
         <div>
           <h1 className="text-2xl font-extrabold text-[#1e3a5f] flex items-center gap-2.5">
             <FaImages className="text-[#78A4CB]" />
-            <span>গ্যালারি ব্যবস্থাপনা (Gallery Management)</span>
+            <span>Gallery Management</span>
           </h1>
           <p className="text-xs md:text-sm text-gray-500 mt-1">
-            বিদ্যালয়ের ক্যাম্পাস ও বিভিন্ন অনুষ্ঠানের ছবি আপলোড, সম্পাদনা ও এক ক্লিকে একাধিক ছবি যোগ করুন।
+            Upload, categorize, manage, and batch-publish school event photos and campus albums.
           </p>
         </div>
 
@@ -260,7 +260,7 @@ export default function ManageGallery() {
           className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
         >
           <FaPlus />
-          <span>নতুন ছবি আপলোড করুন</span>
+          <span>Upload Photos</span>
         </button>
       </div>
 
@@ -274,7 +274,7 @@ export default function ManageGallery() {
               : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
           }`}
         >
-          সকল ক্যাটাগরি ({items.length})
+          All Categories ({items.length})
         </button>
         {categories.map((cat) => (
           <button
@@ -295,7 +295,7 @@ export default function ManageGallery() {
       {isLoading ? (
         <div className="bg-white p-16 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-[#78A4CB] border-t-transparent mb-3" />
-          <p className="text-sm">গ্যালারির ছবি লোড হচ্ছে...</p>
+          <p className="text-sm">Loading gallery photos...</p>
         </div>
       ) : items.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -320,7 +320,7 @@ export default function ManageGallery() {
                     </div>
                   </div>
                   <div className="absolute top-3 right-3 px-3 py-1 bg-[#1e3a5f]/90 backdrop-blur-sm text-[#F9E8A2] text-xs font-bold rounded-lg shadow-sm">
-                    {item.category || "ক্যাম্পাস"}
+                    {item.category || "Campus"}
                   </div>
                 </div>
 
@@ -334,20 +334,20 @@ export default function ManageGallery() {
 
               <div className="p-3 px-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
                 <span className="text-[11px] text-gray-400 font-mono">
-                  {item.createdAt ? new Date(item.createdAt).toLocaleDateString("bn-BD") : ""}
+                  {item.createdAt ? new Date(item.createdAt).toLocaleDateString("en-US") : ""}
                 </span>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleOpenEdit(item)}
                     className="p-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
-                    title="সম্পাদনা"
+                    title="Edit"
                   >
                     <FaEdit />
                   </button>
                   <button
                     onClick={() => handleDelete(item._id, item.title)}
                     className="p-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
-                    title="মুছুন"
+                    title="Delete"
                   >
                     <FaTrash />
                   </button>
@@ -361,8 +361,8 @@ export default function ManageGallery() {
           <div className="w-16 h-16 rounded-2xl bg-[#B4E1EB]/30 text-[#78A4CB] flex items-center justify-center text-3xl mx-auto mb-3">
             <LuImage />
           </div>
-          <h3 className="text-lg font-bold text-[#1e3a5f]">কোনো ছবি পাওয়া যায়নি</h3>
-          <p className="text-xs text-gray-400 mt-1">উপরের &quot;নতুন ছবি আপলোড করুন&quot; বাটনে ক্লিক করে ছবি যোগ করুন।</p>
+          <h3 className="text-lg font-bold text-[#1e3a5f]">No Photos Found</h3>
+          <p className="text-xs text-gray-400 mt-1">Click the &quot;Upload Photos&quot; button above to add new media.</p>
         </div>
       )}
 
@@ -378,10 +378,10 @@ export default function ManageGallery() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg">
-                    {isEditing ? "ছবির তথ্য সম্পাদন করুন" : "এক বা একাধিক ছবি আপলোড করুন"}
+                    {isEditing ? "Edit Gallery Item" : "Upload Gallery Photos"}
                   </h3>
                   <p className="text-xs text-gray-300">
-                    {isEditing ? "নির্বাচিত ছবির বিবরণ পরিবর্তন করুন" : "একসাথে একাধিক ছবি সিলেক্ট করে সরাসরি আপলোড করুন"}
+                    {isEditing ? "Update photo title, category or replacement image" : "Select one or multiple images to batch upload directly"}
                   </p>
                 </div>
               </div>
@@ -400,19 +400,19 @@ export default function ManageGallery() {
                 /* EDIT MODE: Single Item */
                 <>
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1">ছবির শিরোনাম *</label>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Image Title *</label>
                     <input
                       type="text"
                       value={singleFormData.title}
                       onChange={(e) => setSingleFormData({ ...singleFormData, title: e.target.value })}
                       required
-                      placeholder="যেমন: বার্ষিক বিজ্ঞান মেলা ও উদ্ভাবনী প্রজেক্ট"
+                      placeholder="e.g. Annual Science Fair Exhibition"
                       className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1">ক্যাটাগরি নির্বাচন করুন *</label>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Category *</label>
                     <select
                       value={singleFormData.category}
                       onChange={(e) => setSingleFormData({ ...singleFormData, category: e.target.value })}
@@ -426,9 +426,9 @@ export default function ManageGallery() {
                     </select>
                   </div>
 
-                  {/* Clean Image Upload without raw URLs */}
+                  {/* Clean Image Upload */}
                   <ImageUploadField
-                    label="গ্যালারির ছবি *"
+                    label="Gallery Photo *"
                     value={singleFormData.imageUrl}
                     onChange={(url) => setSingleFormData({ ...singleFormData, imageUrl: url })}
                     onFileUpload={async (file) => {
@@ -445,12 +445,12 @@ export default function ManageGallery() {
                   />
 
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1">সংক্ষিপ্ত ক্যাপশন বা বিবরণ</label>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Caption / Description</label>
                     <textarea
                       value={singleFormData.caption}
                       onChange={(e) => setSingleFormData({ ...singleFormData, caption: e.target.value })}
                       rows={2}
-                      placeholder="ছবির সংক্ষিপ্ত বিবরণ লিখুন..."
+                      placeholder="Short description of the photo..."
                       className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB] transition-colors"
                     />
                   </div>
@@ -459,20 +459,20 @@ export default function ManageGallery() {
                 /* ADD MODE: Multi-Image Batch Upload */
                 <>
                   <div>
-                    <label className="block text-xs font-bold text-gray-700 mb-1">অ্যালবাম / ছবির শিরোনাম *</label>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Album / Photo Title *</label>
                     <input
                       type="text"
                       value={batchTitle}
                       onChange={(e) => setBatchTitle(e.target.value)}
                       required
-                      placeholder="যেমন: বার্ষিক ক্রীড়া প্রতিযোগিতা ২০২৬"
+                      placeholder="e.g. Annual Sports Day 2026"
                       className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB] transition-colors"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-gray-700 mb-1">ক্যাটাগরি নির্বাচন করুন *</label>
+                      <label className="block text-xs font-bold text-gray-700 mb-1">Category *</label>
                       <select
                         value={batchCategory}
                         onChange={(e) => setBatchCategory(e.target.value)}
@@ -487,12 +487,12 @@ export default function ManageGallery() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-gray-700 mb-1">সংক্ষিপ্ত ক্যাপশন (ঐচ্ছিক)</label>
+                      <label className="block text-xs font-bold text-gray-700 mb-1">Caption (Optional)</label>
                       <input
                         type="text"
                         value={batchCaption}
                         onChange={(e) => setBatchCaption(e.target.value)}
-                        placeholder="সকল ছবির জন্য সাধারণ ক্যাপশন..."
+                        placeholder="Caption applied to selected photos..."
                         className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                       />
                     </div>
@@ -502,11 +502,11 @@ export default function ManageGallery() {
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
                       <label className="text-xs font-bold text-gray-700">
-                        ছবি নির্বাচন করুন (এক বা একাধিক) *
+                        Select Photos (One or Multiple) *
                       </label>
                       {selectedFiles.length > 0 && (
                         <span className="text-xs font-bold text-[#78A4CB]">
-                          {selectedFiles.length} টি ছবি নির্বাচিত
+                          {selectedFiles.length} photos selected
                         </span>
                       )}
                     </div>
@@ -519,10 +519,10 @@ export default function ManageGallery() {
                         <FaCloudUploadAlt />
                       </div>
                       <p className="font-bold text-sm text-[#1e3a5f]">
-                        ছবি আপলোড করতে ক্লিক করুন অথবা ফাইল সিলেক্ট করুন
+                        Click or drag files here to select photos
                       </p>
                       <p className="text-xs text-gray-400 mt-1">
-                        একসাথে একাধিক ছবি সিলেক্ট করা যাবে (PNG, JPG, WEBP)
+                        Select multiple files simultaneously (PNG, JPG, WEBP)
                       </p>
                       <input
                         ref={fileInputRef}
@@ -538,7 +538,7 @@ export default function ManageGallery() {
                     {selectedFiles.length > 0 && (
                       <div className="mt-4">
                         <div className="flex items-center justify-between mb-2">
-                          <p className="text-xs font-bold text-gray-600">নির্বাচিত ছবির প্রিভিউ:</p>
+                          <p className="text-xs font-bold text-gray-600">Selected Photo Previews:</p>
                           <button
                             type="button"
                             onClick={() => {
@@ -547,7 +547,7 @@ export default function ManageGallery() {
                             }}
                             className="text-xs text-red-500 hover:underline font-semibold cursor-pointer"
                           >
-                            সব মুছুন
+                            Clear All
                           </button>
                         </div>
 
@@ -565,11 +565,11 @@ export default function ManageGallery() {
                               <button
                                 type="button"
                                 onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleRemoveSelectedFile(idx);
+                                   e.stopPropagation();
+                                   handleRemoveSelectedFile(idx);
                                 }}
                                 className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer shadow"
-                                title="বাদ দিন"
+                                title="Remove"
                               >
                                 <FaTimes size={10} />
                               </button>
@@ -589,7 +589,7 @@ export default function ManageGallery() {
                       <div className="flex items-center justify-between text-xs font-bold text-[#1e3a5f]">
                         <span className="flex items-center gap-1.5">
                           <LuLoader className="animate-spin text-[#78A4CB]" />
-                          <span>ক্লাউডিনারিতে আপলোড হচ্ছে...</span>
+                          <span>Uploading to Cloudinary...</span>
                         </span>
                         <span>{uploadProgress}%</span>
                       </div>
@@ -612,7 +612,7 @@ export default function ManageGallery() {
                   disabled={isUploading}
                   className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  বাতিল
+                  Cancel
                 </button>
                 <button
                   type="submit"
@@ -626,20 +626,20 @@ export default function ManageGallery() {
                   {isUploading ? (
                     <>
                       <LuLoader className="animate-spin text-base" />
-                      <span>আপলোড হচ্ছে...</span>
+                      <span>Uploading...</span>
                     </>
                   ) : isEditing ? (
                     <>
                       <FaCheck />
-                      <span>আপডেট করুন</span>
+                      <span>Save Updates</span>
                     </>
                   ) : (
                     <>
                       <LuUpload size={16} />
                       <span>
                         {selectedFiles.length > 1
-                          ? `${selectedFiles.length} টি ছবি আপলোড করুন`
-                          : "ছবি যোগ করুন"}
+                          ? `Upload ${selectedFiles.length} Photos`
+                          : "Upload Photo"}
                       </span>
                     </>
                   )}
@@ -677,7 +677,7 @@ export default function ManageGallery() {
             <div className="p-6 bg-white flex items-center justify-between gap-4">
               <div>
                 <span className="inline-block px-2.5 py-0.5 rounded bg-[#F9E8A2] text-[#5c4300] text-xs font-bold mb-1.5">
-                  {lightboxImage.category || "ক্যাম্পাস"}
+                  {lightboxImage.category || "Campus"}
                 </span>
                 <h3 className="text-lg font-bold text-[#1e3a5f]">{lightboxImage.title}</h3>
                 {lightboxImage.caption && (
@@ -693,7 +693,7 @@ export default function ManageGallery() {
                 }}
                 className="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0"
               >
-                <FaEdit /> সম্পাদনা
+                <FaEdit /> Edit
               </button>
             </div>
           </div>

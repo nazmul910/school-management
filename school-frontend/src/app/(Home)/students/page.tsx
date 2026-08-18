@@ -3,28 +3,29 @@
 import { useState } from "react";
 import { LuUsers, LuSearch, LuGraduationCap, LuFilter } from "react-icons/lu";
 import useStudent from "@/hooks/useStudent";
+import EmptyState from "@/components/common/EmptyState";
 
 const classes = [
-  { id: "all", label: "সকল শ্রেণি" },
-  { id: "Class 6", label: "৬ষ্ঠ শ্রেণি (Class 6)" },
-  { id: "Class 7", label: "৭ম শ্রেণি (Class 7)" },
-  { id: "Class 8", label: "৮ম শ্রেণি (Class 8)" },
-  { id: "Class 9", label: "৯ম শ্রেণি (Class 9)" },
-  { id: "Class 10", label: "১০ম শ্রেণি (Class 10)" },
+  { id: "all", label: "All Classes" },
+  { id: "Class 6", label: "Class 6" },
+  { id: "Class 7", label: "Class 7" },
+  { id: "Class 8", label: "Class 8" },
+  { id: "Class 9", label: "Class 9" },
+  { id: "Class 10", label: "Class 10" },
 ];
 
 const groups = [
-  { id: "all", label: "সকল গ্রুপ" },
-  { id: "Science", label: "বিজ্ঞান (Science)" },
-  { id: "Humanities", label: "মানবিক (Humanities)" },
-  { id: "Business Studies", label: "ব্যবসায় শিক্ষা (Business Studies)" },
+  { id: "all", label: "All Groups" },
+  { id: "Science", label: "Science" },
+  { id: "Humanities", label: "Humanities" },
+  { id: "Business Studies", label: "Business Studies" },
 ];
 
 const sections = [
-  { id: "all", label: "সকল শাখা" },
-  { id: "A", label: "শাখা ক (A)" },
-  { id: "B", label: "শাখা খ (B)" },
-  { id: "C", label: "শাখা গ (C)" },
+  { id: "all", label: "All Sections" },
+  { id: "A", label: "Section A" },
+  { id: "B", label: "Section B" },
+  { id: "C", label: "Section C" },
 ];
 
 export default function StudentsPage() {
@@ -41,9 +42,14 @@ export default function StudentsPage() {
   });
 
   const students = studentData?.data || [];
-
-  // Important rule: Group filter only appears for Class 9 and Class 10
   const isGroupVisible = selectedClass === "Class 9" || selectedClass === "Class 10";
+
+  const handleResetFilters = () => {
+    setSelectedClass("all");
+    setSelectedGroup("all");
+    setSelectedSection("all");
+    setSearchTerm("");
+  };
 
   return (
     <div className="min-h-screen bg-[#F3F8FC] py-12">
@@ -52,13 +58,13 @@ export default function StudentsPage() {
         <div className="bg-gradient-to-r from-[#78A4CB] to-[#1e3a5f] p-8 md:p-12 rounded-3xl text-white shadow-xl mb-10 text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/20 text-[#F9E8A2] rounded-full text-xs font-bold mb-3">
             <LuGraduationCap />
-            <span>শিক্ষার্থী পরিচিতি ও তালিকা</span>
+            <span>Student Directory</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold">
-            বিদ্যালয়ের শিক্ষার্থী তালিকা (৬ষ্ঠ - ১০ম শ্রেণি)
+            Student Directory (Classes 6 – 10)
           </h1>
           <p className="text-sm md:text-base text-gray-200 mt-2 max-w-2xl">
-            শ্রেণি, শাখা, বিভাগ (গ্রুপ) বা রোল নম্বর দিয়ে সহজেই বিদ্যালয়ের শিক্ষার্থীদের তথ্য ও তালিকা খুঁজুন।
+            Search and filter enrolled students across classes, sections, academic study groups, and rolls.
           </p>
         </div>
 
@@ -66,7 +72,7 @@ export default function StudentsPage() {
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#B4E1EB]/60 mb-8 space-y-4">
           <div className="flex items-center gap-2 text-sm font-bold text-[#1e3a5f]">
             <LuFilter className="text-[#78A4CB]" />
-            <span>ফিল্টার ও অনুসন্ধান করুন</span>
+            <span>Filter & Search Records</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -74,7 +80,7 @@ export default function StudentsPage() {
             <div className="relative">
               <input
                 type="text"
-                placeholder="শিক্ষার্থীর নাম / আইডি দিয়ে খুঁজুন..."
+                placeholder="Search student by name or ID..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
@@ -117,7 +123,7 @@ export default function StudentsPage() {
               </select>
             </div>
 
-            {/* Group Filter (Only visible for Class 9 & Class 10) */}
+            {/* Group Filter */}
             {isGroupVisible ? (
               <div>
                 <select
@@ -134,7 +140,7 @@ export default function StudentsPage() {
               </div>
             ) : (
               <div className="hidden lg:flex items-center text-xs text-gray-400 font-medium px-3">
-                (গ্রুপ নির্বাচন শুধুমাত্র ৯ম ও ১০ম শ্রেণির জন্য প্রযোজ্য)
+                (Group selection applies to Classes 9 & 10)
               </div>
             )}
           </div>
@@ -142,13 +148,13 @@ export default function StudentsPage() {
 
         {/* Results Counter */}
         <div className="flex items-center justify-between text-sm text-gray-600 mb-6">
-          <p>মোট শিক্ষার্থী পাওয়া গেছে: <strong className="text-[#1e3a5f]">{students.length} জন</strong></p>
+          <p>Total Students Found: <strong className="text-[#1e3a5f]">{students.length}</strong></p>
         </div>
 
         {/* Student Cards Grid */}
         {isLoading ? (
           <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            শিক্ষার্থীদের তালিকা লোড হচ্ছে...
+            Loading students...
           </div>
         ) : students.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -159,7 +165,7 @@ export default function StudentsPage() {
               >
                 {/* Roll Badge Top Right */}
                 <div className="absolute top-4 right-4 px-2.5 py-1 bg-[#1e3a5f] text-[#F9E8A2] font-bold text-xs rounded-lg">
-                  রোল: {student.roll}
+                  Roll: {student.roll}
                 </div>
 
                 {/* Photo */}
@@ -176,24 +182,24 @@ export default function StudentsPage() {
                   {student.name}
                 </h3>
                 <p className="text-xs text-gray-400 font-mono mt-0.5">
-                  আইডি: {student.studentId}
+                  ID: {student.studentId}
                 </p>
 
                 {/* Class & Section Details */}
                 <div className="mt-4 w-full pt-3 border-t border-gray-100 space-y-1.5 text-xs text-gray-600">
                   <div className="flex items-center justify-between">
-                    <span>শ্রেণি:</span>
+                    <span>Class:</span>
                     <strong className="text-[#1e3a5f]">{student.class}</strong>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>শাখা:</span>
+                    <span>Section:</span>
                     <strong className="text-[#1e3a5f]">{student.section || "A"}</strong>
                   </div>
                   {student.group && (
                     <div className="flex items-center justify-between">
-                      <span>বিভাগ (গ্রুপ):</span>
+                      <span>Group:</span>
                       <span className="px-2 py-0.5 rounded bg-[#B4E1EB]/30 text-[#1e3a5f] font-bold text-[11px]">
-                        {student.group === "Science" ? "বিজ্ঞান" : student.group === "Business Studies" ? "ব্যবসায় শিক্ষা" : student.group === "Humanities" ? "মানবিক" : student.group}
+                        {student.group}
                       </span>
                     </div>
                   )}
@@ -202,9 +208,14 @@ export default function StudentsPage() {
             ))}
           </div>
         ) : (
-          <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            নির্বাচিত ফিল্টারের ভিত্তিতে কোনো শিক্ষার্থী পাওয়া যায়নি।
-          </div>
+          <EmptyState
+            icon="users"
+            title="No Students Found"
+            description="No student records match the selected filter criteria or search keyword."
+            actionLabel="Reset All Filters"
+            onAction={handleResetFilters}
+            size="lg"
+          />
         )}
       </div>
     </div>

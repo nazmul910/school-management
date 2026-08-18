@@ -10,23 +10,23 @@ import useDashboardStats from "@/hooks/useDashboardStats";
 const heroSlides = [
   {
     src: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=900&q=80",
-    label: "সৃজনশীল শিক্ষা",
-    caption: "শিক্ষার্থীদের আনন্দময় পাঠদান পরিবেশ",
+    label: "Creative Learning",
+    caption: "Joyful and engaging educational environment",
   },
   {
     src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=900&q=80",
-    label: "আধুনিক শ্রেণিকক্ষ",
-    caption: "ডিজিটাল মাল্টিমিডিয়া ক্লাসরুম সুবিধা",
+    label: "Modern Classrooms",
+    caption: "Equipped with digital multimedia and interactive tools",
   },
   {
     src: "https://images.unsplash.com/photo-1568792923760-d70635a89fdc?w=900&q=80",
-    label: "বিজ্ঞান ল্যাব",
-    caption: "আধুনিক বিজ্ঞানাগারে ব্যবহারিক পরীক্ষা-নিরীক্ষা",
+    label: "Science Laboratories",
+    caption: "Practical hands-on experiments in high-tech labs",
   },
   {
     src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80",
-    label: "বার্ষিক ক্রীড়া উৎসব",
-    caption: "সহপাঠ্য কার্যক্রমে শিক্ষার্থীদের সক্রিয় অংশগ্রহণ",
+    label: "Annual Sports Festival",
+    caption: "Active participation in sports and extracurriculars",
   },
 ];
 
@@ -80,34 +80,34 @@ const HeroNew = () => {
             <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1e3a5f] text-white text-xs md:text-sm font-medium shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span>অনলাইনে শিক্ষার্থী: <strong className="text-[#F9E8A2]">{onlineCount} জন</strong></span>
+                <span>Online Students: <strong className="text-[#F9E8A2]">{onlineCount} Active</strong></span>
               </span>
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B4E1EB]/50 text-[#1e3a5f] text-xs md:text-sm font-semibold border border-[#95BDD7]/40">
                 <LuAward className="text-[#78A4CB]" />
-                <span>শ্রেষ্ঠ শিক্ষা প্রতিষ্ঠান স্বীকৃতিপ্রাপ্ত</span>
+                <span>Recognized for Academic Excellence</span>
               </span>
             </div>
 
             {/* Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold text-[#1e3a5f] leading-tight tracking-tight">
-              শিক্ষা, শৃঙ্খলা ও নৈতিকতায় <br />
+              Shaping Tomorrow's Leaders <br />
               <span className="bg-gradient-to-r from-[#78A4CB] to-[#1e3a5f] bg-clip-text text-transparent">
-                গড়ে উঠুক আগামীর ভবিষ্যৎ
+                Through Knowledge & Integrity
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              আধুনিক বিজ্ঞানাগার, মাল্টিমিডিয়া ক্লাসরুম এবং অভিজ্ঞ শিক্ষকমণ্ডলীর নিবিড় পরিচর্যায় ৬ষ্ঠ থেকে ১০ম শ্রেণির শিক্ষার্থীদের জন্য আন্তর্জাতিক মানসম্পন্ন শিক্ষা নিশ্চিত করাই আমাদের অঙ্গীকার।
+              Offering world-class education from Class 6 to Class 10 with state-of-the-art laboratories, multimedia classrooms, and dedicated subject specialists.
             </p>
 
             {/* Key Features */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-left max-w-xl mx-auto lg:mx-0">
               {[
-                "অভিজ্ঞ ও বিষয়ভিত্তিক শিক্ষকমণ্ডলী",
-                "ডিজিটাল ক্লাসরুম ও বিজ্ঞান ল্যাব",
-                "বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা গ্রুপ",
-                "ডিজিটাল উপস্থিতি ও নিয়মিত ফলাফল",
+                "Highly Qualified & Specialized Faculty",
+                "Digital Multimedia Classrooms & Tech Labs",
+                "Science, Humanities & Business Studies Groups",
+                "Real-time Digital Attendance & Exam Portals",
               ].map((feat, i) => (
                 <div key={i} className="flex items-center gap-2 text-gray-700 text-sm md:text-base font-medium">
                   <BsCheck2Circle className="text-[#78A4CB] text-lg shrink-0" />
@@ -122,20 +122,20 @@ const HeroNew = () => {
                 href="/notices"
                 className="px-6 py-3.5 rounded-xl bg-[#78A4CB] text-white font-semibold text-base hover:bg-[#6894bb] shadow-lg shadow-[#78A4CB]/30 transition-all flex items-center gap-2"
               >
-                <span>নোটিশ বোর্ড দেখুন</span>
+                <span>View Notice Board</span>
                 <BsArrowRight />
               </Link>
               <Link
                 href="/results"
                 className="px-6 py-3.5 rounded-xl bg-white text-[#1e3a5f] font-semibold text-base border-2 border-[#95BDD7] hover:bg-[#B4E1EB]/20 transition-all"
               >
-                পরীক্ষার ফলাফল
+                Check Results
               </Link>
               <Link
                 href="/top-10"
                 className="px-6 py-3.5 rounded-xl bg-[#F9E8A2] text-[#5c4300] font-bold text-base hover:bg-[#fae488] transition-all shadow-sm flex items-center gap-1.5"
               >
-                <span>সেরা ১০ শিক্ষার্থী</span>
+                <span>Top 10 Students</span>
                 <LuAward />
               </Link>
             </div>
@@ -173,16 +173,18 @@ const HeroNew = () => {
                   </div>
                 ))}
 
-                {/* Prev / Next Buttons (visible on group hover) */}
+                {/* Prev / Next Buttons */}
                 <button
                   onClick={prevSlide}
                   className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm"
+                  aria-label="Previous Slide"
                 >
                   <LuChevronLeft size={18} />
                 </button>
                 <button
                   onClick={nextSlide}
                   className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm"
+                  aria-label="Next Slide"
                 >
                   <LuChevronRight size={18} />
                 </button>
@@ -198,30 +200,20 @@ const HeroNew = () => {
                           ? "w-5 h-2 bg-[#F9E8A2]"
                           : "w-2 h-2 bg-white/50 hover:bg-white/80"
                       }`}
+                      aria-label={`Go to slide ${idx + 1}`}
                     />
                   ))}
                 </div>
               </div>
 
-              {/* Floating Stat Card 1 */}
-              {/* <div className="absolute -bottom-6 -left-4 sm:-left-6 bg-white p-4 rounded-2xl shadow-xl border border-[#B4E1EB] flex items-center gap-3.5 z-30">
-                <div className="w-12 h-12 rounded-xl bg-[#B4E1EB]/40 text-[#1e3a5f] flex items-center justify-center text-2xl">
-                  <LuUsers />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 font-medium">বর্তমান শিক্ষার্থী</p>
-                  <p className="text-xl font-extrabold text-[#1e3a5f]">{totalStudents}+ জন</p>
-                </div>
-              </div> */}
-
-              {/* Floating Stat Card 2 */}
+              {/* Floating Stat Card */}
               <div className="absolute -top-5 -right-4 sm:-right-6 bg-white p-4 rounded-2xl shadow-xl border border-[#F9E8A2] flex items-center gap-3.5 z-30">
                 <div className="w-12 h-12 rounded-xl bg-[#F9E8A2]/50 text-[#5c4300] flex items-center justify-center text-2xl">
                   <LuGraduationCap />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 font-medium">এসএসসি পাশের হার</p>
-                  <p className="text-xl font-extrabold text-emerald-600">১০০% সাফল্য</p>
+                  <p className="text-xs text-gray-500 font-medium">Board Exam Pass Rate</p>
+                  <p className="text-xl font-extrabold text-emerald-600">100% Success</p>
                 </div>
               </div>
             </div>
@@ -233,22 +225,22 @@ const HeroNew = () => {
           <div className="text-center p-3 border-r border-gray-100">
             <div className="flex justify-center text-[#78A4CB] text-2xl mb-1"><LuUsers /></div>
             <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">{totalStudents}+</p>
-            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">মোট শিক্ষার্থী</p>
+            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">Active Students</p>
           </div>
           <div className="text-center p-3 border-r border-gray-100">
             <div className="flex justify-center text-[#78A4CB] text-2xl mb-1"><LuBookOpen /></div>
             <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">{totalTeachers}+</p>
-            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">অভিজ্ঞ শিক্ষক</p>
+            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">Faculty Members</p>
           </div>
           <div className="text-center p-3 border-r border-gray-100">
             <div className="flex justify-center text-[#78A4CB] text-2xl mb-1"><LuAward /></div>
-            <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">৯৮.৫%</p>
-            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">এ+ ও মেধা তালিকা</p>
+            <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">98.5%</p>
+            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">GPA 5.0 & Merit Rate</p>
           </div>
           <div className="text-center p-3">
             <div className="flex justify-center text-[#78A4CB] text-2xl mb-1"><LuGraduationCap /></div>
-            <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">৩০+ বছর</p>
-            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">গৌরবময় ঐতিহ্য</p>
+            <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">30+ Years</p>
+            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">Academic Legacy</p>
           </div>
         </div>
       </div>

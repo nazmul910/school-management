@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { RiLockPasswordLine } from "react-icons/ri";
 import { LuKeyRound, LuCheck, LuLoader } from "react-icons/lu";
 
 interface IFormInput {
@@ -49,14 +48,14 @@ const ChangePassword = () => {
           "Content-Type": "application/json",
         },
       });
-      toast.success(res.data.message || "পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!");
+      toast.success(res.data.message || "Password changed successfully!");
       reset();
       handleLogout(router);
       setTimeout(() => {
-        toast.info("দয়া করে নতুন পাসওয়ার্ড দিয়ে লগইন করুন");
+        toast.info("Please login again with your new password");
       }, 1500);
     } catch (err: any) {
-      toast.error(err.response?.data?.message || "পাসওয়ার্ড পরিবর্তন করা সম্ভব হয়নি");
+      toast.error(err.response?.data?.message || "Failed to change password");
     } finally {
       setIsSubmitting(false);
     }
@@ -76,8 +75,8 @@ const ChangePassword = () => {
             <LuKeyRound />
           </div>
           <div>
-            <h3 className="font-bold text-base text-[#1e3a5f]">অ্যাকাউন্ট পাসওয়ার্ড পরিবর্তন</h3>
-            <p className="text-xs text-gray-400">আপনার নিরাপত্তা নিশ্চিত করতে নিয়মিত পাসওয়ার্ড আপডেট করুন</p>
+            <h3 className="font-bold text-base text-[#1e3a5f]">Change Account Password</h3>
+            <p className="text-xs text-gray-400">Regularly update your password to maintain account security</p>
           </div>
         </div>
 
@@ -89,7 +88,7 @@ const ChangePassword = () => {
           {/* Old Password */}
           <div>
             <label className="block text-xs font-bold text-gray-700 mb-1">
-              বর্তমান পাসওয়ার্ড (Old Password) <span className="text-red-500">*</span>
+              Current Password <span className="text-red-500">*</span>
             </label>
             <input
               type="password"
@@ -104,7 +103,7 @@ const ChangePassword = () => {
           {/* New Password */}
           <div>
             <label className="block text-xs font-bold text-gray-700 mb-1">
-              নতুন পাসওয়ার্ড (New Password) <span className="text-red-500">*</span>
+              New Password <span className="text-red-500">*</span>
             </label>
             <input
               type="password"
@@ -119,7 +118,7 @@ const ChangePassword = () => {
           {/* Confirm Password */}
           <div>
             <label className="block text-xs font-bold text-gray-700 mb-1">
-              পাসওয়ার্ড নিশ্চিত করুন (Confirm Password) <span className="text-red-500">*</span>
+              Confirm New Password <span className="text-red-500">*</span>
             </label>
             <input
               type="password"
@@ -133,7 +132,7 @@ const ChangePassword = () => {
 
           {error && (
             <p className="text-xs font-bold text-red-500 bg-red-50 p-2.5 rounded-xl border border-red-200 text-center">
-              পাসওয়ার্ড মিলছে না! অনুগ্রহ করে পুনরায় যাচাই করুন।
+              Passwords do not match! Please verify and try again.
             </p>
           )}
 
@@ -150,12 +149,12 @@ const ChangePassword = () => {
             {isSubmitting ? (
               <>
                 <LuLoader className="animate-spin text-base" />
-                <span>সংরক্ষণ হচ্ছে...</span>
+                <span>Saving...</span>
               </>
             ) : (
               <>
                 <LuCheck size={16} />
-                <span>পাসওয়ার্ড পরিবর্তন করুন</span>
+                <span>Update Password</span>
               </>
             )}
           </button>

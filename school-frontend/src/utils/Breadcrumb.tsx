@@ -16,19 +16,17 @@ const Breadcrumbs = ({ title }: TBreadcrumbs) => {
         alt="Breadcrumb Background"
         fill
         priority
-        className=" absolute object-cover top-0 right-0 left-0 w-full h-full"
+        className="absolute object-cover top-0 right-0 left-0 w-full h-full"
       />
 
       <div className="container relative z-10 mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-
           <h1 className="mt-4 text-white text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            আপনার কুরআন শিক্ষার যাত্রা শুরু করুন
+            Excellence in Academic Learning
           </h1>
 
           <p className="mt-5 text-white/80 text-base md:text-lg max-w-2xl mx-auto leading-8">
-            আমাদের অভিজ্ঞ শিক্ষকদের সাথে অনলাইনে সহজ ও সুন্দরভাবে
-            কুরআন শিখুন।
+            Empowering students with comprehensive knowledge, creative skills, and leadership for a bright future.
           </p>
         </div>
 
@@ -39,7 +37,7 @@ const Breadcrumbs = ({ title }: TBreadcrumbs) => {
               className="flex items-center gap-2 text-white hover:text-yellow-400 transition"
             >
               <FaHome className="text-sm" />
-              <span>হোম</span>
+              <span>Home</span>
             </Link>
 
             <span className="text-white/40">/</span>

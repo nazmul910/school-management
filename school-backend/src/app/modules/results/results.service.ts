@@ -112,7 +112,7 @@ const searchStudentResultFromDB = async (query: {
   if (query.examYear) filter.examYear = query.examYear;
 
   const result = await Result.findOne(filter).sort({ createdAt: -1 });
-  if (!result) throw new ApiError(httpStatus.NOT_FOUND, "ফলাফল পাওয়া যায়নি");
+  if (!result) throw new ApiError(httpStatus.NOT_FOUND, "Result not found");
   return result;
 };
 

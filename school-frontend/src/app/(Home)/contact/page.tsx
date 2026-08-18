@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone, BsStarFill } from "react-icons/bs";
-import { FaMapMarkerAlt, FaRegClock } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { LuMessageSquarePlus, LuSend, LuGraduationCap } from "react-icons/lu";
 import Swal from "sweetalert2";
 import useAxios from "@/hooks/useAxios";
@@ -15,7 +15,7 @@ export default function ContactPage() {
 
   // Feedback form state
   const [feedbackName, setFeedbackName] = useState("");
-  const [feedbackRole, setFeedbackRole] = useState("অভিভাবক");
+  const [feedbackRole, setFeedbackRole] = useState("Guardian (Class 10)");
   const [feedbackTitle, setFeedbackTitle] = useState("");
   const [feedbackComment, setFeedbackComment] = useState("");
   const [feedbackRating, setFeedbackRating] = useState(5);
@@ -38,16 +38,16 @@ export default function ContactPage() {
         form.reset();
         Swal.fire({
           icon: "success",
-          title: "ধন্যবাদ!",
-          text: "আপনার বার্তা সফলভাবে পাঠানো হয়েছে। আমরা শীঘ্রই যোগাযোগ করব।",
+          title: "Thank You!",
+          text: "Your message has been sent successfully. We will get back to you shortly.",
           confirmButtonColor: "#78A4CB",
         });
       },
       onError: (err: any) => {
         Swal.fire({
           icon: "error",
-          title: "দুঃখিত",
-          text: err?.response?.data?.message || "বার্তা পাঠানো সম্ভব হয়নি। অনুগ্রহ করে পুনরায় চেষ্টা করুন।",
+          title: "Error Sending Message",
+          text: err?.response?.data?.message || "Failed to send your message. Please try again.",
           confirmButtonColor: "#78A4CB",
         });
       },
@@ -60,8 +60,8 @@ export default function ContactPage() {
     if (!feedbackName || !feedbackComment) {
       Swal.fire({
         icon: "warning",
-        title: "তথ্য অসম্পূর্ণ",
-        text: "দয়া করে আপনার নাম ও মতামত লিখুন।",
+        title: "Incomplete Information",
+        text: "Please provide both your name and feedback comments.",
         confirmButtonColor: "#78A4CB",
       });
       return;
@@ -72,7 +72,7 @@ export default function ContactPage() {
       await axios.post("/reviews", {
         name: feedbackName,
         designation: feedbackRole,
-        title: feedbackTitle || "মতামত",
+        title: feedbackTitle || "Feedback",
         comment: feedbackComment,
         rating: feedbackRating,
         status: "approved",
@@ -80,8 +80,8 @@ export default function ContactPage() {
 
       Swal.fire({
         icon: "success",
-        title: "মতামত জমা হয়েছে!",
-        text: "আপনার মূল্যবান মতামত ও রিভিউ সফলভাবে সংরক্ষিত হয়েছে।",
+        title: "Review Submitted!",
+        text: "Thank you! Your feedback has been saved and submitted successfully.",
         confirmButtonColor: "#78A4CB",
       });
 
@@ -92,8 +92,8 @@ export default function ContactPage() {
     } catch (err: any) {
       Swal.fire({
         icon: "error",
-        title: "ত্রুটি",
-        text: err?.response?.data?.message || "মতামত জমা দেওয়া সম্ভব হয়নি।",
+        title: "Submission Error",
+        text: err?.response?.data?.message || "Could not submit your review at this moment.",
         confirmButtonColor: "#78A4CB",
       });
     } finally {
@@ -108,13 +108,13 @@ export default function ContactPage() {
         <div className="bg-gradient-to-r from-[#78A4CB] to-[#1e3a5f] p-8 md:p-12 rounded-3xl text-white shadow-xl mb-12 text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/20 text-[#F9E8A2] rounded-full text-xs font-bold mb-3">
             <LuGraduationCap />
-            <span>যোগাযোগ ও সহায়তা কেন্দ্র</span>
+            <span>Contact & Help Desk</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold">
-            বিদ্যালয়ের সাথে যোগাযোগ ও মতামত
+            Get in Touch & Share Your Feedback
           </h1>
           <p className="text-sm md:text-base text-gray-200 mt-2 max-w-2xl">
-            ভর্তি তথ্য, পরীক্ষা সংক্রান্ত জিজ্ঞাসা অথবা আপনার মূল্যবান মতামত জানাতে আমাদের সাথে যোগাযোগ করুন।
+            Have queries regarding admissions, fees, or academics? Reach out to our administrative office or leave your valuable review.
           </p>
         </div>
 
@@ -126,9 +126,9 @@ export default function ContactPage() {
               <BsTelephone />
             </div>
             <div>
-              <h3 className="font-bold text-lg text-[#1e3a5f]">ফোন ও হটলাইন</h3>
-              <p className="text-xs text-gray-500 mt-1">+৮৮০ ২-৯৮৭৬৫৪৩</p>
-              <p className="text-sm font-bold text-[#78A4CB]">+৮৮০ ১৭০০-০০০০০০</p>
+              <h3 className="font-bold text-lg text-[#1e3a5f]">Phone & Hotline</h3>
+              <p className="text-xs text-gray-500 mt-1">+880 2-9876543</p>
+              <p className="text-sm font-bold text-[#78A4CB]">+880 1700-000000</p>
             </div>
           </div>
 
@@ -138,7 +138,7 @@ export default function ContactPage() {
               <AiOutlineMail />
             </div>
             <div>
-              <h3 className="font-bold text-lg text-[#1e3a5f]">অফিসিয়াল ইমেইল</h3>
+              <h3 className="font-bold text-lg text-[#1e3a5f]">Official Email</h3>
               <p className="text-xs text-gray-500 mt-1">info@idealschool.edu.bd</p>
               <p className="text-sm font-bold text-[#78A4CB]">admission@idealschool.edu.bd</p>
             </div>
@@ -150,9 +150,9 @@ export default function ContactPage() {
               <FaMapMarkerAlt />
             </div>
             <div>
-              <h3 className="font-bold text-lg text-[#1e3a5f]">বিদ্যালয় প্রাঙ্গণ</h3>
-              <p className="text-xs text-gray-500 mt-1">বাড়ি নং ১২, রোড নং ৫, ব্লক-বি</p>
-              <p className="text-sm font-bold text-gray-700">মিরপুর-১০, ঢাকা-১২১৬</p>
+              <h3 className="font-bold text-lg text-[#1e3a5f]">Campus Address</h3>
+              <p className="text-xs text-gray-500 mt-1">House #12, Road #5, Block-B</p>
+              <p className="text-sm font-bold text-gray-700">Mirpur-10, Dhaka-1216</p>
             </div>
           </div>
         </div>
@@ -166,25 +166,25 @@ export default function ContactPage() {
                 <LuSend />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-[#1e3a5f]">সাধারণ জিজ্ঞাসা ও বার্তা পাঠান</h2>
-                <p className="text-xs text-gray-500">যেকোনো প্রশ্ন বা তথ্যের জন্য বার্তা পাঠান</p>
+                <h2 className="text-xl font-bold text-[#1e3a5f]">Send General Inquiry</h2>
+                <p className="text-xs text-gray-500">Ask any questions regarding academics or admission</p>
               </div>
             </div>
 
             <form onSubmit={handleSendInquiry} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">আপনার পূর্ণ নাম *</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">Full Name *</label>
                 <input
                   type="text"
                   name="from_name"
-                  placeholder="যেমন: মোঃ কামরুল হাসান"
+                  placeholder="e.g. John Doe"
                   required
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">ইমেইল ঠিকানা *</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">Email Address *</label>
                 <input
                   type="email"
                   name="from_email"
@@ -195,11 +195,11 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">আপনার বার্তা বা প্রশ্ন *</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">Your Message *</label>
                 <textarea
                   name="message"
                   rows={4}
-                  placeholder="এখানে আপনার বার্তা লিখুন..."
+                  placeholder="Write your inquiry or question here..."
                   required
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                 ></textarea>
@@ -210,7 +210,7 @@ export default function ContactPage() {
                 className="w-full py-3.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <LuSend />
-                <span>বার্তা পাঠান</span>
+                <span>Send Message</span>
               </button>
             </form>
           </div>
@@ -222,46 +222,46 @@ export default function ContactPage() {
                 <LuMessageSquarePlus />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-[#1e3a5f]">বিদ্যালয় সম্পর্কে আপনার মতামত দিন</h2>
-                <p className="text-xs text-gray-500">আপনার রিভিউ সরাসরি ওয়েবসাইটে প্রকাশিত হবে</p>
+                <h2 className="text-xl font-bold text-[#1e3a5f]">Leave a Review / Testimonial</h2>
+                <p className="text-xs text-gray-500">Share your experience with our school community</p>
               </div>
             </div>
 
             <form onSubmit={handleReviewSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">আপনার নাম *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Your Name *</label>
                   <input
                     type="text"
                     value={feedbackName}
                     onChange={(e) => setFeedbackName(e.target.value)}
-                    placeholder="আপনার নাম লিখুন"
+                    placeholder="Enter your name"
                     required
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">আপনার পরিচয় / পদবি *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Role / Designation *</label>
                   <select
                     value={feedbackRole}
                     onChange={(e) => setFeedbackRole(e.target.value)}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB] bg-white font-medium"
                   >
-                    <option value="অভিভাবক (১০ম শ্রেণি)">অভিভাবক (১০ম শ্রেণি)</option>
-                    <option value="অভিভাবক (৯ম শ্রেণি)">অভিভাবক (৯ম শ্রেণি)</option>
-                    <option value="অভিভাবক (৮ম শ্রেণি)">অভিভাবক (৮ম শ্রেণি)</option>
-                    <option value="অভিভাবক (৭ম শ্রেণি)">অভিভাবক (৭ম শ্রেণি)</option>
-                    <option value="অভিভাবক (৬ষ্ঠ শ্রেণি)">অভিভাবক (৬ষ্ঠ শ্রেণি)</option>
-                    <option value="শিক্ষার্থী">শিক্ষার্থী</option>
-                    <option value="প্রাক্তন শিক্ষার্থী">প্রাক্তন শিক্ষার্থী</option>
-                    <option value="শুভাকাঙ্ক্ষী">শুভাকাঙ্ক্ষী</option>
+                    <option value="Guardian (Class 10)">Guardian (Class 10)</option>
+                    <option value="Guardian (Class 9)">Guardian (Class 9)</option>
+                    <option value="Guardian (Class 8)">Guardian (Class 8)</option>
+                    <option value="Guardian (Class 7)">Guardian (Class 7)</option>
+                    <option value="Guardian (Class 6)">Guardian (Class 6)</option>
+                    <option value="Current Student">Current Student</option>
+                    <option value="Alumni">Alumni</option>
+                    <option value="Well-wisher">Well-wisher</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">রেটিং প্রদান করুন *</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">Rating (1 to 5 Stars) *</label>
                 <div className="flex items-center gap-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -275,28 +275,28 @@ export default function ContactPage() {
                       <BsStarFill />
                     </button>
                   ))}
-                  <span className="text-xs text-gray-500 font-semibold ml-2">({feedbackRating} স্টার)</span>
+                  <span className="text-xs text-gray-500 font-semibold ml-2">({feedbackRating} Stars)</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">শিরোনাম (ঐচ্ছিক)</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">Review Headline (Optional)</label>
                 <input
                   type="text"
                   value={feedbackTitle}
                   onChange={(e) => setFeedbackTitle(e.target.value)}
-                  placeholder="যেমন: অসাধারণ শিক্ষা ব্যবস্থা ও শৃংখলা"
+                  placeholder="e.g. Outstanding academic culture and discipline"
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">আপনার মতামত বা মন্তব্য *</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">Your Feedback / Review *</label>
                 <textarea
                   value={feedbackComment}
                   onChange={(e) => setFeedbackComment(e.target.value)}
                   rows={3}
-                  placeholder="বিদ্যালয়ের মান, শিক্ষক ও পরিবেশ সম্পর্কে আপনার মূল্যবান অভিজ্ঞতা লিখুন..."
+                  placeholder="Write your experience regarding teachers, campus environment, and quality of education..."
                   required
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                 ></textarea>
@@ -308,7 +308,7 @@ export default function ContactPage() {
                 className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#78A4CB] to-[#1e3a5f] text-white font-bold text-sm hover:opacity-95 shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <LuMessageSquarePlus />
-                <span>{isSubmittingReview ? "জমা হচ্ছে..." : "মতামত সাবমিট করুন"}</span>
+                <span>{isSubmittingReview ? "Submitting..." : "Submit Review"}</span>
               </button>
             </form>
           </div>

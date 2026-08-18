@@ -6,23 +6,22 @@ import { BsFacebook, BsYoutube } from "react-icons/bs";
 import { CiMenuFries } from "react-icons/ci";
 import { ImCross } from "react-icons/im";
 import { IoMdCall, IoMdMail } from "react-icons/io";
-import { LuLogOut, LuGraduationCap, LuLayoutDashboard, LuUserCheck } from "react-icons/lu";
+import { LuLogOut, LuGraduationCap, LuLayoutDashboard } from "react-icons/lu";
 import { useRouter, usePathname } from "next/navigation";
-import Image from "next/image";
 
 import { handleLogout, useAuth } from "@/app/providers/AuthContext";
 import { useUser } from "@/app/providers/UserContext";
 import useOnlineCount from "@/hooks/useOnlineCount";
 
 const navItems = [
-  { name: "হোম", href: "/" },
-  { name: "শিক্ষার্থী", href: "/students" },
-  { name: "শিক্ষকবৃন্দ", href: "/teachers" },
-  { name: "নোটিশ", href: "/notices" },
-  { name: "ফলাফল", href: "/results" },
-  { name: "সেরা ১০ শিক্ষার্থী", href: "/top-10" },
-  { name: "গ্যালারি", href: "/gallery" },
-  { name: "যোগাযোগ", href: "/contact" },
+  { name: "Home", href: "/" },
+  { name: "Students", href: "/students" },
+  { name: "Teachers", href: "/teachers" },
+  { name: "Notices", href: "/notices" },
+  { name: "Results", href: "/results" },
+  { name: "Top 10 Students", href: "/top-10" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function NavbarNew() {
@@ -78,8 +77,8 @@ export default function NavbarNew() {
                 <LuGraduationCap />
               </div>
               <div className="leading-tight">
-                <span className="font-bold text-base block">আইডিয়াল মডেল স্কুল</span>
-                <span className="text-[11px] text-[#F9E8A2]">শিক্ষা • শৃঙ্খলা • নৈতিকতা</span>
+                <span className="font-bold text-base block">Ideal Model School</span>
+                <span className="text-[11px] text-[#F9E8A2]">Education • Discipline • Ethics</span>
               </div>
             </Link>
             <button
@@ -94,7 +93,7 @@ export default function NavbarNew() {
           {/* Online status indicator */}
           <div className="bg-[#B4E1EB]/40 px-5 py-2 text-xs text-[#1e3a5f] flex items-center gap-2 font-medium">
             <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-            <span>অনলাইনে শিক্ষার্থী: <strong>{onlineCount} জন</strong></span>
+            <span>Online Students: <strong>{onlineCount} Active</strong></span>
           </div>
 
           {/* Nav Items */}
@@ -127,7 +126,7 @@ export default function NavbarNew() {
                 }}
                 className="w-full py-2.5 bg-[#78A4CB] text-white rounded-lg text-sm font-semibold flex items-center justify-center gap-2 shadow-sm"
               >
-                <LuLayoutDashboard size={16} /> ড্যাশবোর্ড
+                <LuLayoutDashboard size={16} /> Dashboard
               </button>
               <button
                 onClick={() => {
@@ -136,7 +135,7 @@ export default function NavbarNew() {
                 }}
                 className="w-full py-2 border border-red-300 rounded-lg text-red-500 text-sm hover:bg-red-50 transition-colors flex items-center justify-center gap-1.5"
               >
-                <LuLogOut size={15} /> লগআউট
+                <LuLogOut size={15} /> Logout
               </button>
             </div>
           ) : (
@@ -145,12 +144,12 @@ export default function NavbarNew() {
               onClick={() => setIsOpen(false)}
               className="flex items-center justify-center w-full py-2.5 bg-[#78A4CB] rounded-lg text-white text-sm font-semibold hover:bg-[#6894bb] transition-colors shadow-sm"
             >
-              লগইন করুন
+              Login
             </Link>
           )}
 
           <div className="flex items-center justify-between text-xs text-gray-500 pt-2">
-            <span>হেল্পলাইন: ০১৭০০-০০০০০০</span>
+            <span>Helpline: +880 1700-000000</span>
             <div className="flex items-center gap-2">
               <a href="#" className="text-gray-400 hover:text-[#78A4CB]"><BsFacebook size={14} /></a>
               <a href="#" className="text-gray-400 hover:text-red-500"><BsYoutube size={14} /></a>
@@ -168,7 +167,7 @@ export default function NavbarNew() {
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
                 <IoMdCall className="text-[#F9E8A2]" size={15} />
-                <span className="text-gray-200">+৮৮০ ২-৯৮৭৬৫৪৩, +৮৮০ ১৭০০-০০০০০০</span>
+                <span className="text-gray-200">+880 2-9876543, +880 1700-000000</span>
               </div>
               <div className="hidden lg:flex items-center gap-2">
                 <IoMdMail className="text-[#F9E8A2]" size={15} />
@@ -180,10 +179,10 @@ export default function NavbarNew() {
             <div className="flex items-center gap-5">
               <div className="flex items-center gap-2 bg-[#78A4CB]/25 px-3 py-0.5 rounded-full border border-[#95BDD7]/40 text-xs text-[#F9E8A2]">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="font-medium">অনলাইনে শিক্ষার্থী: {onlineCount} জন</span>
+                <span className="font-medium">Online Students: {onlineCount} Active</span>
               </div>
               <div className="flex items-center gap-3 text-gray-300">
-                <span>যোগাযোগ:</span>
+                <span>Connect:</span>
                 <a href="#" className="hover:text-[#F9E8A2] transition-colors"><BsFacebook size={13} /></a>
                 <a href="#" className="hover:text-[#F9E8A2] transition-colors"><BsYoutube size={13} /></a>
               </div>
@@ -200,12 +199,12 @@ export default function NavbarNew() {
             </div>
             <div className="leading-tight">
               <h1 className="text-[#1e3a5f] font-bold text-lg md:text-xl tracking-tight">
-                আইডিয়াল মডেল স্কুল ও কলেজ
+                Ideal Model School & College
               </h1>
               <p className="text-xs text-gray-500 font-medium flex items-center gap-2">
-                <span>স্থাপিত: ১৯৯৫</span>
+                <span>Est. 1995</span>
                 <span className="text-[#78A4CB]">•</span>
-                <span className="text-[#78A4CB] font-semibold">EIIN: ১২৩৪৫৬</span>
+                <span className="text-[#78A4CB] font-semibold">EIIN: 123456</span>
               </p>
             </div>
           </Link>
@@ -242,11 +241,11 @@ export default function NavbarNew() {
                   className="flex items-center gap-2 px-4 py-2 bg-[#78A4CB] text-white rounded-lg text-sm font-semibold hover:bg-[#6894bb] transition-all shadow-sm"
                 >
                   <LuLayoutDashboard size={16} />
-                  <span>{auth?.user?.role === "admin" ? "অ্যাডমিন প্যানেল" : "ড্যাশবোর্ড"}</span>
+                  <span>{auth?.user?.role === "admin" ? "Admin Panel" : "Dashboard"}</span>
                 </button>
                 <button
                   onClick={() => handleLogout(router)}
-                  title="লগআউট"
+                  title="Logout"
                   className="p-2 rounded-lg border border-red-200 text-red-500 hover:bg-red-50 transition-colors"
                 >
                   <LuLogOut size={18} />
@@ -258,13 +257,13 @@ export default function NavbarNew() {
                   href="/login"
                   className="px-4 py-2 rounded-lg border border-[#78A4CB] text-[#1e3a5f] text-sm font-semibold hover:bg-[#B4E1EB]/30 transition-colors"
                 >
-                  লগইন
+                  Login
                 </Link>
                 <Link
                   href="/contact"
                   className="px-4.5 py-2 rounded-lg bg-gradient-to-r from-[#78A4CB] to-[#95BDD7] text-white text-sm font-semibold hover:opacity-95 shadow-sm transition-opacity"
                 >
-                  ভর্তি ও তথ্য
+                  Admissions & Info
                 </Link>
               </div>
             )}
@@ -277,7 +276,7 @@ export default function NavbarNew() {
                 onClick={goDashboard}
                 className="p-2 bg-[#78A4CB] text-white rounded-md text-xs font-semibold"
               >
-                ড্যাশবোর্ড
+                Dashboard
               </button>
             )}
             <button

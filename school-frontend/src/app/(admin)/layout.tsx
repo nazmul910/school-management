@@ -7,6 +7,7 @@ import "../globals.css";
 import { AuthProvider } from "../providers/AuthContext";
 import { UserProvider } from "../providers/UserContext";
 import QueryProvider from "../providers/QueryProvider";
+import SmoothScroll from "@/components/common/SmoothScroll";
 
 export default function AdminLayout({
   children,
@@ -18,42 +19,43 @@ export default function AdminLayout({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1024) {
-        setIsOpen(false); // collapse on small screens
+        setIsOpen(false);
       } else {
-        setIsOpen(true); // expand on desktop
+        setIsOpen(true);
       }
     };
 
-    handleResize(); // run once at start
-
-    window.addEventListener("resize", handleResize); // optional: track resizing
+    handleResize();
+    window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <html>
+    <html lang="en">
       <body>
-        <AuthProvider>
-          <ProtectedRoute allowedRoles={["admin"]}>
-            <UserProvider>
-              <QueryProvider>
-                <section className="flex min-h-screen items-start">
-                  <AdminSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-                  <section
-                    className={`flex-1 z-50 min-h-screen overflow-auto transition-margin duration-300 ease-in-out ${
-                      isOpen ? "ml-64" : "ml-28"
-                    }`}
-                  >
-                    <div className="container mx-auto">
-                      {children}
-                      <ToastContainer />
-                    </div>
+        <SmoothScroll>
+          <AuthProvider>
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <UserProvider>
+                <QueryProvider>
+                  <section className="flex min-h-screen items-start">
+                    <AdminSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+                    <section
+                      className={`flex-1 z-50 min-h-screen overflow-auto transition-margin duration-300 ease-in-out ${
+                        isOpen ? "ml-64" : "ml-28"
+                      }`}
+                    >
+                      <div className="container mx-auto">
+                        {children}
+                        <ToastContainer />
+                      </div>
+                    </section>
                   </section>
-                </section>
-              </QueryProvider>
-            </UserProvider>
-          </ProtectedRoute>
-        </AuthProvider>
+                </QueryProvider>
+              </UserProvider>
+            </ProtectedRoute>
+          </AuthProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

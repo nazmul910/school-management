@@ -4,13 +4,14 @@ import { useState } from "react";
 import Link from "next/link";
 import { LuAward, LuTrophy, LuMedal, LuArrowRight } from "react-icons/lu";
 import useResults from "@/hooks/useResults";
+import EmptyState from "@/components/common/EmptyState";
 
 const classesList = [
-  { id: "Class 6", label: "৬ষ্ঠ শ্রেণি" },
-  { id: "Class 7", label: "৭ম শ্রেণি" },
-  { id: "Class 8", label: "৮ম শ্রেণি" },
-  { id: "Class 9", label: "৯ম শ্রেণি" },
-  { id: "Class 10", label: "১০ম শ্রেণি" },
+  { id: "Class 6", label: "Class 6" },
+  { id: "Class 7", label: "Class 7" },
+  { id: "Class 8", label: "Class 8" },
+  { id: "Class 9", label: "Class 9" },
+  { id: "Class 10", label: "Class 10" },
 ];
 
 export default function TopStudentsPreview() {
@@ -23,28 +24,28 @@ export default function TopStudentsPreview() {
   const getRankBadge = (rank: number) => {
     if (rank === 1) {
       return (
-        <span className="w-8 h-8 rounded-full bg-[#F9E8A2] text-[#5c4300] font-extrabold flex items-center justify-center shadow-md border-2 border-amber-400">
-          ১ম
+        <span className="w-8 h-8 rounded-full bg-[#F9E8A2] text-[#5c4300] font-extrabold flex items-center justify-center shadow-md border-2 border-amber-400 text-xs">
+          1st
         </span>
       );
     }
     if (rank === 2) {
       return (
-        <span className="w-8 h-8 rounded-full bg-[#B4E1EB] text-[#1e3a5f] font-extrabold flex items-center justify-center shadow-md border-2 border-[#78A4CB]">
-          ২য়
+        <span className="w-8 h-8 rounded-full bg-[#B4E1EB] text-[#1e3a5f] font-extrabold flex items-center justify-center shadow-md border-2 border-[#78A4CB] text-xs">
+          2nd
         </span>
       );
     }
     if (rank === 3) {
       return (
-        <span className="w-8 h-8 rounded-full bg-[#95BDD7] text-white font-extrabold flex items-center justify-center shadow-md border-2 border-[#78A4CB]">
-          ৩য়
+        <span className="w-8 h-8 rounded-full bg-[#95BDD7] text-white font-extrabold flex items-center justify-center shadow-md border-2 border-[#78A4CB] text-xs">
+          3rd
         </span>
       );
     }
     return (
       <span className="w-7 h-7 rounded-full bg-gray-100 text-gray-700 font-bold flex items-center justify-center border border-gray-300 text-xs">
-        {rank}ম
+        {rank}th
       </span>
     );
   };
@@ -57,13 +58,13 @@ export default function TopStudentsPreview() {
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F9E8A2]/60 text-[#5c4300] text-xs font-bold mb-2">
               <LuTrophy />
-              <span>মেধাতালিকা ও বার্ষিক পরীক্ষার সেরা শিক্ষার্থী</span>
+              <span>Merit List & Academic Achievers</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1e3a5f]">
-              শ্রেণিভিত্তিক শীর্ষ শিক্ষার্থী (Top Students)
+              Class-wise Top Performers
             </h2>
             <p className="text-gray-600 text-sm md:text-base mt-1">
-              বার্ষিক পরীক্ষায় সর্বোচ্চ নম্বর ও গ্রেড অর্জনকারী প্রতিটি শ্রেণির শীর্ষ কৃতী শিক্ষার্থী
+              Top rank holders with highest aggregate marks and GPA in the academic evaluations
             </p>
           </div>
 
@@ -71,12 +72,12 @@ export default function TopStudentsPreview() {
             href="/top-10"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#78A4CB] text-white font-semibold text-sm hover:bg-[#6894bb] transition-all shadow-sm shrink-0"
           >
-            <span>সম্পূর্ণ সেরা ১০ তালিকা দেখুন</span>
+            <span>View Full Top 10 List</span>
             <LuArrowRight />
           </Link>
         </div>
 
-        {/* Class Tabs: Class 6 | Class 7 | Class 8 | Class 9 | Class 10 */}
+        {/* Class Tabs */}
         <div className="flex items-center justify-start overflow-x-auto gap-2 p-1.5 bg-white rounded-2xl shadow-sm border border-[#B4E1EB]/60 mb-8">
           {classesList.map((cls) => (
             <button
@@ -88,7 +89,7 @@ export default function TopStudentsPreview() {
                   : "text-gray-600 hover:bg-[#B4E1EB]/20 hover:text-[#1e3a5f]"
               }`}
             >
-              {cls.label} ({cls.id})
+              {cls.label}
             </button>
           ))}
         </div>
@@ -96,7 +97,7 @@ export default function TopStudentsPreview() {
         {/* Top Performers Grid */}
         {isTop10Loading ? (
           <div className="py-12 text-center text-gray-500 font-medium">
-            সেরা শিক্ষার্থীদের তথ্য লোড হচ্ছে...
+            Loading top students data...
           </div>
         ) : currentClassStudents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
@@ -126,26 +127,26 @@ export default function TopStudentsPreview() {
                     {student.studentName}
                   </h3>
                   <p className="text-xs text-gray-500 font-medium mt-0.5">
-                    রোল: <strong className="text-gray-800">{student.studentRoll}</strong> • শাখা: {student.section || "A"}
+                    Roll: <strong className="text-gray-800">{student.studentRoll}</strong> • Sec: {student.section || "A"}
                   </p>
                   {student.group && (
                     <span className="mt-1 px-2 py-0.5 rounded-full bg-[#B4E1EB]/30 text-[#1e3a5f] text-[11px] font-semibold">
-                      {student.group === "Science" ? "বিজ্ঞান" : student.group === "Business Studies" ? "ব্যবসায় শিক্ষা" : student.group === "Humanities" ? "মানবিক" : student.group}
+                      {student.group}
                     </span>
                   )}
 
                   {/* Marks & GPA pill */}
                   <div className="mt-4 w-full pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
                     <div>
-                      <span className="text-gray-400 block text-[10px]">মোট নম্বর</span>
+                      <span className="text-gray-400 block text-[10px]">Total Marks</span>
                       <strong className="text-[#78A4CB] text-sm">{student.totalMarks}</strong>
                     </div>
                     <div>
-                      <span className="text-gray-400 block text-[10px]">জিপিএ</span>
+                      <span className="text-gray-400 block text-[10px]">GPA</span>
                       <strong className="text-emerald-600 text-sm">{student.gpa.toFixed(2)}</strong>
                     </div>
                     <div>
-                      <span className="text-gray-400 block text-[10px]">গ্রেড</span>
+                      <span className="text-gray-400 block text-[10px]">Grade</span>
                       <span className="px-2 py-0.5 bg-[#F9E8A2] text-[#5c4300] font-bold rounded">
                         {student.grade}
                       </span>
@@ -156,9 +157,12 @@ export default function TopStudentsPreview() {
             })}
           </div>
         ) : (
-          <div className="py-12 text-center bg-white rounded-2xl border border-gray-200 text-gray-500">
-            এই শ্রেণির জন্য এখনো ফলাফল এন্ট্রি করা হয়নি।
-          </div>
+          <EmptyState
+            icon="award"
+            title="No Results Recorded Yet"
+            description={`Evaluation results for ${selectedClass} have not been published yet. Please check back later.`}
+            size="md"
+          />
         )}
       </div>
     </section>

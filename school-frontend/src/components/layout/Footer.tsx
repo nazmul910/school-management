@@ -7,24 +7,24 @@ import { IoMdCall, IoMdMail } from "react-icons/io";
 import { LuGraduationCap } from "react-icons/lu";
 
 const quickLinks = [
-  { name: "হোম পেজ", href: "/" },
-  { name: "শিক্ষার্থী তালিকা", href: "/students" },
-  { name: "শিক্ষকমণ্ডলী", href: "/teachers" },
-  { name: "নোটিশ বোর্ড", href: "/notices" },
-  { name: "পরীক্ষার ফলাফল", href: "/results" },
-  { name: "সেরা ১০ শিক্ষার্থী", href: "/top-10" },
-  { name: "স্কুল গ্যালারি", href: "/gallery" },
-  { name: "যোগাযোগ ও মতামত", href: "/contact" },
+  { name: "Home Page", href: "/" },
+  { name: "Student Directory", href: "/students" },
+  { name: "Faculty Members", href: "/teachers" },
+  { name: "Notice Board", href: "/notices" },
+  { name: "Academic Results", href: "/results" },
+  { name: "Top 10 Students", href: "/top-10" },
+  { name: "Photo Gallery", href: "/gallery" },
+  { name: "Contact & Admissions", href: "/contact" },
 ];
 
 const academicLinks = [
-  { name: "৬ষ্ঠ শ্রেণি", href: "/students?class=Class%206" },
-  { name: "৭ম শ্রেণি", href: "/students?class=Class%207" },
-  { name: "৮ম শ্রেণি", href: "/students?class=Class%208" },
-  { name: "৯ম শ্রেণি (বিজ্ঞান/মানবিক/ব্যবসায়)", href: "/students?class=Class%209" },
-  { name: "১০ম শ্রেণি (এসএসসি ব্যাচ)", href: "/students?class=Class%2010" },
-  { name: "ভর্তি নির্দেশিকা", href: "/contact" },
-  { name: "বার্ষিক পরীক্ষার রুটিন", href: "/notices" },
+  { name: "Class 6", href: "/students?class=Class%206" },
+  { name: "Class 7", href: "/students?class=Class%207" },
+  { name: "Class 8", href: "/students?class=Class%208" },
+  { name: "Class 9 (Science / Humanities / Business)", href: "/students?class=Class%209" },
+  { name: "Class 10 (SSC Batch)", href: "/students?class=Class%2010" },
+  { name: "Admission Guide", href: "/contact" },
+  { name: "Examination Routine", href: "/notices" },
 ];
 
 const Footer = () => {
@@ -40,14 +40,14 @@ const Footer = () => {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white leading-tight">
-                আইডিয়াল মডেল স্কুল ও কলেজ
+                Ideal Model School & College
               </h3>
-              <p className="text-xs text-[#F9E8A2]">শিক্ষা • শৃঙ্খলা • নৈতিকতা</p>
+              <p className="text-xs text-[#F9E8A2]">Education • Discipline • Ethics</p>
             </div>
           </div>
 
           <p className="text-sm text-gray-300 leading-relaxed">
-            গুণগত মানসম্পন্ন আধুনিক ও নৈতিক শিক্ষাদানের মাধ্যমে শিক্ষার্থীদের মেধা বিকাশ, চরিত্র গঠন এবং দেশপ্রেমিক সুনাগরিক হিসেবে গড়ে তোলাই আমাদের মূল লক্ষ্য।
+            Committed to providing high quality, modern, and value-based education to nurture creative talents, moral character, and future leaders.
           </p>
 
           <div className="flex items-center gap-3 pt-2">
@@ -81,7 +81,7 @@ const Footer = () => {
         {/* Quick Links */}
         <div>
           <h4 className="text-base font-bold text-white mb-5 pb-2 border-b border-gray-700/60 inline-block">
-            প্রয়োজনীয় লিংক
+            Quick Links
           </h4>
           <ul className="space-y-2.5 text-sm">
             {quickLinks.map((item) => (
@@ -100,7 +100,7 @@ const Footer = () => {
         {/* Academic Structure */}
         <div>
           <h4 className="text-base font-bold text-white mb-5 pb-2 border-b border-gray-700/60 inline-block">
-            একাডেমিক তথ্য (৬ষ্ঠ - ১০ম শ্রেণি)
+            Academic Levels (Class 6 - 10)
           </h4>
           <ul className="space-y-2.5 text-sm">
             {academicLinks.map((item) => (
@@ -119,18 +119,18 @@ const Footer = () => {
         {/* Contact Info */}
         <div className="space-y-4">
           <h4 className="text-base font-bold text-white mb-5 pb-2 border-b border-gray-700/60 inline-block">
-            বিদ্যালয়ের ঠিকানা ও যোগাযোগ
+            Campus & Contact
           </h4>
 
           <div className="space-y-3 text-sm text-gray-300">
             <div className="flex items-start gap-3">
               <IoLocationSharp className="text-[#F9E8A2] text-xl shrink-0 mt-0.5" />
-              <span>বাড়ি নং ১২, রোড নং ৫, ব্লক-বি, মিরপুর-১০, ঢাকা-১২১৬, বাংলাদেশ।</span>
+              <span>House #12, Road #5, Block-B, Mirpur-10, Dhaka-1216, Bangladesh.</span>
             </div>
 
             <div className="flex items-center gap-3">
               <IoMdCall className="text-[#F9E8A2] text-lg shrink-0" />
-              <span>+৮৮০ ২-৯৮৭৬৫৪৩, +৮৮০ ১৭০০-০০০০০০</span>
+              <span>+880 2-9876543, +880 1700-000000</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -141,9 +141,9 @@ const Footer = () => {
 
           <div className="pt-2">
             <div className="bg-[#1e3a5f] p-3 rounded-lg border border-[#78A4CB]/30 text-xs">
-              <p className="text-[#F9E8A2] font-semibold mb-1">অফিস চলাকালীন সময়:</p>
-              <p className="text-gray-300">রবিবার – বৃহস্পতিবার: সকাল ৮:০০ – বিকাল ৪:০০</p>
-              <p className="text-gray-400">শুক্রবার ও শনিবার: সাপ্তাহিক ছুটি</p>
+              <p className="text-[#F9E8A2] font-semibold mb-1">Office Hours:</p>
+              <p className="text-gray-300">Sunday – Thursday: 8:00 AM – 4:00 PM</p>
+              <p className="text-gray-400">Friday & Saturday: Weekly Holiday</p>
             </div>
           </div>
         </div>
@@ -153,14 +153,14 @@ const Footer = () => {
       <section className="border-t border-gray-800 bg-[#0a1523] py-5">
         <div className="max-w-[1400px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
           <p>
-            © {new Date().getFullYear()} আইডিয়াল মডেল স্কুল ও কলেজ। সর্বস্বত্ব সংরক্ষিত।
+            © {new Date().getFullYear()} Ideal Model School & College. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="/notices" className="hover:text-white transition-colors">নোটিশ</Link>
+            <Link href="/notices" className="hover:text-white transition-colors">Notices</Link>
             <span>•</span>
-            <Link href="/results" className="hover:text-white transition-colors">ফলাফল</Link>
+            <Link href="/results" className="hover:text-white transition-colors">Results</Link>
             <span>•</span>
-            <Link href="/contact" className="hover:text-white transition-colors">যোগাযোগ</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
           </div>
         </div>
       </section>

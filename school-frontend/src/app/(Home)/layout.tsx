@@ -6,11 +6,12 @@ import QueryProvider from "../providers/QueryProvider";
 import { UserProvider } from "../providers/UserContext";
 import NavbarNew from "@/components/layout/NavbarNew";
 import ScrollToTop from "@/utils/ScrollButton";
+import SmoothScroll from "@/components/common/SmoothScroll";
 
 export const metadata: Metadata = {
-  title: "আইডিয়াল মডেল স্কুল ও কলেজ | Ideal Model School & College",
+  title: "Ideal Model School & College | Excellence in Modern Education",
   description:
-    "আধুনিক ও মানসম্মত শিক্ষা ব্যবস্থা, অভিজ্ঞ শিক্ষকমণ্ডলী, ডিজিটাল ক্লাসরুম ও ফলাফল নিয়ে পরিচালিত বাংলাদেশের অন্যতম শীর্ষস্থানীয় বিদ্যালয়।",
+    "A premier educational institution dedicated to academic excellence, digital classrooms, experienced faculty, and comprehensive student development.",
 };
 
 export default function RootLayout({
@@ -19,18 +20,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="bn">
+    <html lang="en">
       <body>
-        <QueryProvider>
-          <UserProvider>
-            <AuthProvider>
-              <NavbarNew />
-              {children}
-              <ScrollToTop />
-              <Footer />
-            </AuthProvider>
-          </UserProvider>
-        </QueryProvider>
+        <SmoothScroll>
+          <QueryProvider>
+            <UserProvider>
+              <AuthProvider>
+                <NavbarNew />
+                {children}
+                <ScrollToTop />
+                <Footer />
+              </AuthProvider>
+            </UserProvider>
+          </QueryProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

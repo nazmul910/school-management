@@ -2,21 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LuSearch, LuAward, LuPrinter, LuGraduationCap, LuCircleAlert, LuTrophy } from "react-icons/lu";
+import { LuSearch, LuAward, LuPrinter, LuCircleAlert, LuTrophy } from "react-icons/lu";
 import useAxios from "@/hooks/useAxios";
 
 const classes = [
-  { id: "Class 6", label: "৬ষ্ঠ শ্রেণি (Class 6)" },
-  { id: "Class 7", label: "৭ম শ্রেণি (Class 7)" },
-  { id: "Class 8", label: "৮ম শ্রেণি (Class 8)" },
-  { id: "Class 9", label: "৯ম শ্রেণি (Class 9)" },
-  { id: "Class 10", label: "১০ম শ্রেণি (Class 10)" },
+  { id: "Class 6", label: "Class 6" },
+  { id: "Class 7", label: "Class 7" },
+  { id: "Class 8", label: "Class 8" },
+  { id: "Class 9", label: "Class 9" },
+  { id: "Class 10", label: "Class 10" },
 ];
 
 const examTypes = [
-  { id: "Final Examination", label: "বার্ষিক পরীক্ষা (Final Examination)" },
-  { id: "Half Yearly", label: "অর্ধ-বার্ষিক পরীক্ষা (Half Yearly)" },
-  { id: "First Term", label: "১ম সাময়িক পরীক্ষা (1st Term)" },
+  { id: "Final Examination", label: "Final Examination" },
+  { id: "Half Yearly", label: "Half Yearly Examination" },
+  { id: "First Term", label: "1st Term Examination" },
 ];
 
 const examYears = ["2025", "2026"];
@@ -35,7 +35,7 @@ export default function ResultsPage() {
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!roll) {
-      setErrorMsg("অনুগ্রহ করে রোল নম্বর প্রদান করুন।");
+      setErrorMsg("Please enter a valid student roll number.");
       return;
     }
     setLoading(true);
@@ -49,10 +49,10 @@ export default function ResultsPage() {
       if (res.data?.data) {
         setResultData(res.data.data);
       } else {
-        setErrorMsg("ফলাফল পাওয়া যায়নি। তথ্য সঠিক কিনা যাচাই করুন।");
+        setErrorMsg("No examination result found. Please verify the class and roll number.");
       }
     } catch (err: any) {
-      setErrorMsg(err?.response?.data?.message || "প্রদত্ত তথ্য অনুযায়ী কোনো ফলাফল পাওয়া যায়নি।");
+      setErrorMsg(err?.response?.data?.message || "No result found matching the entered information.");
     } finally {
       setLoading(false);
     }
@@ -70,13 +70,13 @@ export default function ResultsPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/20 text-[#F9E8A2] rounded-full text-xs font-bold mb-3">
               <LuAward />
-              <span>অনলাইন ফলাফল পোর্টাল</span>
+              <span>Online Results Portal</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold">
-              পরীক্ষার ফলাফল ও নম্বরপত্র অনুসন্ধান
+              Academic Results & Marksheet Search
             </h1>
             <p className="text-sm md:text-base text-gray-200 mt-2 max-w-2xl">
-              শ্রেণি ও রোল নম্বর নির্বাচন করে তাৎক্ষণিকভাবে বিষয়ভিত্তিক নম্বর, জিপিএ, গ্রেড ও অবস্থান দেখুন।
+              Select class, roll number, and exam session to instantly view subject marks, GPA, letter grade, and merit standing.
             </p>
           </div>
 
@@ -85,7 +85,7 @@ export default function ResultsPage() {
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#F9E8A2] text-[#5c4300] font-bold text-sm hover:bg-[#fae488] shadow-md transition-all shrink-0"
           >
             <LuTrophy />
-            <span>সেরা ১০ শিক্ষার্থী তালিকা</span>
+            <span>Top 10 Students</span>
           </Link>
         </div>
 
@@ -93,13 +93,13 @@ export default function ResultsPage() {
         <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-[#B4E1EB]/60 mb-10">
           <h2 className="text-xl font-bold text-[#1e3a5f] mb-6 flex items-center gap-2">
             <LuSearch className="text-[#78A4CB]" />
-            <span>ফলাফল অনুসন্ধানের তথ্য প্রদান করুন</span>
+            <span>Enter Examination Search Criteria</span>
           </h2>
 
           <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {/* Class */}
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">শ্রেণি *</label>
+              <label className="block text-xs font-bold text-gray-700 mb-1.5">Class *</label>
               <select
                 value={selectedClass}
                 onChange={(e) => setSelectedClass(e.target.value)}
@@ -115,10 +115,10 @@ export default function ResultsPage() {
 
             {/* Roll */}
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">রোল নম্বর *</label>
+              <label className="block text-xs font-bold text-gray-700 mb-1.5">Student Roll No. *</label>
               <input
                 type="number"
-                placeholder="যেমন: ১, ২, ৩..."
+                placeholder="e.g. 1, 2, 3..."
                 value={roll}
                 onChange={(e) => setRoll(e.target.value)}
                 required
@@ -128,7 +128,7 @@ export default function ResultsPage() {
 
             {/* Exam Type */}
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">পরীক্ষার ধরন *</label>
+              <label className="block text-xs font-bold text-gray-700 mb-1.5">Exam Session *</label>
               <select
                 value={examType}
                 onChange={(e) => setExamType(e.target.value)}
@@ -144,7 +144,7 @@ export default function ResultsPage() {
 
             {/* Year & Submit */}
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1.5">পরীক্ষার সন *</label>
+              <label className="block text-xs font-bold text-gray-700 mb-1.5">Exam Year *</label>
               <select
                 value={examYear}
                 onChange={(e) => setExamYear(e.target.value)}
@@ -165,7 +165,7 @@ export default function ResultsPage() {
                 className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <LuSearch />
-                <span>{loading ? "অনুসন্ধান চলছে..." : "ফলাফল দেখুন"}</span>
+                <span>{loading ? "Searching Results..." : "View Result"}</span>
               </button>
             </div>
           </form>
@@ -185,68 +185,68 @@ export default function ResultsPage() {
             {/* Marksheet Top Controls */}
             <div className="flex items-center justify-between pb-6 mb-8 border-b border-gray-200 print:hidden">
               <span className="px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
-                ফলাফল সফলভাবে প্রাপ্ত হয়েছে
+                Result Found Successfully
               </span>
               <button
                 onClick={handlePrint}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-[#1e3a5f] font-semibold text-xs transition-colors"
               >
                 <LuPrinter />
-                <span>প্রিন্ট / সেভ করুন</span>
+                <span>Print / Save PDF</span>
               </button>
             </div>
 
             {/* School Header */}
             <div className="text-center pb-6 border-b-2 border-[#78A4CB] space-y-1">
               <h2 className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">
-                আইডিয়াল মডেল স্কুল ও কলেজ
+                Ideal Model School & College
               </h2>
-              <p className="text-xs text-gray-500">মিরপুর-১০, ঢাকা-১২১৬ • EIIN: ১২৩৪৫৬</p>
+              <p className="text-xs text-gray-500">Mirpur-10, Dhaka-1216 • EIIN: 123456</p>
               <h3 className="text-lg font-bold text-[#78A4CB] pt-2">
-                একাডেমিক ফলাফল ও নম্বরপত্র ({resultData.examType} - {resultData.examYear})
+                Academic Transcript & Marksheet ({resultData.examType} - {resultData.examYear})
               </h3>
             </div>
 
             {/* Student Info Card */}
             <div className="my-6 p-5 rounded-2xl bg-[#F3F8FC] border border-[#B4E1EB]/60 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-xs md:text-sm">
               <div>
-                <span className="text-gray-400 block text-[11px]">শিক্ষার্থীর নাম:</span>
+                <span className="text-gray-400 block text-[11px]">Student Name:</span>
                 <strong className="text-[#1e3a5f] font-bold text-base">{resultData.studentName}</strong>
               </div>
               <div>
-                <span className="text-gray-400 block text-[11px]">শিক্ষার্থী আইডি:</span>
+                <span className="text-gray-400 block text-[11px]">Student ID:</span>
                 <strong className="text-gray-800 font-mono">{resultData.studentId}</strong>
               </div>
               <div>
-                <span className="text-gray-400 block text-[11px]">শ্রেণি:</span>
+                <span className="text-gray-400 block text-[11px]">Class:</span>
                 <strong className="text-[#1e3a5f]">{resultData.class}</strong>
               </div>
               <div>
-                <span className="text-gray-400 block text-[11px]">রোল নম্বর:</span>
+                <span className="text-gray-400 block text-[11px]">Roll No:</span>
                 <strong className="text-[#1e3a5f] text-base">{resultData.studentRoll}</strong>
               </div>
               <div>
-                <span className="text-gray-400 block text-[11px]">শাখা:</span>
+                <span className="text-gray-400 block text-[11px]">Section:</span>
                 <strong className="text-gray-800">{resultData.section || "A"}</strong>
               </div>
               {resultData.group && (
                 <div>
-                  <span className="text-gray-400 block text-[11px]">বিভাগ (গ্রুপ):</span>
+                  <span className="text-gray-400 block text-[11px]">Group / Stream:</span>
                   <strong className="text-[#78A4CB]">
-                    {resultData.group === "Science" ? "বিজ্ঞান" : resultData.group === "Business Studies" ? "ব্যবসায় শিক্ষা" : resultData.group === "Humanities" ? "মানবিক" : resultData.group}
+                    {resultData.group}
                   </strong>
                 </div>
               )}
               <div>
-                <span className="text-gray-400 block text-[11px]">মেধাক্রম / অবস্থান:</span>
+                <span className="text-gray-400 block text-[11px]">Class Position:</span>
                 <span className="px-2.5 py-0.5 rounded bg-[#F9E8A2] text-[#5c4300] font-extrabold">
-                  {resultData.position}ম স্থান
+                  Rank #{resultData.position}
                 </span>
               </div>
               <div>
-                <span className="text-gray-400 block text-[11px]">ফলাফল স্ট্যাটাস:</span>
+                <span className="text-gray-400 block text-[11px]">Status:</span>
                 <span className="px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">
-                  উত্তীর্ণ (Passed)
+                  Passed
                 </span>
               </div>
             </div>
@@ -256,11 +256,11 @@ export default function ResultsPage() {
               <table className="w-full text-left text-sm border-collapse">
                 <thead>
                   <tr className="bg-[#1e3a5f] text-white text-xs uppercase tracking-wider">
-                    <th className="p-3.5 rounded-l-xl">ক্রমিক</th>
-                    <th className="p-3.5">বিষয়</th>
-                    <th className="p-3.5 text-center">প্রাপ্ত নম্বর</th>
-                    <th className="p-3.5 text-center">লেটার গ্রেড</th>
-                    <th className="p-3.5 rounded-r-xl text-center">গ্রেড পয়েন্ট (GPA)</th>
+                    <th className="p-3.5 rounded-l-xl">SL</th>
+                    <th className="p-3.5">Subject</th>
+                    <th className="p-3.5 text-center">Marks Obtained</th>
+                    <th className="p-3.5 text-center">Letter Grade</th>
+                    <th className="p-3.5 rounded-r-xl text-center">Grade Point (GPA)</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
@@ -286,25 +286,25 @@ export default function ResultsPage() {
             {/* Summary Bar */}
             <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-[#78A4CB] to-[#95BDD7] text-white flex flex-wrap items-center justify-between gap-4">
               <div>
-                <span className="text-xs text-white/80 block">সর্বমোট নম্বর</span>
+                <span className="text-xs text-white/80 block">Total Marks</span>
                 <strong className="text-2xl md:text-3xl font-extrabold">{resultData.totalMarks}</strong>
               </div>
               <div>
-                <span className="text-xs text-white/80 block">প্রাপ্ত জিপিএ (GPA)</span>
+                <span className="text-xs text-white/80 block">Obtained GPA</span>
                 <strong className="text-2xl md:text-3xl font-extrabold text-[#F9E8A2]">
                   {resultData.gpa?.toFixed(2)}
                 </strong>
               </div>
               <div>
-                <span className="text-xs text-white/80 block">চূড়ান্ত গ্রেড</span>
+                <span className="text-xs text-white/80 block">Overall Grade</span>
                 <span className="px-4 py-1.5 rounded-xl bg-white text-[#1e3a5f] text-xl font-extrabold shadow-sm inline-block">
                   {resultData.grade}
                 </span>
               </div>
               <div>
-                <span className="text-xs text-white/80 block">শ্রেণির অবস্থান</span>
+                <span className="text-xs text-white/80 block">Class Rank</span>
                 <strong className="text-2xl md:text-3xl font-extrabold text-[#F9E8A2]">
-                  {resultData.position}ম
+                  #{resultData.position}
                 </strong>
               </div>
             </div>
@@ -313,15 +313,15 @@ export default function ResultsPage() {
             <div className="mt-16 pt-8 grid grid-cols-3 gap-8 text-center text-xs text-gray-500 border-t border-dashed border-gray-300">
               <div>
                 <div className="w-32 border-b border-gray-400 mx-auto mb-2" />
-                <span>শ্রেণি শিক্ষকের স্বাক্ষর</span>
+                <span>Class Teacher</span>
               </div>
               <div>
                 <div className="w-32 border-b border-gray-400 mx-auto mb-2" />
-                <span>পরীক্ষা নিয়ন্ত্রক</span>
+                <span>Controller of Exams</span>
               </div>
               <div>
                 <div className="w-32 border-b border-gray-400 mx-auto mb-2" />
-                <span className="font-bold text-[#1e3a5f]">প্রধান শিক্ষক</span>
+                <span className="font-bold text-[#1e3a5f]">Headmaster</span>
               </div>
             </div>
           </div>

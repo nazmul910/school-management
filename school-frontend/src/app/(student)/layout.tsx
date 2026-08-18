@@ -7,6 +7,7 @@ import { AuthProvider } from "../providers/AuthContext";
 import { UserProvider } from "../providers/UserContext";
 import ProtectedRoute from "@/utils/ProtectedRoute";
 import QueryProvider from "../providers/QueryProvider";
+import SmoothScroll from "@/components/common/SmoothScroll";
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -25,29 +26,31 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <html>
+    <html lang="en">
       <body>
-        <AuthProvider>
-          <ProtectedRoute allowedRoles={["student"]}>
-            <UserProvider>
-              <QueryProvider>
-                <section className="flex min-h-screen items-start">
-                  <StudentSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-                  <section
-                    className={`flex-1 z-50 min-h-screen overflow-auto transition-margin duration-300 ease-in-out ${
-                      isOpen ? "ml-64" : "ml-28"
-                    }`}
-                  >
-                    <div className="container mx-auto">
-                      {children}
-                      <ToastContainer />
-                    </div>
+        <SmoothScroll>
+          <AuthProvider>
+            <ProtectedRoute allowedRoles={["student"]}>
+              <UserProvider>
+                <QueryProvider>
+                  <section className="flex min-h-screen items-start">
+                    <StudentSidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+                    <section
+                      className={`flex-1 z-50 min-h-screen overflow-auto transition-margin duration-300 ease-in-out ${
+                        isOpen ? "ml-64" : "ml-28"
+                      }`}
+                    >
+                      <div className="container mx-auto">
+                        {children}
+                        <ToastContainer />
+                      </div>
+                    </section>
                   </section>
-                </section>
-              </QueryProvider>
-            </UserProvider>
-          </ProtectedRoute>
-        </AuthProvider>
+                </QueryProvider>
+              </UserProvider>
+            </ProtectedRoute>
+          </AuthProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

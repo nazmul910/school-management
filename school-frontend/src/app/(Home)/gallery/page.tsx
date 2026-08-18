@@ -4,12 +4,13 @@ import { useState } from "react";
 import { LuImage, LuEye } from "react-icons/lu";
 import { ImCross } from "react-icons/im";
 import useGallery from "@/hooks/useGallery";
+import EmptyState from "@/components/common/EmptyState";
 
-const categories = ["সকল", "ক্যাম্পাস", "ক্রীড়া", "সাংস্কৃতিক", "বিজ্ঞান মেলা", "পুরস্কার বিতরণী"];
+const categories = ["All", "Campus", "Sports", "Cultural", "Science Fair", "Prize Giving"];
 
 export default function GalleryPage() {
-  const [selectedCategory, setSelectedCategory] = useState("সকল");
-  const { galleryData, isLoading } = useGallery(selectedCategory);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const { galleryData, isLoading } = useGallery(selectedCategory === "All" ? "all" : selectedCategory);
   const [previewImage, setPreviewImage] = useState<{ url: string; title: string; caption?: string } | null>(null);
 
   const images = galleryData?.data || [];
@@ -21,13 +22,13 @@ export default function GalleryPage() {
         <div className="bg-gradient-to-r from-[#78A4CB] to-[#1e3a5f] p-8 md:p-12 rounded-3xl text-white shadow-xl mb-10 text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/20 text-[#F9E8A2] rounded-full text-xs font-bold mb-3">
             <LuImage />
-            <span>স্কুল ফটো ও স্মৃতি অ্যালবাম</span>
+            <span>School Photo & Media Gallery</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold">
-            বিদ্যালয় ফটো গ্যালারি
+            Campus Life & Event Gallery
           </h1>
           <p className="text-sm md:text-base text-gray-200 mt-2 max-w-2xl">
-            বিদ্যালয়ের মনোরম ক্যাম্পাস, বার্ষিক ক্রীড়া, বিজ্ঞান মেলা, জাতীয় দিবস উদযাপন ও পুরস্কার বিতরণী অনুষ্ঠানের আলোকচিত্র।
+            Explore memorable moments from science exhibitions, sports championships, national celebrations, and academic assemblies.
           </p>
         </div>
 
@@ -51,7 +52,7 @@ export default function GalleryPage() {
         {/* Image Grid */}
         {isLoading ? (
           <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            গ্যালারির ছবি লোড হচ্ছে...
+            Loading photo gallery...
           </div>
         ) : images.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -75,7 +76,7 @@ export default function GalleryPage() {
 
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                   <span className="inline-block px-2.5 py-0.5 rounded bg-[#F9E8A2] text-[#5c4300] text-xs font-bold mb-2">
-                    {item.category || "ক্যাম্পাস"}
+                    {item.category || "Campus"}
                   </span>
                   <h3 className="text-base font-bold leading-snug line-clamp-2">
                     {item.title}
@@ -90,9 +91,14 @@ export default function GalleryPage() {
             ))}
           </div>
         ) : (
-          <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            এই ক্যাটাগরিতে কোনো ছবি পাওয়া যায়নি।
-          </div>
+          <EmptyState
+            icon="image"
+            title="No Images Found"
+            description={`There are currently no photos listed under the "${selectedCategory}" category.`}
+            actionLabel={selectedCategory !== "All" ? "View All Photos" : undefined}
+            onAction={selectedCategory !== "All" ? () => setSelectedCategory("All") : undefined}
+            size="lg"
+          />
         )}
 
         {/* Lightbox Modal */}

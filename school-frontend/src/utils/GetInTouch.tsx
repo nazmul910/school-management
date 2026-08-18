@@ -11,15 +11,15 @@ const GetInTouch = () => {
                         <LuGraduationCap />
                     </div>
                     <div>
-                        <h2 className='text-xl md:text-2xl font-bold'>আপনার সন্তানের সুন্দর ও সমৃদ্ধ ভবিষ্যৎ গড়তে আজই যোগাযোগ করুন</h2>
-                        <p className='text-sm text-[#F9E8A2] mt-1'>অভিজ্ঞ শিক্ষক, উন্নত পাঠ্যক্রম এবং সুশৃঙ্খল পরিবেশের নিশ্চয়তা।</p>
+                        <h2 className='text-xl md:text-2xl font-bold'>Build a Bright & Successful Future for Your Child Today</h2>
+                        <p className='text-sm text-[#F9E8A2] mt-1'>Guaranteed experienced faculty, modern curriculum, and a disciplined environment.</p>
                     </div>
                 </div>
                 <Link
                     href="/contact"
                     className='bg-[#F9E8A2] text-[#5c4300] px-8 py-3.5 rounded-xl font-bold text-base shadow-md hover:bg-[#fae488] transition-all whitespace-nowrap'
                 >
-                    যোগাযোগ ও ভর্তি
+                    Contact & Admission
                 </Link>
             </div>
         </section>

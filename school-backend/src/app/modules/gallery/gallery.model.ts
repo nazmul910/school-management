@@ -5,7 +5,7 @@ const gallerySchema = new Schema<IGallery>(
   {
     title: { type: String, required: true },
     caption: { type: String, default: "" },
-    category: { type: String, default: "ক্যাম্পাস" },
+    category: { type: String, default: "Campus" },
     imageUrl: { type: String, required: true },
     imagePublicId: { type: String, default: "" },
     isDeleted: { type: Boolean, default: false },

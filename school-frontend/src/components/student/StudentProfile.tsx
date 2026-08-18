@@ -70,7 +70,7 @@ export default function StudentProfile() {
         })
         .catch((err) => {
           console.error(err);
-          toast.error("প্রোফাইল তথ্য লোড করা যায়নি");
+          toast.error("Failed to load profile details");
         })
         .finally(() => {
           setIsLoading(false);
@@ -95,13 +95,13 @@ export default function StudentProfile() {
     try {
       const { data } = await axiosSecure.patch(`/users/update-user/${decoded.userId}`, safeProfile);
       if (data.success) {
-        toast.success("প্রোফাইল তথ্য সফলভাবে আপডেট হয়েছে!");
+        toast.success("Profile updated successfully!");
         setIsEditing(false);
         fetchProfile();
       }
     } catch (err: any) {
       console.error(err);
-      toast.error(err.response?.data?.message || "প্রোফাইল আপডেট ব্যর্থ হয়েছে");
+      toast.error(err.response?.data?.message || "Failed to update profile");
     } finally {
       setIsSaving(false);
     }
@@ -132,13 +132,13 @@ export default function StudentProfile() {
           image: uploadedImageUrl,
         });
         setProfile((prev) => ({ ...prev, avatar: uploadedImageUrl }));
-        toast.success("প্রোফাইল ছবি সফলভাবে আপডেট হয়েছে!");
+        toast.success("Profile photo updated successfully!");
       } else {
-        toast.error("ছবি আপলোড ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
+        toast.error("Image upload failed. Please try again.");
       }
     } catch (error: any) {
       console.error("Upload error:", error);
-      toast.error(error.response?.data?.message || "ছবি আপলোড করা যায়নি।");
+      toast.error(error.response?.data?.message || "Could not upload image.");
     } finally {
       setIsUploadingPhoto(false);
     }
@@ -167,15 +167,15 @@ export default function StudentProfile() {
             <div className="bg-white rounded-3xl shadow-xl shadow-[#1e3a5f]/5 border border-[#B4E1EB]/60 p-6 sm:p-8 relative overflow-hidden">
               <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
                 <div>
-                  <h2 className="text-xl font-extrabold text-[#1e3a5f]">শিক্ষার্থী প্রোফাইল</h2>
-                  <p className="text-xs text-gray-500 mt-0.5">আপনার ব্যক্তিগত তথ্য ও পরিচিতি</p>
+                  <h2 className="text-xl font-extrabold text-[#1e3a5f]">Student Profile</h2>
+                  <p className="text-xs text-gray-500 mt-0.5">Your personal information and contact details</p>
                 </div>
                 <button
                   onClick={() => setIsEditing(true)}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#B4E1EB]/30 text-[#1e3a5f] hover:bg-[#78A4CB] hover:text-white transition-all duration-200 text-xs font-bold cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
                 >
                   <AiOutlineEdit size={16} />
-                  <span>সম্পাদনা করুন</span>
+                  <span>Edit Profile</span>
                 </button>
               </div>
 
@@ -197,30 +197,30 @@ export default function StudentProfile() {
                 <div className="flex-1 w-full space-y-4">
                   <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
-                      শিক্ষার্থীর নাম
+                      Student Name
                     </label>
                     <p className="text-base font-bold text-[#1e3a5f] mt-0.5">{profile.name || "—"}</p>
                   </div>
 
                   <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
-                      ইমেইল ঠিকানা
+                      Email Address
                     </label>
                     <p className="text-sm font-semibold text-gray-800 mt-0.5 font-mono">{profile.email || "—"}</p>
                   </div>
 
                   <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
-                      মোবাইল নম্বর
+                      Mobile Number
                     </label>
-                    <p className="text-sm font-semibold text-gray-800 mt-0.5">{profile.contact || "প্রদান করা হয়নি"}</p>
+                    <p className="text-sm font-semibold text-gray-800 mt-0.5">{profile.contact || "Not provided"}</p>
                   </div>
 
                   <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
-                      বর্তমান ঠিকানা
+                      Address
                     </label>
-                    <p className="text-sm font-semibold text-gray-800 mt-0.5">{profile.address || "প্রদান করা হয়নি"}</p>
+                    <p className="text-sm font-semibold text-gray-800 mt-0.5">{profile.address || "Not provided"}</p>
                   </div>
                 </div>
               </div>
@@ -229,8 +229,8 @@ export default function StudentProfile() {
             /* EDIT MODE */
             <div className="bg-white rounded-3xl shadow-xl shadow-[#1e3a5f]/5 border border-[#B4E1EB]/60 p-6 sm:p-8">
               <div className="border-b border-gray-100 pb-4 mb-6">
-                <h2 className="text-xl font-extrabold text-[#1e3a5f]">প্রোফাইল সম্পাদনা</h2>
-                <p className="text-xs text-gray-500 mt-0.5">নতুন তথ্য দিয়ে আপনার প্রোফাইল আপডেট করুন</p>
+                <h2 className="text-xl font-extrabold text-[#1e3a5f]">Edit Profile</h2>
+                <p className="text-xs text-gray-500 mt-0.5">Update your contact information and details</p>
               </div>
 
               {/* Avatar Upload with Cloudinary */}
@@ -249,7 +249,7 @@ export default function StudentProfile() {
                     {isUploadingPhoto && (
                       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center text-white text-xs gap-1">
                         <LuLoader className="animate-spin text-xl text-[#F9E8A2]" />
-                        <span>আপলোড হচ্ছে...</span>
+                        <span>Uploading...</span>
                       </div>
                     )}
                   </div>
@@ -259,7 +259,7 @@ export default function StudentProfile() {
                     onClick={handleAvatarClick}
                     disabled={isUploadingPhoto}
                     className="absolute bottom-0 right-0 p-2.5 bg-[#78A4CB] text-white rounded-full shadow-lg hover:bg-[#1e3a5f] hover:scale-110 active:scale-95 transition-all cursor-pointer border-2 border-white"
-                    title="ছবি পরিবর্তন করুন"
+                    title="Change photo"
                   >
                     <LuCamera size={16} />
                   </button>
@@ -272,13 +272,13 @@ export default function StudentProfile() {
                     className="hidden"
                   />
                 </div>
-                <p className="text-xs text-gray-400 mt-3 font-medium">ক্যামেরা আইকনে ক্লিক করে নতুন ছবি সিলেক্ট করুন</p>
+                <p className="text-xs text-gray-400 mt-3 font-medium">Click the camera icon to select a new profile photo</p>
               </div>
 
               <form className="space-y-4" onSubmit={handleSave}>
                 {/* Full Name */}
                 <InputField
-                  label="পূর্ণ নাম"
+                  label="Full Name"
                   value={profile.name}
                   onChange={(v) => handleChange("name", v)}
                   required
@@ -286,7 +286,7 @@ export default function StudentProfile() {
 
                 {/* Email */}
                 <InputField
-                  label="ইমেইল ঠিকানা"
+                  label="Email Address"
                   type="email"
                   value={profile.email}
                   onChange={(v) => handleChange("email", v)}
@@ -296,7 +296,7 @@ export default function StudentProfile() {
 
                 {/* Contact */}
                 <InputField
-                  label="যোগাযোগের নম্বর"
+                  label="Contact Number"
                   value={profile.contact}
                   onChange={(v) => handleChange("contact", v)}
                   icon
@@ -305,10 +305,10 @@ export default function StudentProfile() {
 
                 {/* Address */}
                 <InputField
-                  label="বর্তমান ঠিকানা"
+                  label="Address"
                   value={profile.address}
                   onChange={(v) => handleChange("address", v)}
-                  placeholder="যেমন: ঢাকা, বাংলাদেশ"
+                  placeholder="e.g. Dhaka, Bangladesh"
                 />
 
                 {/* Action Buttons */}
@@ -319,7 +319,7 @@ export default function StudentProfile() {
                     className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-gray-200 text-gray-700 text-sm font-bold hover:bg-gray-100 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
                     <LuArrowLeft size={16} />
-                    <span>ফিরে যান</span>
+                    <span>Go Back</span>
                   </button>
 
                   <button
@@ -334,12 +334,12 @@ export default function StudentProfile() {
                     {isSaving ? (
                       <>
                         <LuLoader className="animate-spin text-base" />
-                        <span>সংরক্ষণ হচ্ছে...</span>
+                        <span>Saving...</span>
                       </>
                     ) : (
                       <>
                         <LuCheck size={16} />
-                        <span>পরিবর্তন সংরক্ষণ করুন</span>
+                        <span>Save Changes</span>
                       </>
                     )}
                   </button>

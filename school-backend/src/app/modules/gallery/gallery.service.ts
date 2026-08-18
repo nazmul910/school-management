@@ -18,7 +18,7 @@ const createGalleryItemToDB = async (payload: IGallery | IGallery[] | { items: I
 
 const getAllGalleryItemsFromDB = async (category?: string) => {
   const query: Record<string, any> = { isDeleted: false };
-  if (category && category !== "all" && category !== "সকল") {
+  if (category && category !== "all") {
     query.category = category;
   }
   const result = await Gallery.find(query).sort({ createdAt: -1 });

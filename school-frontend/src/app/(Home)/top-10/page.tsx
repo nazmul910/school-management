@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { LuAward, LuTrophy, LuMedal, LuGraduationCap } from "react-icons/lu";
+import { LuAward, LuTrophy } from "react-icons/lu";
 import useResults from "@/hooks/useResults";
+import EmptyState from "@/components/common/EmptyState";
 
 const classesList = [
-  { id: "Class 6", label: "৬ষ্ঠ শ্রেণি (Class 6)" },
-  { id: "Class 7", label: "৭ম শ্রেণি (Class 7)" },
-  { id: "Class 8", label: "৮ম শ্রেণি (Class 8)" },
-  { id: "Class 9", label: "৯ম শ্রেণি (Class 9)" },
-  { id: "Class 10", label: "১০ম শ্রেণি (Class 10)" },
+  { id: "Class 6", label: "Class 6" },
+  { id: "Class 7", label: "Class 7" },
+  { id: "Class 8", label: "Class 8" },
+  { id: "Class 9", label: "Class 9" },
+  { id: "Class 10", label: "Class 10" },
 ];
 
 export default function Top10Page() {
@@ -23,27 +24,27 @@ export default function Top10Page() {
     if (pos === 1) {
       return (
         <span className="w-9 h-9 rounded-full bg-[#F9E8A2] text-[#5c4300] font-extrabold flex items-center justify-center shadow-md border-2 border-amber-400 text-sm">
-          ১ম
+          1st
         </span>
       );
     }
     if (pos === 2) {
       return (
         <span className="w-9 h-9 rounded-full bg-[#B4E1EB] text-[#1e3a5f] font-extrabold flex items-center justify-center shadow-md border-2 border-[#78A4CB] text-sm">
-          ২য়
+          2nd
         </span>
       );
     }
     if (pos === 3) {
       return (
         <span className="w-9 h-9 rounded-full bg-[#95BDD7] text-white font-extrabold flex items-center justify-center shadow-md border-2 border-[#78A4CB] text-sm">
-          ৩য়
+          3rd
         </span>
       );
     }
     return (
       <span className="w-8 h-8 rounded-full bg-gray-100 text-gray-700 font-bold flex items-center justify-center border border-gray-300 text-xs">
-        {pos}ম
+        {pos}th
       </span>
     );
   };
@@ -55,13 +56,13 @@ export default function Top10Page() {
         <div className="bg-gradient-to-r from-[#78A4CB] to-[#1e3a5f] p-8 md:p-12 rounded-3xl text-white shadow-xl mb-10 text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/20 text-[#F9E8A2] rounded-full text-xs font-bold mb-3">
             <LuTrophy />
-            <span>বার্ষিক পরীক্ষা মেধা তালিকা</span>
+            <span>Annual Merit Honors</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold">
-            শ্রেণিভিত্তিক সেরা ১০ কৃতী শিক্ষার্থী
+            Top 10 Academic Achievers by Class
           </h1>
           <p className="text-sm md:text-base text-gray-200 mt-2 max-w-2xl">
-            বার্ষিক পরীক্ষায় অসাধারণ মেধা ও ফলাফলের ভিত্তিতে প্রতিটি শ্রেণির শীর্ষ ১০ শিক্ষার্থীর আনুষ্ঠানিক মেধা তালিকা।
+            Official merit list honoring the top 10 outstanding scholars in each grade based on aggregate examination performance.
           </p>
         </div>
 
@@ -85,17 +86,17 @@ export default function Top10Page() {
         {/* Top 10 Content */}
         {isTop10Loading ? (
           <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            সেরা ১০ শিক্ষার্থীর তালিকা লোড হচ্ছে...
+            Loading top 10 rankings...
           </div>
         ) : currentStudents.length > 0 ? (
           <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-[#B4E1EB]/60">
             <div className="flex items-center justify-between pb-6 mb-6 border-b border-gray-100">
               <h2 className="text-xl md:text-2xl font-bold text-[#1e3a5f] flex items-center gap-2">
                 <LuAward className="text-[#78A4CB]" />
-                <span>{selectedClass} - সেরা ১০ মেধাতালিকা</span>
+                <span>{selectedClass} — Top 10 Merit List</span>
               </h2>
               <span className="px-3.5 py-1 rounded-full bg-[#F9E8A2] text-[#5c4300] text-xs font-bold">
-                চূড়ান্ত মূল্যায়ন ২০২৫
+                Final Evaluation 2025
               </span>
             </div>
 
@@ -104,14 +105,14 @@ export default function Top10Page() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-[#1e3a5f] text-white text-xs uppercase tracking-wider">
-                    <th className="p-4 rounded-l-xl text-center">অবস্থান</th>
-                    <th className="p-4">শিক্ষার্থী</th>
-                    <th className="p-4 text-center">রোল</th>
-                    <th className="p-4 text-center">শ্রেণি ও শাখা</th>
-                    <th className="p-4 text-center">বিভাগ (গ্রুপ)</th>
-                    <th className="p-4 text-center">মোট নম্বর</th>
-                    <th className="p-4 text-center">জিপিএ (GPA)</th>
-                    <th className="p-4 rounded-r-xl text-center">গ্রেড</th>
+                    <th className="p-4 rounded-l-xl text-center">Rank</th>
+                    <th className="p-4">Student</th>
+                    <th className="p-4 text-center">Roll</th>
+                    <th className="p-4 text-center">Class & Section</th>
+                    <th className="p-4 text-center">Group / Stream</th>
+                    <th className="p-4 text-center">Total Marks</th>
+                    <th className="p-4 text-center">GPA</th>
+                    <th className="p-4 rounded-r-xl text-center">Grade</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-sm">
@@ -166,7 +167,7 @@ export default function Top10Page() {
                         <td className="p-4 text-center">
                           {student.group ? (
                             <span className="px-2.5 py-0.5 rounded-full bg-[#B4E1EB]/40 text-[#1e3a5f] text-xs font-semibold">
-                              {student.group === "Science" ? "বিজ্ঞান" : student.group === "Business Studies" ? "ব্যবসায় শিক্ষা" : student.group === "Humanities" ? "মানবিক" : student.group}
+                              {student.group}
                             </span>
                           ) : (
                             <span className="text-gray-400 text-xs">—</span>
@@ -197,9 +198,12 @@ export default function Top10Page() {
             </div>
           </div>
         ) : (
-          <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            এই শ্রেণির জন্য এখনো কোনো ফলাফল পাওয়া যায়নি।
-          </div>
+          <EmptyState
+            icon="award"
+            title="No Results Recorded Yet"
+            description={`Merit list data for ${selectedClass} has not been published yet. Please check back later.`}
+            size="lg"
+          />
         )}
       </div>
     </div>

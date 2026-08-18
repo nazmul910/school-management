@@ -3,10 +3,11 @@ import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "../providers/AuthContext";
 import QueryProvider from "../providers/QueryProvider";
+import SmoothScroll from "@/components/common/SmoothScroll";
+
 export const metadata: Metadata = {
-  title: "Dawah Quran Academy",
-  description:
-    "Learn Quran online with expert tutors, interactive lessons, and personalized guidance.",
+  title: "School Management System | Authentication",
+  description: "Secure login and authentication portal for students, teachers, and administrators.",
 };
 
 export default function AuthLayout({
@@ -17,12 +18,14 @@ export default function AuthLayout({
   return (
     <html lang="en">
       <body>
-        <QueryProvider>
-          <AuthProvider>
-            {children}
-            <ToastContainer />
-          </AuthProvider>
-        </QueryProvider>
+        <SmoothScroll>
+          <QueryProvider>
+            <AuthProvider>
+              {children}
+              <ToastContainer />
+            </AuthProvider>
+          </QueryProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

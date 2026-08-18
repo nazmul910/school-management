@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { LuSchool, LuGraduationCap, LuPhone, LuMail, LuArrowRight } from "react-icons/lu";
+import { LuSchool, LuPhone, LuArrowRight } from "react-icons/lu";
 import useTeachers from "@/hooks/useTeachers";
+import EmptyState from "@/components/common/EmptyState";
 
 export default function TeacherCard() {
   const { teachersData, isLoading } = useTeachers();
@@ -16,13 +17,13 @@ export default function TeacherCard() {
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B4E1EB]/50 text-[#1e3a5f] text-xs font-bold mb-2">
               <LuSchool />
-              <span>দক্ষ ও নিবেদিতপ্রাণ শিক্ষক পরিষদ</span>
+              <span>Qualified & Dedicated Faculty</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a5f]">
-              আমাদের অভিজ্ঞ শিক্ষকমণ্ডলী
+              Our Experienced Faculty Members
             </h2>
             <p className="text-gray-600 text-sm md:text-base mt-1">
-              উচ্চশিক্ষিত ও প্রশিক্ষণপ্রাপ্ত শিক্ষকগণের আন্তরিক পাঠদানে আলোকিত হোক প্রতিটি শিক্ষার্থী
+              Highly educated and professionally certified mentors guiding each student toward brilliance
             </p>
           </div>
 
@@ -30,7 +31,7 @@ export default function TeacherCard() {
             href="/teachers"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#78A4CB] text-white font-semibold text-sm hover:bg-[#6894bb] transition-all shadow-sm shrink-0"
           >
-            <span>সকল শিক্ষক দেখুন</span>
+            <span>View All Faculty</span>
             <LuArrowRight />
           </Link>
         </div>
@@ -38,7 +39,7 @@ export default function TeacherCard() {
         {/* Teachers Grid */}
         {isLoading ? (
           <div className="py-12 text-center text-gray-500 font-medium">
-            শিক্ষকবৃন্দের তথ্য লোড হচ্ছে...
+            Loading faculty members...
           </div>
         ) : teachers.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -66,13 +67,13 @@ export default function TeacherCard() {
                       {teacher.name}
                     </h3>
                     <p className="text-xs text-gray-500 font-medium mt-0.5">
-                      {teacher.department ? `বিভাগ: ${teacher.department}` : teacher.education}
+                      {teacher.department ? `Dept: ${teacher.department}` : teacher.education}
                     </p>
                   </div>
 
                   {/* Subjects */}
                   <div className="pt-2 border-t border-gray-100">
-                    <p className="text-xs text-gray-500 mb-1 font-medium">পাঠদানের বিষয়:</p>
+                    <p className="text-xs text-gray-500 mb-1 font-medium">Subjects Taught:</p>
                     <div className="flex flex-wrap gap-1">
                       {(teacher.subject || []).map((sub: string, i: number) => (
                         <span
@@ -88,7 +89,7 @@ export default function TeacherCard() {
                   {/* Classes Taught */}
                   {teacher.classes && teacher.classes.length > 0 && (
                     <div className="text-xs text-gray-600">
-                      <span>শ্রেণি: </span>
+                      <span>Classes: </span>
                       <strong className="text-[#1e3a5f]">{teacher.classes.join(", ")}</strong>
                     </div>
                   )}
@@ -98,16 +99,19 @@ export default function TeacherCard() {
                     <span className="flex items-center gap-1">
                       <LuPhone className="text-[#78A4CB]" /> {teacher.number}
                     </span>
-                    <span className="text-[#78A4CB] font-semibold">অভিজ্ঞতা: {teacher.experience || "৩+ বছর"}</span>
+                    <span className="text-[#78A4CB] font-semibold">Exp: {teacher.experience || "3+ Years"}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="py-12 text-center text-gray-500">
-            কোনো শিক্ষকের তথ্য পাওয়া যায়নি।
-          </div>
+          <EmptyState
+            icon="users"
+            title="No Teachers Found"
+            description="Faculty records are currently being updated. Please check back later."
+            size="md"
+          />
         )}
       </div>
     </section>

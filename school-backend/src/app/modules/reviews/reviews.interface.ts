@@ -5,7 +5,7 @@ export interface IReview {
   title?: string;
   comment: string;
   name: string;
-  designation?: string; // e.g. "অভিভাবক" / "শিক্ষার্থী" / "প্রাক্তন শিক্ষার্থী"
+  designation?: string; // e.g. "Guardian" / "Student" / "Alumni"
   rating?: number;
   status: "approved" | "pending";
 }

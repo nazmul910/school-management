@@ -58,7 +58,7 @@ export default function AdminProfile() {
         })
         .catch((err) => {
           console.error(err);
-          toast.error("প্রোফাইল লোড করা সম্ভব হয়নি");
+          toast.error("Failed to load admin profile");
         })
         .finally(() => {
           setIsLoading(false);
@@ -83,13 +83,13 @@ export default function AdminProfile() {
     try {
       const { data } = await axiosSecure.patch(`/users/update-user/${decoded.userId}`, safeProfile);
       if (data.success) {
-        toast.success("প্রোফাইল তথ্য সফলভাবে আপডেট হয়েছে!");
+        toast.success("Profile updated successfully!");
         setIsEditing(false);
         fetchProfile();
       }
     } catch (err: any) {
       console.error(err);
-      toast.error(err.response?.data?.message || "আপডেট ব্যর্থ হয়েছে");
+      toast.error(err.response?.data?.message || "Failed to update profile");
     } finally {
       setIsSaving(false);
     }
@@ -124,13 +124,13 @@ export default function AdminProfile() {
           image: uploadedImgUrl,
         });
         setProfile((prev) => ({ ...prev, avatar: uploadedImgUrl }));
-        toast.success("প্রোফাইল ছবি সফলভাবে আপডেট হয়েছে!");
+        toast.success("Profile photo updated successfully!");
       } else {
-        toast.error("ছবি আপলোড ব্যর্থ হয়েছে।");
+        toast.error("Photo upload failed.");
       }
     } catch (error: any) {
       console.error("Upload error:", error);
-      toast.error(error.response?.data?.message || "ছবি আপলোড করা সম্ভব হয়নি।");
+      toast.error(error.response?.data?.message || "Could not upload photo.");
     } finally {
       setIsUploadingPhoto(false);
     }
@@ -151,15 +151,15 @@ export default function AdminProfile() {
         <section className="bg-white rounded-3xl shadow-xl shadow-[#1e3a5f]/5 border border-[#B4E1EB]/60 p-6 sm:p-8 mt-6">
           <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
             <div>
-              <h2 className="text-xl font-extrabold text-[#1e3a5f]">অ্যাডমিন প্রোফাইল</h2>
-              <p className="text-xs text-gray-500 mt-0.5">আপনার অ্যাকাউন্টের বিবরণ ও পরিচিতি</p>
+              <h2 className="text-xl font-extrabold text-[#1e3a5f]">Administrator Profile</h2>
+              <p className="text-xs text-gray-500 mt-0.5">Account details and contact information</p>
             </div>
             <button
               onClick={() => setIsEditing(true)}
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#B4E1EB]/30 text-[#1e3a5f] hover:bg-[#78A4CB] hover:text-white transition-all duration-200 text-xs font-bold cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
             >
               <AiOutlineEdit size={16} />
-              <span>সম্পাদনা করুন</span>
+              <span>Edit Profile</span>
             </button>
           </div>
 
@@ -179,29 +179,29 @@ export default function AdminProfile() {
             <div className="flex-1 w-full space-y-4">
               <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  পূর্ণ নাম
+                  Full Name
                 </label>
                 <p className="text-base font-bold text-[#1e3a5f] mt-0.5">{profile.name || "—"}</p>
               </div>
 
               <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  ইমেইল ঠিকানা
+                  Email Address
                 </label>
                 <p className="text-sm font-semibold text-gray-800 mt-0.5 font-mono">{profile.email || "—"}</p>
               </div>
 
               <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  মোবাইল নম্বর
+                  Contact Number
                 </label>
-                <p className="text-sm font-semibold text-gray-800 mt-0.5">{profile.contact || "প্রদান করা হয়নি"}</p>
+                <p className="text-sm font-semibold text-gray-800 mt-0.5">{profile.contact || "Not provided"}</p>
               </div>
 
               {profile.bio && (
                 <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
                   <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
-                    পরিচিতি (Bio)
+                    Bio / Overview
                   </label>
                   <p className="text-sm font-medium text-gray-700 mt-0.5 leading-relaxed">{profile.bio}</p>
                 </div>
@@ -213,8 +213,8 @@ export default function AdminProfile() {
         /* EDIT MODE */
         <section className="bg-white rounded-3xl shadow-xl shadow-[#1e3a5f]/5 border border-[#B4E1EB]/60 p-6 sm:p-8 mt-6">
           <div className="border-b border-gray-100 pb-4 mb-6">
-            <h2 className="text-xl font-extrabold text-[#1e3a5f]">প্রোফাইল সম্পাদনা</h2>
-            <p className="text-xs text-gray-500 mt-0.5">নতুন তথ্য দিয়ে অ্যাডমিন প্রোফাইল আপডেট করুন</p>
+            <h2 className="text-xl font-extrabold text-[#1e3a5f]">Edit Profile</h2>
+            <p className="text-xs text-gray-500 mt-0.5">Update administrator account details</p>
           </div>
 
           <div className="flex flex-col items-center mb-8">
@@ -232,7 +232,7 @@ export default function AdminProfile() {
                 {isUploadingPhoto && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center text-white text-xs gap-1">
                     <LuLoader className="animate-spin text-xl text-[#F9E8A2]" />
-                    <span>আপলোড হচ্ছে...</span>
+                    <span>Uploading...</span>
                   </div>
                 )}
               </div>
@@ -242,7 +242,7 @@ export default function AdminProfile() {
                 onClick={handleAvatarClick}
                 disabled={isUploadingPhoto}
                 className="absolute bottom-0 right-0 p-2.5 bg-[#78A4CB] text-white rounded-full shadow-lg hover:bg-[#1e3a5f] hover:scale-110 active:scale-95 transition-all cursor-pointer border-2 border-white"
-                title="ছবি পরিবর্তন করুন"
+                title="Change photo"
               >
                 <LuCamera size={16} />
               </button>
@@ -255,18 +255,18 @@ export default function AdminProfile() {
                 className="hidden"
               />
             </div>
-            <p className="text-xs text-gray-400 mt-3 font-medium">ক্যামেরা আইকনে ক্লিক করে নতুন ছবি সিলেক্ট করুন</p>
+            <p className="text-xs text-gray-400 mt-3 font-medium">Click camera icon to select a new avatar</p>
           </div>
 
           <form className="space-y-4" onSubmit={handleSave}>
             <InputField
-              label="পূর্ণ নাম"
+              label="Full Name"
               value={profile.name}
               onChange={(v) => handleChange("name", v)}
               required
             />
             <InputField
-              label="ইমেইল"
+              label="Email Address"
               type="email"
               value={profile.email}
               onChange={(v) => handleChange("email", v)}
@@ -274,19 +274,19 @@ export default function AdminProfile() {
               required
             />
             <InputField
-              label="মোবাইল নম্বর"
+              label="Contact Number"
               value={profile.contact}
               onChange={(v) => handleChange("contact", v)}
               icon
               placeholder="01XXXXXXXXX"
             />
             <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">পরিচিতি (Bio)</label>
+              <label className="block text-xs font-bold text-gray-700 mb-1">Bio / Overview</label>
               <textarea
                 value={profile.bio}
                 onChange={(e) => handleChange("bio", e.target.value)}
                 rows={3}
-                placeholder="সংক্ষিপ্ত পরিচিতি..."
+                placeholder="Short bio..."
                 className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB] bg-white transition-colors"
               />
             </div>
@@ -298,7 +298,7 @@ export default function AdminProfile() {
                 className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-gray-200 text-gray-700 text-sm font-bold hover:bg-gray-100 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <LuArrowLeft size={16} />
-                <span>ফিরে যান</span>
+                <span>Go Back</span>
               </button>
 
               <button
@@ -313,12 +313,12 @@ export default function AdminProfile() {
                 {isSaving ? (
                   <>
                     <LuLoader className="animate-spin text-base" />
-                    <span>সংরক্ষণ হচ্ছে...</span>
+                    <span>Saving...</span>
                   </>
                 ) : (
                   <>
                     <LuCheck size={16} />
-                    <span>পরিবর্তন সংরক্ষণ করুন</span>
+                    <span>Save Changes</span>
                   </>
                 )}
               </button>

@@ -18,14 +18,14 @@ export default function NoticeTicker() {
         <div className="flex items-center gap-3 shrink-0">
           <div className="flex items-center gap-1.5 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-md animate-pulse uppercase tracking-wider">
             <HiOutlineSpeakerphone size={16} />
-            <span>জরুরি নোটিশ</span>
+            <span>Latest Notice</span>
           </div>
         </div>
 
         {/* Center: Latest Notice Text */}
         <div className="flex-1 overflow-hidden">
           {isLoading ? (
-            <p className="text-xs text-gray-300">নোটিশ লোড হচ্ছে...</p>
+            <p className="text-xs text-gray-300">Loading notices...</p>
           ) : latestNotice ? (
             <div className="flex items-center gap-3 text-sm">
               <span className="text-[#F9E8A2] font-semibold hidden sm:inline">[{latestNotice.publishDate}]:</span>
@@ -43,12 +43,12 @@ export default function NoticeTicker() {
                   className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-500/20 text-red-300 border border-red-400/40 rounded text-xs hover:bg-red-500 hover:text-white transition-colors shrink-0"
                 >
                   <FaFilePdf size={11} />
-                  <span>PDF দেখুন</span>
+                  <span>View PDF</span>
                 </a>
               )}
             </div>
           ) : (
-            <p className="text-xs text-gray-300">এই মুহূর্তে কোনো নতুন নোটিশ নেই।</p>
+            <p className="text-xs text-gray-300">No active notices at this moment.</p>
           )}
         </div>
 
@@ -57,7 +57,7 @@ export default function NoticeTicker() {
           href="/notices"
           className="text-xs text-[#F9E8A2] hover:text-white font-semibold flex items-center gap-1 shrink-0 transition-colors"
         >
-          <span>সকল নোটিশ ({notices.length})</span>
+          <span>All Notices ({notices.length})</span>
           <BsArrowRight />
         </Link>
       </div>

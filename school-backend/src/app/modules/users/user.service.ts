@@ -27,7 +27,7 @@ const createUserToDB = async (payload: IUser) => {
       roll: (count % 50) + 1,
       class: "Class 6",
       section: "A",
-      address: "বাংলাদেশ",
+      address: "Bangladesh",
       isDeleted: false,
     };
 

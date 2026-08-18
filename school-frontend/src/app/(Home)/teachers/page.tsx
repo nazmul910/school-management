@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { LuSchool, LuPhone, LuMail, LuGraduationCap, LuSearch, LuBookOpen } from "react-icons/lu";
+import { LuSchool, LuPhone, LuSearch, LuBookOpen } from "react-icons/lu";
 import useTeachers from "@/hooks/useTeachers";
+import EmptyState from "@/components/common/EmptyState";
 
 export default function TeachersPage() {
   const { teachersData, isLoading } = useTeachers();
@@ -10,8 +11,6 @@ export default function TeachersPage() {
   const [selectedDept, setSelectedDept] = useState("all");
 
   const teachers = teachersData?.data || [];
-
-  const departments = ["all", ...Array.from(new Set(teachers.map((t: any) => t.department).filter(Boolean)))];
 
   const filteredTeachers = teachers.filter((t: any) => {
     const matchesSearch =
@@ -31,13 +30,13 @@ export default function TeachersPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/20 text-[#F9E8A2] rounded-full text-xs font-bold mb-3">
               <LuSchool />
-              <span>শিক্ষক পরিচিতি ও তথ্যাবলী</span>
+              <span>Faculty Directory</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold">
-              বিদ্যালয়ের সম্মানিত শিক্ষকমণ্ডলী
+              Distinguished Faculty & Instructors
             </h1>
             <p className="text-sm md:text-base text-gray-200 mt-2 max-w-2xl">
-              উচ্চশিক্ষিত, নিবেদিতপ্রাণ ও বিষয়ভিত্তিক প্রশিক্ষণপ্রাপ্ত শিক্ষকগণের আন্তরিক পাঠদানে আমাদের শিক্ষার্থীরা সর্বদা এগিয়ে।
+              Meet our team of experienced, highly educated, and dedicated teachers committed to guiding every student to academic excellence.
             </p>
           </div>
 
@@ -45,7 +44,7 @@ export default function TeachersPage() {
           <div className="w-full md:w-80 relative">
             <input
               type="text"
-              placeholder="শিক্ষকের নাম বা বিষয় দিয়ে খুঁজুন..."
+              placeholder="Search teacher by name or subject..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-white text-gray-800 text-sm focus:outline-none shadow-md placeholder:text-gray-400"
@@ -57,7 +56,7 @@ export default function TeachersPage() {
         {/* Teachers Grid */}
         {isLoading ? (
           <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            শিক্ষকবৃন্দের তথ্য লোড হচ্ছে...
+            Loading faculty members...
           </div>
         ) : filteredTeachers.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -86,12 +85,12 @@ export default function TeachersPage() {
                         {teacher.name}
                       </h3>
                       <p className="text-xs text-gray-500 font-medium mt-0.5">
-                        {teacher.department ? `বিভাগ: ${teacher.department}` : "সাধারণ"}
+                        {teacher.department ? `Department: ${teacher.department}` : "General"}
                       </p>
                     </div>
 
                     <div className="text-xs text-gray-600 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-                      <p className="font-semibold text-[#1e3a5f] mb-0.5">শিক্ষাগত যোগ্যতা:</p>
+                      <p className="font-semibold text-[#1e3a5f] mb-0.5">Education & Qualifications:</p>
                       <p className="line-clamp-2">{teacher.education}</p>
                     </div>
 
@@ -99,7 +98,7 @@ export default function TeachersPage() {
                     <div>
                       <p className="text-xs text-gray-500 mb-1.5 font-medium flex items-center gap-1">
                         <LuBookOpen className="text-[#78A4CB]" />
-                        <span>পাঠদানের বিষয়:</span>
+                        <span>Subjects Taught:</span>
                       </p>
                       <div className="flex flex-wrap gap-1">
                         {(teacher.subject || []).map((sub: string, i: number) => (
@@ -116,7 +115,7 @@ export default function TeachersPage() {
                     {/* Classes */}
                     {teacher.classes && teacher.classes.length > 0 && (
                       <div className="text-xs text-gray-600">
-                        <span className="text-gray-400">শ্রেণি: </span>
+                        <span className="text-gray-400">Classes: </span>
                         <strong className="text-[#1e3a5f]">{teacher.classes.join(", ")}</strong>
                       </div>
                     )}
@@ -134,15 +133,20 @@ export default function TeachersPage() {
                   <span className="flex items-center gap-1">
                     <LuPhone className="text-[#78A4CB]" /> {teacher.number}
                   </span>
-                  <span className="font-semibold text-[#78A4CB]">{teacher.experience || "অভিজ্ঞ"}</span>
+                  <span className="font-semibold text-[#78A4CB]">Exp: {teacher.experience || "Experienced"}</span>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            কোনো শিক্ষক পাওয়া যায়নি।
-          </div>
+          <EmptyState
+            icon="users"
+            title="No Teachers Found"
+            description={searchTerm ? `No teachers found matching "${searchTerm}". Try another search keyword.` : "No teacher records are available right now."}
+            actionLabel={searchTerm ? "Reset Search" : undefined}
+            onAction={searchTerm ? () => setSearchTerm("") : undefined}
+            size="lg"
+          />
         )}
       </div>
     </div>

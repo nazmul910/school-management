@@ -1,8 +1,7 @@
-"use client"
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { LuClock, LuX } from "react-icons/lu";
-
 
 interface Timings {
   Fajr: string;
@@ -27,12 +26,12 @@ const PRAYER_KEYS: (keyof Timings)[] = [
   "Isha",
 ];
 
-const BANGLA_NAMES: Record<keyof Timings, string> = {
-  Fajr: "ফজর",
-  Dhuhr: "যোহর",
-  Asr: "আসর",
-  Maghrib: "মাগরিব",
-  Isha: "ইশা",
+const ENGLISH_NAMES: Record<keyof Timings, string> = {
+  Fajr: "Fajr",
+  Dhuhr: "Dhuhr",
+  Asr: "Asr",
+  Maghrib: "Maghrib",
+  Isha: "Isha",
 };
 
 function toAmPm(time: string) {
@@ -62,15 +61,15 @@ function getNextPrayer(timings: Timings) {
   for (const k of PRAYER_KEYS) {
     const [h, m] = timings[k].split(":").map(Number);
     if (h * 60 + m > now)
-      return { name: BANGLA_NAMES[k], time: toAmPm(timings[k]) };
+      return { name: ENGLISH_NAMES[k], time: toAmPm(timings[k]) };
   }
-  return { name: BANGLA_NAMES["Fajr"], time: toAmPm(timings["Fajr"]) };
+  return { name: ENGLISH_NAMES["Fajr"], time: toAmPm(timings["Fajr"]) };
 }
 
 function PrayerWidget() {
   const [data, setData] = useState<PrayerData | null>(null);
   const [open, setOpen] = useState(false);
-  const [visible, setVisible] = useState(false); // controls animation state
+  const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -118,7 +117,7 @@ function PrayerWidget() {
       const yyyy = today.getFullYear();
       try {
         const res = await fetch(
-          `https://api.aladhan.com/v1/timingsByCity/${dd}-${mm}-${yyyy}?city=Dhaka&country=Bangladesh&method=2`,
+          `https://api.aladhan.com/v1/timingsByCity/${dd}-${mm}-${yyyy}?city=Dhaka&country=Bangladesh&method=2`
         );
         const json = await res.json();
         const t = json.data.timings;
@@ -136,7 +135,7 @@ function PrayerWidget() {
           hijriYear: d.hijri.year,
         });
       } catch {
-
+        // error handling
       } finally {
         setLoading(false);
       }
@@ -151,10 +150,10 @@ function PrayerWidget() {
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center gap-2 bg-[#ffd54f] hover:bg-primary text-white duration-300 font-semibold text-sm px-5 py-3 rounded-t-xl transition-colors"
+        className="flex items-center gap-2 bg-[#ffd54f] hover:bg-[#78A4CB] text-slate-800 hover:text-white duration-300 font-semibold text-sm px-5 py-3 rounded-t-xl transition-colors shadow-sm"
       >
         <LuClock size={16} />
-        নামাজের সময়
+        Prayer Times
       </button>
 
       {open && (
@@ -175,28 +174,27 @@ function PrayerWidget() {
           >
             <button
               onClick={handleClose}
-              className="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 text-gray-500 hover:text-primary transition-colors duration-200"
+              className="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 text-gray-500 hover:text-[#78A4CB] transition-colors duration-200"
             >
               <LuX size={18} />
             </button>
 
             {loading ? (
               <div className="p-10 text-center text-sm text-gray-400">
-                লোড হচ্ছে...
+                Loading prayer schedule...
               </div>
             ) : data ? (
               <>
-                <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-50">
+                <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-50 bg-slate-50/50">
                   <div className="w-10 h-10 bg-amber-400 rounded-xl flex items-center justify-center text-xl">
                     🕌
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-primary">
-                      নামাজের সময়সূচি
+                    <p className="text-sm font-bold text-slate-800">
+                      Prayer Schedule
                     </p>
                     <p className="text-xs text-gray-400">
-                      {data.readableDate} • {data.hijriMonth} {data.hijriYear}{" "}
-                      AH
+                      {data.readableDate} • {data.hijriMonth} {data.hijriYear} AH
                     </p>
                   </div>
                 </div>
@@ -212,17 +210,17 @@ function PrayerWidget() {
                         <span
                           className={`text-sm font-medium ${
                             isActive
-                              ? "text-amber-500 font-bold"
+                              ? "text-amber-600 font-bold"
                               : "text-gray-700"
                           }`}
                         >
-                          {BANGLA_NAMES[key]}
+                          {ENGLISH_NAMES[key]}
                         </span>
                         <span
                           className={`text-sm font-semibold px-3 py-1 rounded-full ${
                             isActive
-                              ? "bg-amber-50 text-amber-500"
-                              : "bg-slate-50 text-primary"
+                              ? "bg-amber-100 text-amber-700"
+                              : "bg-slate-100 text-slate-700"
                           }`}
                         >
                           {toAmPm(data.timings[key])}
@@ -233,11 +231,11 @@ function PrayerWidget() {
                 </div>
 
                 {nextPrayer && (
-                  <div className="mx-5 mb-5 bg-amber-400 rounded-xl px-4 py-3 flex justify-between items-center">
-                    <span className="text-xs text-amber-900 font-semibold">
-                      পরবর্তী নামাজ
+                  <div className="mx-5 mb-5 bg-amber-400 rounded-xl px-4 py-3 flex justify-between items-center text-amber-950">
+                    <span className="text-xs font-semibold">
+                      Next Prayer
                     </span>
-                    <span className="text-sm text-amber-900 font-bold">
+                    <span className="text-sm font-bold">
                       {nextPrayer.name} — {nextPrayer.time}
                     </span>
                   </div>
@@ -245,7 +243,7 @@ function PrayerWidget() {
               </>
             ) : (
               <div className="p-10 text-center text-sm text-red-400">
-                তথ্য লোড করা যায়নি।
+                Could not load prayer times.
               </div>
             )}
           </div>
@@ -254,6 +252,5 @@ function PrayerWidget() {
     </>
   );
 }
-
 
 export default PrayerWidget;

@@ -7,10 +7,10 @@ const teacherSchema = new Schema<ITeacher>(
     teacherId: { type: String, default: "" },
     email: { type: String, required: true },
     number: { type: String, required: true },
-    designation: { type: String, required: true, default: "সহকারী শিক্ষক" },
-    department: { type: String, default: "সাধারণ" },
+    designation: { type: String, required: true, default: "Assistant Teacher" },
+    department: { type: String, default: "General" },
     education: { type: String, required: true },
-    experience: { type: String, default: "৩+ বছর" },
+    experience: { type: String, default: "3+ Years" },
     subject: {
       type: [String],
       required: true,

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaFilePdf, FaDownload, FaEye, FaSearch, FaCalendarAlt, FaBullhorn } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import useNotices from "@/hooks/useNotices";
+import EmptyState from "@/components/common/EmptyState";
 
 export default function NoticesPage() {
   const { noticesData, isLoading } = useNotices();
@@ -26,13 +27,13 @@ export default function NoticesPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/20 text-[#F9E8A2] rounded-full text-xs font-bold mb-3">
               <FaBullhorn />
-              <span>বিদ্যালয় নোটিশ বোর্ড</span>
+              <span>Official Notice Board</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold">
-              সকল জরুরি নোটিশ ও বিজ্ঞপ্তি
+              Academic Notices & Announcements
             </h1>
             <p className="text-sm md:text-base text-gray-200 mt-2 max-w-2xl">
-              বিদ্যালয়ের পরীক্ষা, ভর্তি, ছুটি ও অন্যান্য প্রশাসনিক বিজ্ঞপ্তি নিয়মিতভাবে এই নোটিশ বোর্ডে প্রকাশ করা হয়।
+              Stay up-to-date with official announcements regarding exams, schedules, admissions, holidays, and campus events.
             </p>
           </div>
 
@@ -40,7 +41,7 @@ export default function NoticesPage() {
           <div className="w-full md:w-80 relative">
             <input
               type="text"
-              placeholder="নোটিশ খুঁজুন (শিরোনাম বা তারিখ)..."
+              placeholder="Search notices by keyword or date..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-white text-gray-800 text-sm focus:outline-none shadow-md placeholder:text-gray-400"
@@ -52,7 +53,7 @@ export default function NoticesPage() {
         {/* Notices Content */}
         {isLoading ? (
           <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            নোটিশসমূহ লোড হচ্ছে...
+            Loading notices...
           </div>
         ) : filteredNotices.length > 0 ? (
           <div className="space-y-4">
@@ -70,12 +71,12 @@ export default function NoticesPage() {
                   <div className="flex flex-wrap items-center gap-2.5">
                     {notice.isPinned && (
                       <span className="px-2.5 py-0.5 bg-red-600 text-white font-bold text-xs rounded-md uppercase">
-                        জরুরি
+                        Important
                       </span>
                     )}
                     <span className="flex items-center gap-1.5 text-xs text-gray-500 font-semibold bg-gray-100 px-3 py-1 rounded-full">
                       <FaCalendarAlt className="text-[#78A4CB]" />
-                      <span>প্রকাশিত: {notice.publishDate}</span>
+                      <span>Published: {notice.publishDate}</span>
                     </span>
                   </div>
 
@@ -96,7 +97,7 @@ export default function NoticesPage() {
                       className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#B4E1EB]/50 text-[#1e3a5f] font-semibold text-xs md:text-sm rounded-xl hover:bg-[#78A4CB] hover:text-white transition-colors border border-[#95BDD7]"
                     >
                       <FaEye />
-                      <span>PDF দেখুন</span>
+                      <span>View PDF</span>
                     </button>
                     <a
                       href={notice.pdfUrl}
@@ -106,19 +107,24 @@ export default function NoticesPage() {
                       className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#78A4CB] text-white font-semibold text-xs md:text-sm rounded-xl hover:bg-[#6894bb] shadow-sm transition-colors"
                     >
                       <FaDownload />
-                      <span>ডাউনলোড</span>
+                      <span>Download</span>
                     </a>
                   </div>
                 ) : (
-                  <span className="text-xs text-gray-400 italic">কোনো সংযুক্তি নেই</span>
+                  <span className="text-xs text-gray-400 italic">No attachments</span>
                 )}
               </div>
             ))}
           </div>
         ) : (
-          <div className="bg-white p-12 rounded-3xl text-center shadow-sm text-gray-500 font-medium">
-            কোনো নোটিশ পাওয়া যায়নি।
-          </div>
+          <EmptyState
+            icon="file"
+            title="No Notices Found"
+            description={searchTerm ? `No announcements found matching "${searchTerm}". Try searching for another keyword.` : "There are currently no published announcements."}
+            actionLabel={searchTerm ? "Clear Search" : undefined}
+            onAction={searchTerm ? () => setSearchTerm("") : undefined}
+            size="lg"
+          />
         )}
 
         {/* PDF Modal Viewer */}
@@ -138,7 +144,7 @@ export default function NoticesPage() {
                     rel="noopener noreferrer"
                     className="px-3 py-1 bg-[#78A4CB] text-white text-xs font-semibold rounded hover:bg-[#6894bb] flex items-center gap-1"
                   >
-                    <FaDownload /> নতুন ট্যাবে খুলুন
+                    <FaDownload /> Open in New Tab
                   </a>
                   <button
                     onClick={() => setSelectedPdf(null)}

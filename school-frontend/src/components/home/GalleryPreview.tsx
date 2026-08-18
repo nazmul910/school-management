@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { LuImage, LuArrowRight } from "react-icons/lu";
 import useGallery from "@/hooks/useGallery";
+import EmptyState from "@/components/common/EmptyState";
 
 export default function GalleryPreview() {
   const { galleryData, isLoading } = useGallery();
@@ -16,13 +17,13 @@ export default function GalleryPreview() {
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F9E8A2]/60 text-[#5c4300] text-xs font-bold mb-2">
               <LuImage />
-              <span>ছবি ও ভিডিও অ্যালবাম</span>
+              <span>Campus Album</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1e3a5f]">
-              স্কুল ফটো গ্যালারি
+              School Photo Gallery
             </h2>
             <p className="text-gray-600 text-sm md:text-base mt-1">
-              বিদ্যালয়ের বিভিন্ন শিক্ষামূলক কার্যক্রম, উৎসব ও স্মৃতিময় মুহূর্তের আলোকচিত্র
+              Capturing memorable academic activities, cultural festivals, and student life
             </p>
           </div>
 
@@ -30,7 +31,7 @@ export default function GalleryPreview() {
             href="/gallery"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#78A4CB] text-white font-semibold text-sm hover:bg-[#6894bb] transition-all shadow-sm shrink-0"
           >
-            <span>সম্পূর্ণ গ্যালারি দেখুন</span>
+            <span>View Full Gallery</span>
             <LuArrowRight />
           </Link>
         </div>
@@ -38,7 +39,7 @@ export default function GalleryPreview() {
         {/* Gallery Grid */}
         {isLoading ? (
           <div className="py-12 text-center text-gray-500 font-medium">
-            গ্যালারির ছবি লোড হচ্ছে...
+            Loading photo gallery...
           </div>
         ) : galleryItems.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -56,7 +57,7 @@ export default function GalleryPreview() {
 
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                   <span className="inline-block px-2.5 py-0.5 rounded bg-[#F9E8A2] text-[#5c4300] text-xs font-bold mb-2">
-                    {item.category || "ক্যাম্পাস"}
+                    {item.category || "Campus"}
                   </span>
                   <h3 className="text-base font-bold leading-snug line-clamp-2">
                     {item.title}
@@ -71,9 +72,12 @@ export default function GalleryPreview() {
             ))}
           </div>
         ) : (
-          <div className="py-12 text-center text-gray-500">
-            কোনো ছবি পাওয়া যায়নি।
-          </div>
+          <EmptyState
+            icon="image"
+            title="No Gallery Photos Found"
+            description="Our photo moments are currently being updated. Please visit again soon!"
+            size="md"
+          />
         )}
       </div>
     </section>

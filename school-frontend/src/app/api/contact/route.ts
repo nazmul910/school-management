@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
     if (!from_name || !from_email || !message) {
       return NextResponse.json(
-        { success: false, message: "সব তথ্য দিন" },
+        { success: false, message: "Please fill in all required fields" },
         { status: 400 }
       );
     }

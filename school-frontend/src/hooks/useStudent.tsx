@@ -10,7 +10,7 @@ export default function useStudent(filters: Record<string, any> = {}) {
     queryKey: ["students", filters],
     queryFn: async () => {
       const params = new URLSearchParams();
-      if (filters.class && filters.class !== "all" && filters.class !== "সকল") {
+      if (filters.class && filters.class !== "all") {
         params.append("class", filters.class);
       }
       if (filters.section && filters.section !== "all") {

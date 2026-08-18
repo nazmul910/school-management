@@ -3,20 +3,20 @@ import bd from "@/assets/flags/bd-flag.webp";
 import can from "@/assets/flags/can-flag.webp";
 import usa from "@/assets/flags/usa-flag.webp";
 import Image from "next/image";
-import { FaHandFist } from "react-icons/fa6";
+import { FaAward } from "react-icons/fa6";
 import { PiStudentFill } from "react-icons/pi";
 
 const StudentStatus = () => {
   const flags = [
     { src: bd, alt: "Bangladesh" },
-    { src: usa, alt: "America" },
+    { src: usa, alt: "United States" },
     { src: can, alt: "Canada" },
     { src: aus, alt: "Australia" },
   ];
 
   const stats = [
-    { number: "১০০০+", label: "সফল শিক্ষার্থী" },
-    { number: "৪টি", label: "দেশে আমাদের উপস্থিতি" },
+    { number: "1500+", label: "Successful Graduates" },
+    { number: "100%", label: "Curriculum Standard" },
   ];
 
   return (
@@ -24,28 +24,27 @@ const StudentStatus = () => {
       <div className="container mx-auto px-4 max-w-5xl">
 
         {/* Section heading */}
-        <p className="text-center text-[11px] uppercase tracking-[3px] text-[#8a7a60] mb-2">
-          আমাদের সম্পর্কে
+        <p className="text-center text-[11px] uppercase tracking-[3px] text-[#8a7a60] mb-2 font-semibold">
+          About Our Standards
         </p>
-        <h2 className="text-center text-3xl font-bold text-primary mb-12">
-          আলহামদুলিল্লাহ!
+        <h2 className="text-center text-3xl font-bold text-[#1e3a5f] mb-12">
+          Excellence in Academic Guidance
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           {/* Left dark panel */}
-          <div className="bg-primary rounded-3xl p-10 flex flex-col justify-between min-h-[340px]">
+          <div className="bg-[#1e3a5f] rounded-3xl p-10 flex flex-col justify-between min-h-[340px]">
             <div>
-              <p className="text-[10px] uppercase tracking-[3px] text-[#6a85aa] mb-3">
-                কুরআন শিক্ষা একাডেমি
+              <p className="text-[10px] uppercase tracking-[3px] text-[#95BDD7] mb-3">
+                Ideal Model School & College
               </p>
               <h3 className="text-2xl font-bold text-white leading-snug">
-                বিশ্বজুড়ে বাংলাভাষীদের<br />কুরআন শিক্ষায়
+                Building Global Standard<br />Education & Ethics
               </h3>
               <div className="w-11 h-[3px] bg-amber-400 rounded-full my-5" />
-              <p className="text-sm text-[#8fa3c0] leading-7">
-                আমরা দীর্ঘদিন ধরে আমেরিকা, কানাডা, অস্ট্রেলিয়া এবং বাংলাদেশে
-                বসবাসকারী বাংলাভাষীদের কুরআন শিক্ষা দিয়ে আসছি।
+              <p className="text-sm text-slate-300 leading-7">
+                Our institution provides comprehensive academic coaching, modern scientific tools, and character mentorship for lifelong success.
               </p>
             </div>
             <div className="flex items-center gap-3 mt-8">
@@ -69,31 +68,31 @@ const StudentStatus = () => {
             <div className="bg-white rounded-2xl p-6 border border-black/5 flex flex-col gap-4 flex-1">
               <div className="flex items-center gap-4">
                 <div className="w-11 h-11 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl shrink-0">
-                  <FaHandFist />
+                  <FaAward />
                 </div>
                 <h4 className="font-semibold text-[#1a2340] text-[15px]">
-                  শিক্ষার্থীদের আস্থা
+                  Trusted by Guardians
                 </h4>
               </div>
               <div className="h-px bg-gray-100" />
               <p className="text-[13px] text-gray-500 leading-relaxed">
-                আমাদের একাডেমি শিক্ষার্থীদের গ্রহণযোগ্যতা ও কুরআন শিক্ষার মানের জন্য নির্ভরযোগ্য।
+                Parents trust our dedicated mentors, safety records, and comprehensive pedagogical methodologies.
               </p>
             </div>
 
             {/* Feature card 2 */}
             <div className="bg-white rounded-2xl p-6 border border-black/5 flex flex-col gap-4 flex-1">
               <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-[#e8edf7] text-primary flex items-center justify-center text-xl shrink-0">
+                <div className="w-11 h-11 rounded-xl bg-[#e8edf7] text-[#1e3a5f] flex items-center justify-center text-xl shrink-0">
                   <PiStudentFill />
                 </div>
                 <h4 className="font-semibold text-[#1a2340] text-[15px]">
-                  সফল সমাপ্তি
+                  Distinguished Alumni
                 </h4>
               </div>
               <div className="h-px bg-gray-100" />
               <p className="text-[13px] text-gray-500 leading-relaxed">
-                আমাদের একাডেমি থেকে সফলভাবে কুরআন শিক্ষাগ্রহণ সম্পন্ন করেছে বহু প্রতিভাবান শিক্ষার্থী।
+                Our graduates have moved on to leading public universities, engineering faculties, and professional fields.
               </p>
             </div>
 
@@ -102,10 +101,10 @@ const StudentStatus = () => {
               {stats.map((s) => (
                 <div
                   key={s.label}
-                  className="bg-primary rounded-2xl py-5 px-4 text-center"
+                  className="bg-[#1e3a5f] rounded-2xl py-5 px-4 text-center"
                 >
                   <p className="text-2xl font-bold text-white mb-1">{s.number}</p>
-                  <p className="text-[11px] text-[#fff] tracking-wide">{s.label}</p>
+                  <p className="text-[11px] text-slate-200 tracking-wide">{s.label}</p>
                 </div>
               ))}
             </div>

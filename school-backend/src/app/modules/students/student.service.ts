@@ -17,7 +17,7 @@ const createStudentToDB = async (payload: IStudent) => {
 const getAllStudentsFromDB = async (query: Record<string, any> = {}) => {
   const filter: Record<string, any> = { isDeleted: false };
 
-  if (query.class && query.class !== "all" && query.class !== "সকল") {
+  if (query.class && query.class !== "all") {
     filter.class = query.class;
   }
   if (query.section && query.section !== "all") {
