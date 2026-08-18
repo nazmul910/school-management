@@ -12,11 +12,11 @@ const examTypes = ["Final Examination", "Half Yearly", "First Term"];
 const examYears = ["2025", "2026"];
 
 const defaultSubjects = [
-  { subject: "বাংলা", marks: 85 },
-  { subject: "ইংরেজি", marks: 80 },
-  { subject: "সাধারণ গণিত", marks: 90 },
-  { subject: "বিজ্ঞান / পদার্থবিজ্ঞান", marks: 88 },
-  { subject: "তথ্য ও যোগাযোগ প্রযুক্তি", marks: 45 },
+  { subject: "Bangla", marks: 85 },
+  { subject: "English", marks: 80 },
+  { subject: "General Mathematics", marks: 90 },
+  { subject: "Science / Physics", marks: 88 },
+  { subject: "ICT", marks: 45 },
 ];
 
 export default function ManageResults() {
@@ -32,12 +32,10 @@ export default function ManageResults() {
   const allStudents = studentData?.data || [];
   const results = resultsData?.data || [];
 
-  // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  // Form State
   const [formData, setFormData] = useState({
     studentName: "",
     studentId: "",
@@ -99,7 +97,6 @@ export default function ManageResults() {
     setIsModalOpen(true);
   };
 
-  // Select a student from database dropdown to auto-fill details
   const handleSelectStudent = (studentId: string) => {
     const found = allStudents.find((s: any) => s._id === studentId);
     if (found) {
@@ -127,7 +124,7 @@ export default function ManageResults() {
   const handleAddSubjectRow = () => {
     setFormData((prev) => ({
       ...prev,
-      subjectMarks: [...prev.subjectMarks, { subject: "নতুন বিষয়", marks: 80 }],
+      subjectMarks: [...prev.subjectMarks, { subject: "New Subject", marks: 80 }],
     }));
   };
 
@@ -155,24 +152,24 @@ export default function ManageResults() {
         { id: editingId, payload },
         {
           onSuccess: () => {
-            Swal.fire("সফল", "ফলাফল সফলভাবে আপডেট হয়েছে।", "success");
+            Swal.fire("Success", "Result updated successfully.", "success");
             setIsModalOpen(false);
             resetForm();
           },
           onError: (err: any) => {
-            Swal.fire("ত্রুটি", err?.response?.data?.message || "আপডেট ব্যর্থ হয়েছে।", "error");
+            Swal.fire("Error", err?.response?.data?.message || "Update failed.", "error");
           },
         }
       );
     } else {
       addResult.mutate(payload, {
         onSuccess: () => {
-          Swal.fire("সফল", "ফলাফল সফলভাবে সংরক্ষণ করা হয়েছে।", "success");
+          Swal.fire("Success", "Result saved successfully.", "success");
           setIsModalOpen(false);
           resetForm();
         },
         onError: (err: any) => {
-          Swal.fire("ত্রুটি", err?.response?.data?.message || "সংরক্ষণ করা সম্ভব হয়নি।", "error");
+          Swal.fire("Error", err?.response?.data?.message || "Could not save result.", "error");
         },
       });
     }
@@ -180,26 +177,25 @@ export default function ManageResults() {
 
   const handleDelete = (id: string, name: string) => {
     Swal.fire({
-      title: "আপনি কি নিশ্চিত?",
-      text: `শিক্ষার্থী "${name}" এর ফলাফল মুছে ফেলা হবে!`,
+      title: "Are you sure?",
+      text: `Result for student "${name}" will be permanently deleted!`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#78A4CB",
-      confirmButtonText: "হ্যাঁ, মুছুন",
-      cancelButtonText: "বাতিল",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
     }).then((res) => {
       if (res.isConfirmed) {
         deleteResult.mutate(id, {
           onSuccess: () => {
-            Swal.fire("মুছে ফেলা হয়েছে!", "ফলাফল সফলভাবে ডিলিট হয়েছে।", "success");
+            Swal.fire("Deleted!", "Result has been deleted successfully.", "success");
           },
         });
       }
     });
   };
 
-  // Toggle Top 10 flag directly from table
   const handleToggleTop10 = (item: any) => {
     const updatedStatus = !item.isTop10Eligible;
     updateResult.mutate({
@@ -215,10 +211,10 @@ export default function ManageResults() {
         <div>
           <h1 className="text-2xl font-extrabold text-[#1e3a5f] flex items-center gap-2.5">
             <FaAward className="text-[#78A4CB]" />
-            <span>ফলাফল ও সেরা ১০ ব্যবস্থাপনা (Result & Top 10)</span>
+            <span>Results & Top 10 Management</span>
           </h1>
           <p className="text-xs md:text-sm text-gray-500 mt-1">
-            বার্ষিক ও অন্যান্য পরীক্ষার ফলাফল এন্ট্রি, নম্বর হিসাব এবং সেরা ১০ মেধা তালিকা নিয়ন্ত্রণ করুন।
+            Enter exam results, calculate marks, and manage the Top 10 merit list.
           </p>
         </div>
 
@@ -227,7 +223,7 @@ export default function ManageResults() {
           className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
         >
           <FaPlus />
-          <span>নতুন ফলাফল যোগ করুন</span>
+          <span>Add New Result</span>
         </button>
       </div>
 
@@ -239,7 +235,7 @@ export default function ManageResults() {
             onChange={(e) => setFilterClass(e.target.value)}
             className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none bg-white font-medium"
           >
-            <option value="all">সকল শ্রেণি</option>
+            <option value="all">All Classes</option>
             {classes.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -254,7 +250,7 @@ export default function ManageResults() {
             onChange={(e) => setFilterExam(e.target.value)}
             className="px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none bg-white font-medium"
           >
-            <option value="all">সকল পরীক্ষা</option>
+            <option value="all">All Exams</option>
             {examTypes.map((e) => (
               <option key={e} value={e}>
                 {e}
@@ -267,39 +263,39 @@ export default function ManageResults() {
       {/* Results Table */}
       <div className="bg-white rounded-3xl shadow-sm border border-[#B4E1EB]/60 overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="font-bold text-lg text-[#1e3a5f]">ফলাফল তালিকা ({results.length} টি)</h2>
+          <h2 className="font-bold text-lg text-[#1e3a5f]">Results List ({results.length} total)</h2>
         </div>
 
         {isLoading ? (
-          <div className="p-12 text-center text-gray-500 font-medium">লোড হচ্ছে...</div>
+          <div className="p-12 text-center text-gray-500 font-medium">Loading...</div>
         ) : results.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm border-collapse">
               <thead>
                 <tr className="bg-[#1e3a5f] text-white text-xs uppercase tracking-wider">
-                  <th className="p-4 text-center">মেধাক্রম</th>
-                  <th className="p-4">শিক্ষার্থী</th>
-                  <th className="p-4 text-center">শ্রেণি ও রোল</th>
-                  <th className="p-4 text-center">পরীক্ষা ও সন</th>
-                  <th className="p-4 text-center">মোট নম্বর</th>
-                  <th className="p-4 text-center">জিপিএ</th>
-                  <th className="p-4 text-center">গ্রেড</th>
-                  <th className="p-4 text-center">টপ ১০ ফ্ল্যাগ</th>
-                  <th className="p-4 text-center">অ্যাকশন</th>
+                  <th className="p-4 text-center">Rank</th>
+                  <th className="p-4">Student</th>
+                  <th className="p-4 text-center">Class & Roll</th>
+                  <th className="p-4 text-center">Exam & Year</th>
+                  <th className="p-4 text-center">Total Marks</th>
+                  <th className="p-4 text-center">GPA</th>
+                  <th className="p-4 text-center">Grade</th>
+                  <th className="p-4 text-center">Top 10 Flag</th>
+                  <th className="p-4 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {results.map((item: any) => (
                   <tr key={item._id} className="hover:bg-blue-50/20 transition-colors">
                     <td className="p-4 text-center font-extrabold text-[#78A4CB]">
-                      {item.position}ম
+                      #{item.position}
                     </td>
                     <td className="p-4">
                       <strong className="text-[#1e3a5f] font-bold block">{item.studentName}</strong>
                       <span className="text-xs text-gray-400 font-mono">{item.studentId}</span>
                     </td>
                     <td className="p-4 text-center text-xs text-gray-700">
-                      <strong>{item.class}</strong> (রোল: {item.studentRoll})
+                      <strong>{item.class}</strong> (Roll: {item.studentRoll})
                     </td>
                     <td className="p-4 text-center text-xs text-gray-600">
                       {item.examType} ({item.examYear})
@@ -321,7 +317,7 @@ export default function ManageResults() {
                         }`}
                       >
                         {item.isTop10Eligible ? <FaCheckCircle /> : <FaTimesCircle />}
-                        <span>{item.isTop10Eligible ? "টপ ১০ সক্রিয়" : "নিষ্ক্রিয়"}</span>
+                        <span>{item.isTop10Eligible ? "Top 10 Active" : "Inactive"}</span>
                       </button>
                     </td>
                     <td className="p-4 text-center">
@@ -329,14 +325,14 @@ export default function ManageResults() {
                         <button
                           onClick={() => handleOpenEdit(item)}
                           className="p-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
-                          title="সম্পাদনা"
+                          title="Edit"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(item._id, item.studentName)}
                           className="p-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
-                          title="মুছুন"
+                          title="Delete"
                         >
                           <FaTrash />
                         </button>
@@ -348,7 +344,7 @@ export default function ManageResults() {
             </table>
           </div>
         ) : (
-          <div className="p-12 text-center text-gray-500 font-medium">কোনো ফলাফল পাওয়া যায়নি।</div>
+          <div className="p-12 text-center text-gray-500 font-medium">No results found.</div>
         )}
       </div>
 
@@ -358,9 +354,9 @@ export default function ManageResults() {
           <div className="bg-white w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl my-8">
             <div className="p-6 bg-[#1e3a5f] text-white flex items-center justify-between">
               <h3 className="font-bold text-lg">
-                {isEditing ? "ফলাফল সম্পাদন করুন" : "নতুন ফলাফল এন্ট্রি করুন"}
+                {isEditing ? "Edit Result" : "Add New Result Entry"}
               </h3>
-              <button onClick={() => setIsModalOpen(false)} className="p-1.5 text-gray-300 hover:text-white">
+              <button onClick={() => setIsModalOpen(false)} className="p-1.5 text-gray-300 hover:text-white cursor-pointer">
                 <ImCross size={14} />
               </button>
             </div>
@@ -370,16 +366,16 @@ export default function ManageResults() {
               {!isEditing && allStudents.length > 0 && (
                 <div className="p-4 rounded-2xl bg-[#B4E1EB]/30 border border-[#95BDD7]/50">
                   <label className="block text-xs font-bold text-[#1e3a5f] mb-1">
-                    শিক্ষার্থী তালিকা থেকে নির্বাচন করুন (Auto Fill):
+                    Select Student from List (Auto Fill):
                   </label>
                   <select
                     onChange={(e) => handleSelectStudent(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none bg-white font-medium"
                   >
-                    <option value="">-- শিক্ষার্থী নির্বাচন করুন --</option>
+                    <option value="">-- Select a student --</option>
                     {allStudents.map((s: any) => (
                       <option key={s._id} value={s._id}>
-                        {s.name} (রোল: {s.roll}, শ্রেণি: {s.class})
+                        {s.name} (Roll: {s.roll}, Class: {s.class})
                       </option>
                     ))}
                   </select>
@@ -389,20 +385,20 @@ export default function ManageResults() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Student Name */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">শিক্ষার্থীর নাম *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Student Name *</label>
                   <input
                     type="text"
                     value={formData.studentName}
                     onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
                     required
-                    placeholder="নাম লিখুন"
+                    placeholder="Enter name"
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                   />
                 </div>
 
                 {/* Roll */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">রোল নম্বর *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Roll Number *</label>
                   <input
                     type="number"
                     value={formData.studentRoll}
@@ -414,7 +410,7 @@ export default function ManageResults() {
 
                 {/* Class */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">শ্রেণি *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Class *</label>
                   <select
                     value={formData.class}
                     onChange={(e) => setFormData({ ...formData, class: e.target.value })}
@@ -430,7 +426,7 @@ export default function ManageResults() {
 
                 {/* Section */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">শাখা</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Section</label>
                   <input
                     type="text"
                     value={formData.section}
@@ -442,7 +438,7 @@ export default function ManageResults() {
 
                 {/* Group */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">বিভাগ (গ্রুপ)</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Group / Division</label>
                   <input
                     type="text"
                     value={formData.group}
@@ -454,7 +450,7 @@ export default function ManageResults() {
 
                 {/* Student ID */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">শিক্ষার্থী আইডি</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Student ID</label>
                   <input
                     type="text"
                     value={formData.studentId}
@@ -466,7 +462,7 @@ export default function ManageResults() {
 
                 {/* Exam Type */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">পরীক্ষার ধরন *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Exam Type *</label>
                   <select
                     value={formData.examType}
                     onChange={(e) => setFormData({ ...formData, examType: e.target.value })}
@@ -482,7 +478,7 @@ export default function ManageResults() {
 
                 {/* Exam Year */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">পরীক্ষার সন *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Exam Year *</label>
                   <select
                     value={formData.examYear}
                     onChange={(e) => setFormData({ ...formData, examYear: e.target.value })}
@@ -500,13 +496,13 @@ export default function ManageResults() {
               {/* Subject-Wise Marks Grid */}
               <div className="pt-2">
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs font-bold text-gray-700">বিষয়ভিত্তিক প্রাপ্ত নম্বর *</label>
+                  <label className="text-xs font-bold text-gray-700">Subject-wise Marks *</label>
                   <button
                     type="button"
                     onClick={handleAddSubjectRow}
-                    className="text-xs font-bold text-[#78A4CB] hover:underline flex items-center gap-1"
+                    className="text-xs font-bold text-[#78A4CB] hover:underline flex items-center gap-1 cursor-pointer"
                   >
-                    <FaPlus size={10} /> বিষয় যোগ করুন
+                    <FaPlus size={10} /> Add Subject
                   </button>
                 </div>
 
@@ -521,7 +517,7 @@ export default function ManageResults() {
                           n[i].subject = e.target.value;
                           setFormData({ ...formData, subjectMarks: n });
                         }}
-                        placeholder="বিষয়ের নাম"
+                        placeholder="Subject name"
                         className="flex-1 px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none"
                       />
                       <input
@@ -530,14 +526,14 @@ export default function ManageResults() {
                         max="100"
                         value={sm.marks}
                         onChange={(e) => handleSubjectMarkChange(i, Number(e.target.value))}
-                        placeholder="নম্বর"
+                        placeholder="Marks"
                         className="w-24 px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none text-center font-bold"
                       />
                       {formData.subjectMarks.length > 1 && (
                         <button
                           type="button"
                           onClick={() => handleRemoveSubjectRow(i)}
-                          className="p-2 text-red-500 hover:bg-red-50 rounded-lg text-xs"
+                          className="p-2 text-red-500 hover:bg-red-50 rounded-lg text-xs cursor-pointer"
                         >
                           <FaTrash />
                         </button>
@@ -552,10 +548,10 @@ export default function ManageResults() {
                 <div>
                   <h4 className="text-sm font-bold text-[#5c4300] flex items-center gap-1.5">
                     <FaTrophy />
-                    <span>বার্ষিক পরীক্ষা সেরা ১০ ফ্ল্যাগ (Top 10 Flag)</span>
+                    <span>Top 10 Eligibility Flag</span>
                   </h4>
                   <p className="text-xs text-gray-600 mt-0.5">
-                    সক্রিয় থাকলে এই শিক্ষার্থী স্বয়ংক্রিয়ভাবে শ্রেণির টপ ১০ মেধা তালিকায় স্থান পাবে।
+                    When active, this student will automatically appear in the class Top 10 merit list.
                   </p>
                 </div>
                 <input
@@ -573,13 +569,13 @@ export default function ManageResults() {
                   onClick={() => setIsModalOpen(false)}
                   className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  বাতিল
+                  Cancel
                 </button>
                 <button
                   type="submit"
                   className="px-6 py-2.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  {isEditing ? "আপডেট করুন" : "সংরক্ষণ করুন"}
+                  {isEditing ? "Update" : "Save"}
                 </button>
               </div>
             </form>

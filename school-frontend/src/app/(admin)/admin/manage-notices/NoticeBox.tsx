@@ -28,14 +28,14 @@ const NoticeBox = ({ notice, refetch, isAdmin = true }: INoticeBox) => {
 
   const handleDelete = () => {
     Swal.fire({
-      title: "আপনি কি নিশ্চিত?",
-      text: "এই নোটিশটি স্থায়ীভাবে মুছে ফেলা হবে!",
+      title: "Are you sure?",
+      text: "This notice will be permanently deleted!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#78A4CB",
-      confirmButtonText: "হ্যাঁ, মুছুন",
-      cancelButtonText: "বাতিল",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/notices/${notice?._id}`).then((res) => {
@@ -43,7 +43,7 @@ const NoticeBox = ({ notice, refetch, isAdmin = true }: INoticeBox) => {
             refetch();
             Swal.fire({
               icon: "success",
-              title: "সফলভাবে মুছে ফেলা হয়েছে!",
+              title: "Deleted successfully!",
               timer: 1500,
               showConfirmButton: false,
             });
@@ -67,14 +67,14 @@ const NoticeBox = ({ notice, refetch, isAdmin = true }: INoticeBox) => {
           {notice.isPinned && (
             <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-bold shadow-sm">
               <FaThumbtack size={10} />
-              <span>জরুরি নোটিশ</span>
+              <span>Urgent Notice</span>
             </span>
           )}
           <span className="flex items-center gap-1 text-xs font-semibold text-gray-500 font-mono">
             <FaCalendarAlt className="text-[#78A4CB]" size={11} />
             {notice?.publishDate ||
               (notice?.createdAt &&
-                new Date(notice.createdAt).toLocaleDateString("bn-BD"))}
+                new Date(notice.createdAt).toLocaleDateString("en-US"))}
           </span>
         </div>
 
@@ -82,7 +82,7 @@ const NoticeBox = ({ notice, refetch, isAdmin = true }: INoticeBox) => {
           <button
             onClick={handleDelete}
             className="p-2 text-red-500 hover:bg-red-50 hover:text-red-700 rounded-xl transition-all hover:scale-110 active:scale-95 cursor-pointer text-base"
-            title="মুছে ফেলুন"
+            title="Delete"
           >
             <MdOutlineDelete />
           </button>
@@ -104,7 +104,7 @@ const NoticeBox = ({ notice, refetch, isAdmin = true }: INoticeBox) => {
           className="mt-2 text-xs font-bold text-[#78A4CB] hover:underline cursor-pointer transition-colors"
           onClick={() => setExpanded(!expanded)}
         >
-          {expanded ? "সংক্ষেপ করুন ▲" : "আরও পড়ুন ▼"}
+          {expanded ? "Show Less ▲" : "Read More ▼"}
         </button>
       )}
 
@@ -118,7 +118,7 @@ const NoticeBox = ({ notice, refetch, isAdmin = true }: INoticeBox) => {
             className="inline-flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-600 text-red-600 hover:text-white rounded-xl text-xs font-bold border border-red-200 hover:border-red-600 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
           >
             <FaFilePdf size={14} />
-            <span>পিডিএফ সংযুক্তি দেখুন / ডাউনলোড</span>
+            <span>View / Download PDF</span>
           </a>
         </div>
       )}

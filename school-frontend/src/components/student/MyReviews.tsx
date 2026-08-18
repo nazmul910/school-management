@@ -44,15 +44,15 @@ export default function MyReviews() {
       };
       const res = await axiosSecure.post("/reviews", payload);
       if (res.data.success) {
-        toast.success("মতামত সফলভাবে জমা দেওয়া হয়েছে!");
+        toast.success("Review submitted successfully!");
         reset();
         myReviewsRefetch();
         setIsReviewModalOpen(false);
       } else {
-        toast.error("মতামত জমা দিতে ব্যর্থ হয়েছে");
+        toast.error("Failed to submit review");
       }
     } catch (err: any) {
-      toast.error(err.response?.data?.message || "মতামত জমা দিতে ব্যর্থ হয়েছে");
+      toast.error(err.response?.data?.message || "Failed to submit review");
     } finally {
       setIsSubmittingReview(false);
     }
@@ -65,13 +65,13 @@ export default function MyReviews() {
       <div className="sm:flex justify-between items-center bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-[#B4E1EB]/60">
         <div>
           <DashboardTitle blackText="My" greenText="Reviews" />
-          <p className="text-xs text-gray-500 mt-1">বিদ্যালয় সম্পর্কিত আপনার মূল্যবান মতামত ও অভিজ্ঞতা শেয়ার করুন</p>
+          <p className="text-xs text-gray-500 mt-1">Share your valuable feedback and experience about the school</p>
         </div>
         <button
           className="bg-[#78A4CB] hover:bg-[#6894bb] text-white px-5 py-3 rounded-2xl flex items-center gap-2 my-3 sm:my-0 shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer font-bold text-sm"
           onClick={() => setIsReviewModalOpen(true)}
         >
-          <AiOutlinePlus /> নতুন মতামত লিখুন
+          <AiOutlinePlus /> Write a Review
         </button>
       </div>
 
@@ -86,7 +86,7 @@ export default function MyReviews() {
               <div className="flex items-center justify-between gap-5 mb-2">
                 <p className="text-xs text-gray-400 font-mono">
                   {review?.createdAt &&
-                    new Date(review.createdAt).toLocaleDateString("bn-BD", {
+                    new Date(review.createdAt).toLocaleDateString("en-US", {
                       day: "2-digit",
                       month: "short",
                       year: "numeric",
@@ -99,7 +99,7 @@ export default function MyReviews() {
                       : "bg-emerald-100 text-emerald-800"
                   }`}
                 >
-                  {review.status === "pending" ? "অপেক্ষমাণ (Pending)" : "অনুমোদিত (Approved)"}
+                  {review.status === "pending" ? "Pending" : "Approved"}
                 </span>
               </div>
               <h4 className="text-lg sm:text-xl font-bold text-[#1e3a5f] mb-2">
@@ -115,8 +115,8 @@ export default function MyReviews() {
             <div className="bg-[#B4E1EB]/30 p-6 rounded-full mb-4">
               <FaQuoteRight className="text-4xl text-[#78A4CB]" />
             </div>
-            <h3 className="text-xl font-bold text-[#1e3a5f] mb-1">কোনো মতামত জমা দেওয়া হয়নি</h3>
-            <p className="text-gray-400 text-xs">আপনার কোনো মতামত এখনো যোগ করেননি। উপরের বাটনে ক্লিক করে যুক্ত করুন।</p>
+            <h3 className="text-xl font-bold text-[#1e3a5f] mb-1">No reviews submitted yet</h3>
+            <p className="text-gray-400 text-xs">You haven't added any reviews yet. Click the button above to add one.</p>
           </div>
         )}
       </div>
@@ -128,17 +128,17 @@ export default function MyReviews() {
           setIsModalOpen={setIsReviewModalOpen}
         >
           <form onSubmit={handleSubmit(onReviewDataSubmit)} className="space-y-4">
-            <h3 className="font-bold text-lg text-[#1e3a5f]">আপনার মতামত যুক্ত করুন</h3>
+            <h3 className="font-bold text-lg text-[#1e3a5f]">Add Your Review</h3>
             <p className="border-t border-gray-100 mb-4"></p>
 
             {/* Review Title */}
             <div>
               <label className="block text-xs font-bold text-gray-700 mb-1">
-                মতামতের শিরোনাম (Title) <span className="text-red-500">*</span>
+                Review Title <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                placeholder="যেমন: অসাধারণ শিক্ষাদান পদ্ধতি"
+                placeholder="e.g. Outstanding teaching methods"
                 {...register("title", { required: true })}
                 className={`w-full border bg-white border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
                   errors.title && "border-red-500"
@@ -149,11 +149,11 @@ export default function MyReviews() {
             {/* Review Comment */}
             <div>
               <label className="block text-xs font-bold text-gray-700 mb-1">
-                বিস্তারিত মতামত (Comment) <span className="text-red-500">*</span>
+                Review Comment <span className="text-red-500">*</span>
               </label>
               <textarea
                 {...register("comment", { required: true })}
-                placeholder="আপনার অভিজ্ঞতা ৩-৪ লাইনের ভিতর লিখুন..."
+                placeholder="Write your experience in 3-4 lines..."
                 rows={4}
                 className={`w-full border bg-white border-gray-200 p-3 rounded-xl text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
                   errors.comment && "border-red-500"
@@ -167,7 +167,7 @@ export default function MyReviews() {
                 onClick={() => setIsReviewModalOpen(false)}
                 className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
               >
-                বাতিল
+                Cancel
               </button>
               <button
                 type="submit"
@@ -181,10 +181,10 @@ export default function MyReviews() {
                 {isSubmittingReview ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>জমা হচ্ছে...</span>
+                    <span>Submitting...</span>
                   </>
                 ) : (
-                  "মতামত জমা দিন"
+                  "Submit Review"
                 )}
               </button>
             </div>

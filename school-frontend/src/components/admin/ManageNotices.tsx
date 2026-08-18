@@ -73,7 +73,7 @@ export default function ManageNotices() {
         setFormData((prev) => ({ ...prev, pdfUrl: res.data.data.url }));
         Swal.fire({
           icon: "success",
-          title: "PDF আপলোড সম্পন্ন",
+          title: "PDF Uploaded",
           timer: 1500,
           showConfirmButton: false,
         });
@@ -81,8 +81,8 @@ export default function ManageNotices() {
     } catch (err: any) {
       Swal.fire({
         icon: "error",
-        title: "আপলোড ব্যর্থ",
-        text: "PDF ফাইল আপলোড করা যায়নি।",
+        title: "Upload Failed",
+        text: "Could not upload PDF file.",
       });
     } finally {
       setUploadingPdf(false);
@@ -97,24 +97,24 @@ export default function ManageNotices() {
         { id: editingId, payload: formData },
         {
           onSuccess: () => {
-            Swal.fire("সফল", "নোটিশ সফলভাবে আপডেট হয়েছে।", "success");
+            Swal.fire("Success", "Notice updated successfully.", "success");
             setIsModalOpen(false);
             resetForm();
           },
           onError: (err: any) => {
-            Swal.fire("ত্রুটি", err?.response?.data?.message || "আপডেট ব্যর্থ হয়েছে।", "error");
+            Swal.fire("Error", err?.response?.data?.message || "Update failed.", "error");
           },
         }
       );
     } else {
       addNotice.mutate(formData, {
         onSuccess: () => {
-          Swal.fire("সফল", "নতুন নোটিশ সফলভাবে প্রকাশ করা হয়েছে।", "success");
+          Swal.fire("Success", "New notice published successfully.", "success");
           setIsModalOpen(false);
           resetForm();
         },
         onError: (err: any) => {
-          Swal.fire("ত্রুটি", err?.response?.data?.message || "নোটিশ প্রকাশ ব্যর্থ হয়েছে।", "error");
+          Swal.fire("Error", err?.response?.data?.message || "Failed to publish notice.", "error");
         },
       });
     }
@@ -122,19 +122,19 @@ export default function ManageNotices() {
 
   const handleDelete = (id: string, heading: string) => {
     Swal.fire({
-      title: "আপনি কি নিশ্চিত?",
-      text: `"${heading}" নোটিশটি মুছে ফেলা হবে!`,
+      title: "Are you sure?",
+      text: `Notice "${heading}" will be permanently deleted!`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#78A4CB",
-      confirmButtonText: "হ্যাঁ, মুছুন",
-      cancelButtonText: "বাতিল",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
     }).then((res) => {
       if (res.isConfirmed) {
         deleteNotice.mutate(id, {
           onSuccess: () => {
-            Swal.fire("মুছে ফেলা হয়েছে!", "নোটিশ সফলভাবে ডিলিট হয়েছে।", "success");
+            Swal.fire("Deleted!", "Notice has been deleted successfully.", "success");
           },
         });
       }
@@ -148,40 +148,40 @@ export default function ManageNotices() {
         <div>
           <h1 className="text-2xl font-extrabold text-[#1e3a5f] flex items-center gap-2.5">
             <IoNotificationsSharp className="text-[#78A4CB]" />
-            <span>নোটিশ ব্যবস্থাপনা (Notice Management)</span>
+            <span>Notice Management</span>
           </h1>
           <p className="text-xs md:text-sm text-gray-500 mt-1">
-            বিদ্যালয়ের সাধারণ ও জরুরি নোটিশ তৈরি, পিডিএফ আপলোড ও সম্পাদনা করুন।
+            Create, upload PDF, and manage general and urgent school notices.
           </p>
         </div>
 
         <button
           onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all shrink-0"
+          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
         >
           <FaPlus />
-          <span>নতুন নোটিশ যোগ করুন</span>
+          <span>Add New Notice</span>
         </button>
       </div>
 
       {/* Notices Table */}
       <div className="bg-white rounded-3xl shadow-sm border border-[#B4E1EB]/60 overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="font-bold text-lg text-[#1e3a5f]">প্রকাশিত নোটিশ তালিকা ({notices.length} টি)</h2>
+          <h2 className="font-bold text-lg text-[#1e3a5f]">Published Notices ({notices.length} total)</h2>
         </div>
 
         {isLoading ? (
-          <div className="p-12 text-center text-gray-500 font-medium">লোড হচ্ছে...</div>
+          <div className="p-12 text-center text-gray-500 font-medium">Loading...</div>
         ) : notices.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm border-collapse">
               <thead>
                 <tr className="bg-[#1e3a5f] text-white text-xs uppercase tracking-wider">
-                  <th className="p-4">তারিখ</th>
-                  <th className="p-4">নোটিশ শিরোনাম ও বিবরণ</th>
-                  <th className="p-4 text-center">পিডিএফ ফাইল</th>
-                  <th className="p-4 text-center">জরুরি স্ট্যাটাস</th>
-                  <th className="p-4 text-center">অ্যাকশন</th>
+                  <th className="p-4">Date</th>
+                  <th className="p-4">Notice Title & Description</th>
+                  <th className="p-4 text-center">PDF File</th>
+                  <th className="p-4 text-center">Priority Status</th>
+                  <th className="p-4 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -203,10 +203,10 @@ export default function ManageNotices() {
                           href={notice.pdfUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 px-3 py-1 bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs font-bold hover:bg-red-600 hover:text-white transition-colors"
+                          className="inline-flex items-center gap-1 px-3 py-1 bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs font-bold hover:bg-red-600 hover:text-white transition-colors cursor-pointer"
                         >
                           <FaFilePdf />
-                          <span>PDF দেখুন</span>
+                          <span>View PDF</span>
                         </a>
                       ) : (
                         <span className="text-xs text-gray-400">—</span>
@@ -215,25 +215,25 @@ export default function ManageNotices() {
                     <td className="p-4 text-center">
                       {notice.isPinned ? (
                         <span className="px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 font-bold text-xs">
-                          জরুরি (Pinned)
+                          Urgent (Pinned)
                         </span>
                       ) : (
-                        <span className="text-xs text-gray-400">সাধারণ</span>
+                        <span className="text-xs text-gray-400">General</span>
                       )}
                     </td>
                     <td className="p-4 text-center">
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleOpenEdit(notice)}
-                          className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
-                          title="সম্পাদনা"
+                          className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer hover:scale-110 active:scale-95"
+                          title="Edit"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(notice._id, notice.heading)}
-                          className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors"
-                          title="মুছুন"
+                          className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors cursor-pointer hover:scale-110 active:scale-95"
+                          title="Delete"
                         >
                           <FaTrash />
                         </button>
@@ -245,7 +245,7 @@ export default function ManageNotices() {
             </table>
           </div>
         ) : (
-          <div className="p-12 text-center text-gray-500 font-medium">কোনো নোটিশ পাওয়া যায়নি।</div>
+          <div className="p-12 text-center text-gray-500 font-medium">No notices found.</div>
         )}
       </div>
 
@@ -255,9 +255,9 @@ export default function ManageNotices() {
           <div className="bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl my-8">
             <div className="p-6 bg-[#1e3a5f] text-white flex items-center justify-between">
               <h3 className="font-bold text-lg">
-                {isEditing ? "নোটিশ সম্পাদন করুন" : "নতুন নোটিশ প্রকাশ করুন"}
+                {isEditing ? "Edit Notice" : "Publish New Notice"}
               </h3>
-              <button onClick={() => setIsModalOpen(false)} className="p-1.5 text-gray-300 hover:text-white">
+              <button onClick={() => setIsModalOpen(false)} className="p-1.5 text-gray-300 hover:text-white cursor-pointer">
                 <ImCross size={14} />
               </button>
             </div>
@@ -265,13 +265,13 @@ export default function ManageNotices() {
             <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-4">
               {/* Heading */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">নোটিশ শিরোনাম *</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1">Notice Title *</label>
                 <input
                   type="text"
                   value={formData.heading}
                   onChange={(e) => setFormData({ ...formData, heading: e.target.value })}
                   required
-                  placeholder="যেমন: বার্ষিক পরীক্ষা ২০২৬ এর রুটিন সংক্রান্ত বিজ্ঞপ্তি"
+                  placeholder="e.g. Annual Exam 2026 Schedule Notice"
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                 />
               </div>
@@ -279,7 +279,7 @@ export default function ManageNotices() {
               {/* Publish Date & Pinned */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">প্রকাশের তারিখ *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Publish Date *</label>
                   <input
                     type="date"
                     value={formData.publishDate}
@@ -297,28 +297,28 @@ export default function ManageNotices() {
                       onChange={(e) => setFormData({ ...formData, isPinned: e.target.checked })}
                       className="w-4 h-4 text-[#78A4CB] rounded focus:ring-0"
                     />
-                    <span>জরুরি নোটিশ হিসেবে পিন করুন (Highlight)</span>
+                    <span>Pin as Urgent Notice (Highlight)</span>
                   </label>
                 </div>
               </div>
 
               {/* Notice Body */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">নোটিশের বিস্তারিত বিবরণ *</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1">Notice Details *</label>
                 <textarea
                   value={formData.body}
                   onChange={(e) => setFormData({ ...formData, body: e.target.value })}
                   rows={4}
                   required
-                  placeholder="নোটিশের বিস্তারিত তথ্য লিখুন..."
+                  placeholder="Write the full notice details here..."
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                 ></textarea>
               </div>
 
-              {/* PDF File Upload - Clean Dropzone / File Picker (No raw URLs) */}
+              {/* PDF File Upload */}
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-1.5">
-                  পিডিএফ সংযুক্তি (PDF File)
+                  PDF Attachment (Optional)
                 </label>
 
                 {formData.pdfUrl ? (
@@ -328,21 +328,21 @@ export default function ManageNotices() {
                         <FaFilePdf />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs font-bold text-gray-800 truncate">পিডিএফ ফাইল সংযুক্ত করা হয়েছে</p>
+                        <p className="text-xs font-bold text-gray-800 truncate">PDF file attached</p>
                         <a
                           href={formData.pdfUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-[11px] text-red-600 hover:underline font-semibold flex items-center gap-1 mt-0.5"
                         >
-                          <FaEye size={10} /> দেখুন
+                          <FaEye size={10} /> Preview
                         </a>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
                       <label className="px-3 py-1.5 bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 text-xs font-bold rounded-xl cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-sm">
-                        {uploadingPdf ? "আপলোড হচ্ছে..." : "পরিবর্তন"}
+                        {uploadingPdf ? "Uploading..." : "Change"}
                         <input
                           type="file"
                           accept=".pdf,application/pdf"
@@ -354,7 +354,7 @@ export default function ManageNotices() {
                         type="button"
                         onClick={() => setFormData({ ...formData, pdfUrl: "" })}
                         className="p-2 text-red-600 hover:bg-red-100 rounded-xl transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
-                        title="ফাইল মুছে ফেলুন"
+                        title="Remove file"
                       >
                         <FaTrash />
                       </button>
@@ -367,9 +367,9 @@ export default function ManageNotices() {
                     </div>
                     <div className="text-center">
                       <p className="text-xs font-bold text-[#1e3a5f]">
-                        {uploadingPdf ? "পিডিএফ আপলোড হচ্ছে..." : "পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন"}
+                        {uploadingPdf ? "Uploading PDF..." : "Click to select a PDF file"}
                       </p>
-                      <p className="text-[11px] text-gray-400 mt-0.5">সর্বোচ্চ ১৫ এমবি (.pdf)</p>
+                      <p className="text-[11px] text-gray-400 mt-0.5">Max 15 MB (.pdf)</p>
                     </div>
                     <input
                       type="file"
@@ -388,14 +388,14 @@ export default function ManageNotices() {
                   onClick={() => setIsModalOpen(false)}
                   className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  বাতিল
+                  Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={uploadingPdf}
                   className="px-6 py-2.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  {isEditing ? "আপডেট করুন" : "প্রকাশ করুন"}
+                  {isEditing ? "Update" : "Publish"}
                 </button>
               </div>
             </form>

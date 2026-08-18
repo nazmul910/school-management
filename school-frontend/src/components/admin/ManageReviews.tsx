@@ -16,10 +16,10 @@ export default function ManageReviews() {
         <div>
           <h1 className="text-2xl font-extrabold text-[#1e3a5f] flex items-center gap-2.5">
             <MdOutlineRateReview className="text-[#78A4CB]" />
-            <span>মতামত ও রিভিউ ব্যবস্থাপনা (Reviews & Feedback)</span>
+            <span>Reviews & Feedback Management</span>
           </h1>
           <p className="text-xs md:text-sm text-gray-500 mt-1">
-            অভিভাবক ও শিক্ষার্থীদের জমাকৃত মতামত অনুমোদন, স্ট্যাটাস পরিবর্তন ও নিয়ন্ত্রণ করুন।
+            Approve, manage, and control reviews submitted by parents and students.
           </p>
         </div>
       </div>
@@ -28,7 +28,7 @@ export default function ManageReviews() {
       <div className="space-y-4">
         {isLoading ? (
           <div className="p-12 bg-white rounded-3xl text-center text-gray-500 font-medium">
-            মতামত লোড হচ্ছে...
+            Loading reviews...
           </div>
         ) : reviews.length > 0 ? (
           reviews.map((review: any) => (
@@ -39,8 +39,8 @@ export default function ManageReviews() {
             <div className="bg-[#B4E1EB]/30 p-6 rounded-full mb-4">
               <FaQuoteRight className="text-4xl text-[#78A4CB]" />
             </div>
-            <h3 className="text-xl font-bold text-[#1e3a5f] mb-1">কোনো রিভিউ পাওয়া যায়নি</h3>
-            <p className="text-gray-500 text-sm">ওয়েবসাইট থেকে মতামত জমা হলে এখানে দেখা যাবে।</p>
+            <h3 className="text-xl font-bold text-[#1e3a5f] mb-1">No reviews found</h3>
+            <p className="text-gray-500 text-sm">Reviews submitted via the website will appear here.</p>
           </div>
         )}
       </div>

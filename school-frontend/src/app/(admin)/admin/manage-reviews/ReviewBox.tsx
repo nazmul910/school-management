@@ -14,14 +14,14 @@ export default function ReviewBox({ review, refetch }: IReviewBox) {
 
   const handleToggleStatus = (newStatus: "approved" | "pending") => {
     Swal.fire({
-      title: "আপনি কি নিশ্চিত?",
-      text: `এই মতামতটি ${newStatus === "approved" ? "অনুমোদন" : "অননুমোদিত"} করা হবে।`,
+      title: "Are you sure?",
+      text: `This review will be ${newStatus === "approved" ? "approved" : "unapproved"}.`,
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#78A4CB",
       cancelButtonColor: "#6c757d",
-      confirmButtonText: "হ্যাঁ, পরিবর্তন করুন",
-      cancelButtonText: "বাতিল",
+      confirmButtonText: "Yes, change",
+      cancelButtonText: "Cancel",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -31,12 +31,12 @@ export default function ReviewBox({ review, refetch }: IReviewBox) {
           refetch();
           Swal.fire({
             icon: "success",
-            title: "স্ট্যাটাস পরিবর্তিত হয়েছে!",
+            title: "Status updated!",
             timer: 1500,
             showConfirmButton: false,
           });
         } catch (err: any) {
-          Swal.fire("ত্রুটি", "স্ট্যাটাস পরিবর্তন করা যায়নি।", "error");
+          Swal.fire("Error", "Could not update status.", "error");
         }
       }
     });
@@ -44,22 +44,22 @@ export default function ReviewBox({ review, refetch }: IReviewBox) {
 
   const handleDelete = () => {
     Swal.fire({
-      title: "মুছে ফেলতে চান?",
-      text: "এই রিভিউটি স্থায়ীভাবে ডিলিট হয়ে যাবে!",
+      title: "Delete review?",
+      text: "This review will be permanently deleted!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#78A4CB",
-      confirmButtonText: "হ্যাঁ, মুছুন",
-      cancelButtonText: "বাতিল",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           await axios.delete(`/reviews/${review._id}`);
           refetch();
-          Swal.fire("ডিলিট হয়েছে!", "রিভিউ সফলভাবে মুছে ফেলা হয়েছে।", "success");
+          Swal.fire("Deleted!", "Review has been deleted successfully.", "success");
         } catch (err: any) {
-          Swal.fire("ত্রুটি", "রিভিউ মুছে ফেলা যায়নি।", "error");
+          Swal.fire("Error", "Could not delete review.", "error");
         }
       }
     });
@@ -79,7 +79,7 @@ export default function ReviewBox({ review, refetch }: IReviewBox) {
                 : "bg-amber-100 text-amber-800"
             }`}
           >
-            {isApproved ? "অনুমোদিত (Approved)" : "অপেক্ষমাণ (Pending)"}
+            {isApproved ? "Approved" : "Pending"}
           </span>
           <div className="flex items-center gap-1 text-amber-400 text-xs">
             {[...Array(review.rating || 5)].map((_, i) => (
@@ -99,7 +99,7 @@ export default function ReviewBox({ review, refetch }: IReviewBox) {
         </p>
 
         <p className="text-xs font-bold text-[#78A4CB] pt-1">
-          — {review.name} <span className="text-gray-400 font-normal">({review.designation || "অভিভাবক"})</span>
+          — {review.name} <span className="text-gray-400 font-normal">({review.designation || "Guardian"})</span>
         </p>
       </div>
 
@@ -110,21 +110,21 @@ export default function ReviewBox({ review, refetch }: IReviewBox) {
             onClick={() => handleToggleStatus("approved")}
             className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
-            <FaCheck /> অনুমোদন করুন
+            <FaCheck /> Approve
           </button>
         ) : (
           <button
             onClick={() => handleToggleStatus("pending")}
             className="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
-            <FaTimes /> অননুমোদিত করুন
+            <FaTimes /> Unapprove
           </button>
         )}
 
         <button
           onClick={handleDelete}
           className="p-2.5 bg-red-50 hover:bg-red-600 text-red-600 hover:text-white rounded-xl transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
-          title="মুছে ফেলুন"
+          title="Delete"
         >
           <FaTrash />
         </button>

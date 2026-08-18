@@ -10,24 +10,24 @@ import useAxios from "@/hooks/useAxios";
 import ImageUploadField from "./ImageUploadField";
 
 const availableSubjects = [
-  "বাংলা ১ম পত্র",
-  "বাংলা ২য় পত্র",
+  "Bangla 1st Paper",
+  "Bangla 2nd Paper",
   "English 1st Paper",
   "English 2nd Paper",
-  "সাধারণ গণিত",
-  "উচ্চতর গণিত",
-  "পদার্থবিজ্ঞান",
-  "রসায়ন",
-  "জীববিজ্ঞান",
-  "সাধারণ বিজ্ঞান",
-  "বাংলাদেশ ও বিশ্বপরিচয়",
-  "তথ্য ও যোগাযোগ প্রযুক্তি (ICT)",
-  "হিসাববিজ্ঞান",
-  "ব্যবসায় উদ্যোগ",
-  "ফিন্যান্স ও ব্যাংকিং",
-  "ইসলাম ও নৈতিক শিক্ষা",
-  "শারীরিক শিক্ষা ও স্বাস্থ্য",
-  "চারু ও কারুকলা",
+  "General Mathematics",
+  "Higher Mathematics",
+  "Physics",
+  "Chemistry",
+  "Biology",
+  "General Science",
+  "Bangladesh & Global Studies",
+  "Information & Communication Technology (ICT)",
+  "Accounting",
+  "Business Entrepreneurship",
+  "Finance & Banking",
+  "Islam & Moral Education",
+  "Physical Education & Health",
+  "Arts & Crafts",
 ];
 
 const availableClasses = ["Class 6", "Class 7", "Class 8", "Class 9", "Class 10"];
@@ -46,11 +46,11 @@ export default function ManageTeachers() {
     teacherId: "",
     email: "",
     number: "",
-    designation: "সহকারী শিক্ষক",
-    department: "সাধারণ",
+    designation: "Assistant Teacher",
+    department: "General",
     education: "",
-    experience: "৩+ বছর",
-    subject: ["সাধারণ গণিত"],
+    experience: "3+ years",
+    subject: ["General Mathematics"],
     classes: ["Class 8", "Class 9", "Class 10"],
     gender: "male",
     profileImage: "",
@@ -66,11 +66,11 @@ export default function ManageTeachers() {
       teacherId: "",
       email: "",
       number: "",
-      designation: "সহকারী শিক্ষক",
-      department: "সাধারণ",
+      designation: "Assistant Teacher",
+      department: "General",
       education: "",
-      experience: "৩+ বছর",
-      subject: ["সাধারণ গণিত"],
+      experience: "3+ years",
+      subject: ["General Mathematics"],
       classes: ["Class 8", "Class 9", "Class 10"],
       gender: "male",
       profileImage: "",
@@ -92,10 +92,10 @@ export default function ManageTeachers() {
       teacherId: teacher.teacherId || "",
       email: teacher.email || "",
       number: teacher.number || "",
-      designation: teacher.designation || "সহকারী শিক্ষক",
-      department: teacher.department || "সাধারণ",
+      designation: teacher.designation || "Assistant Teacher",
+      department: teacher.department || "General",
       education: teacher.education || "",
-      experience: teacher.experience || "৩+ বছর",
+      experience: teacher.experience || "3+ years",
       subject: Array.isArray(teacher.subject) ? teacher.subject : [],
       classes: Array.isArray(teacher.classes) ? teacher.classes : ["Class 8", "Class 9", "Class 10"],
       gender: teacher.gender || "male",
@@ -132,7 +132,7 @@ export default function ManageTeachers() {
     e.preventDefault();
 
     if (formData.subject.length === 0) {
-      Swal.fire("সতর্কতা", "কমপক্ষে একটি পাঠদানের বিষয় নির্বাচন করুন।", "warning");
+      Swal.fire("Warning", "Please select at least one teaching subject.", "warning");
       return;
     }
 
@@ -141,24 +141,24 @@ export default function ManageTeachers() {
         { id: editingId, payload: formData },
         {
           onSuccess: () => {
-            Swal.fire("সফল", "শিক্ষকের তথ্য সফলভাবে আপডেট হয়েছে।", "success");
+            Swal.fire("Success", "Teacher information updated successfully.", "success");
             setIsModalOpen(false);
             resetForm();
           },
           onError: (err: any) => {
-            Swal.fire("ত্রুটি", err?.response?.data?.message || "আপডেট ব্যর্থ হয়েছে।", "error");
+            Swal.fire("Error", err?.response?.data?.message || "Update failed.", "error");
           },
         }
       );
     } else {
       addTeacher.mutate(formData, {
         onSuccess: () => {
-          Swal.fire("সফল", "নতুন শিক্ষক সফলভাবে যুক্ত করা হয়েছে।", "success");
+          Swal.fire("Success", "New teacher added successfully.", "success");
           setIsModalOpen(false);
           resetForm();
         },
         onError: (err: any) => {
-          Swal.fire("ত্রুটি", err?.response?.data?.message || "শিক্ষক যোগ করা সম্ভব হয়নি।", "error");
+          Swal.fire("Error", err?.response?.data?.message || "Could not add teacher.", "error");
         },
       });
     }
@@ -166,19 +166,19 @@ export default function ManageTeachers() {
 
   const handleDelete = (id: string, name: string) => {
     Swal.fire({
-      title: "আপনি কি নিশ্চিত?",
-      text: `"${name}" শিক্ষকের তথ্য মুছে ফেলা হবে!`,
+      title: "Are you sure?",
+      text: `Teacher "${name}" will be permanently deleted!`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#78A4CB",
-      confirmButtonText: "হ্যাঁ, মুছুন",
-      cancelButtonText: "বাতিল",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
     }).then((res) => {
       if (res.isConfirmed) {
         deleteTeacher.mutate(id, {
           onSuccess: () => {
-            Swal.fire("মুছে ফেলা হয়েছে!", "শিক্ষকের তথ্য সফলভাবে ডিলিট হয়েছে।", "success");
+            Swal.fire("Deleted!", "Teacher record has been deleted successfully.", "success");
           },
         });
       }
@@ -192,10 +192,10 @@ export default function ManageTeachers() {
         <div>
           <h1 className="text-2xl font-extrabold text-[#1e3a5f] flex items-center gap-2.5">
             <FaChalkboardTeacher className="text-[#78A4CB]" />
-            <span>শিক্ষক ব্যবস্থাপনা (Teacher Management)</span>
+            <span>Teacher Management</span>
           </h1>
           <p className="text-xs md:text-sm text-gray-500 mt-1">
-            বিদ্যালয়ের সকল শিক্ষকবৃন্দের তথ্য, পদবি, পাঠদানের বিষয় ও শ্রেণি নিয়ন্ত্রণ করুন।
+            Manage all teachers, their designations, subjects, and assigned classes.
           </p>
         </div>
 
@@ -204,30 +204,30 @@ export default function ManageTeachers() {
           className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
         >
           <FaPlus />
-          <span>নতুন শিক্ষক যোগ করুন</span>
+          <span>Add New Teacher</span>
         </button>
       </div>
 
       {/* Teachers Table */}
       <div className="bg-white rounded-3xl shadow-sm border border-[#B4E1EB]/60 overflow-hidden">
         <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="font-bold text-lg text-[#1e3a5f]">শিক্ষকমণ্ডলী তালিকা ({teachers.length} জন)</h2>
+          <h2 className="font-bold text-lg text-[#1e3a5f]">Teacher List ({teachers.length} total)</h2>
         </div>
 
         {isLoading ? (
-          <div className="p-12 text-center text-gray-500 font-medium">লোড হচ্ছে...</div>
+          <div className="p-12 text-center text-gray-500 font-medium">Loading...</div>
         ) : teachers.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm border-collapse">
               <thead>
                 <tr className="bg-[#1e3a5f] text-white text-xs uppercase tracking-wider">
-                  <th className="p-4">শিক্ষক</th>
-                  <th className="p-4">পদবি ও বিভাগ</th>
-                  <th className="p-4">শিক্ষাগত যোগ্যতা</th>
-                  <th className="p-4">পাঠদানের বিষয়সমূহ</th>
-                  <th className="p-4">শ্রেণিসমূহ</th>
-                  <th className="p-4">যোগাযোগ</th>
-                  <th className="p-4 text-center">অ্যাকশন</th>
+                  <th className="p-4">Teacher</th>
+                  <th className="p-4">Designation & Department</th>
+                  <th className="p-4">Education</th>
+                  <th className="p-4">Subjects</th>
+                  <th className="p-4">Classes</th>
+                  <th className="p-4">Contact</th>
+                  <th className="p-4 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -252,7 +252,7 @@ export default function ManageTeachers() {
                       <span className="px-2.5 py-0.5 rounded-full bg-[#B4E1EB]/40 text-[#1e3a5f] font-bold text-xs">
                         {teacher.designation}
                       </span>
-                      <p className="text-xs text-gray-500 mt-0.5">{teacher.department || "সাধারণ"}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{teacher.department || "General"}</p>
                     </td>
                     <td className="p-4 text-gray-600 text-xs max-w-[180px] truncate">{teacher.education}</td>
                     <td className="p-4">
@@ -276,14 +276,14 @@ export default function ManageTeachers() {
                         <button
                           onClick={() => handleOpenEdit(teacher)}
                           className="p-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
-                          title="সম্পাদনা"
+                          title="Edit"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(teacher._id, teacher.name)}
                           className="p-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
-                          title="মুছুন"
+                          title="Delete"
                         >
                           <FaTrash />
                         </button>
@@ -295,7 +295,7 @@ export default function ManageTeachers() {
             </table>
           </div>
         ) : (
-          <div className="p-12 text-center text-gray-500 font-medium">কোনো শিক্ষকের তথ্য পাওয়া যায়নি।</div>
+          <div className="p-12 text-center text-gray-500 font-medium">No teachers found.</div>
         )}
       </div>
 
@@ -305,7 +305,7 @@ export default function ManageTeachers() {
           <div className="bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl my-8">
             <div className="p-6 bg-[#1e3a5f] text-white flex items-center justify-between">
               <h3 className="font-bold text-lg">
-                {isEditing ? "শিক্ষকের তথ্য সম্পাদন করুন" : "নতুন শিক্ষক যোগ করুন"}
+                {isEditing ? "Edit Teacher Information" : "Add New Teacher"}
               </h3>
               <button
                 type="button"
@@ -320,11 +320,11 @@ export default function ManageTeachers() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Name */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">শিক্ষকের নাম *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Teacher Name *</label>
                   <input
                     type="text"
                     required
-                    placeholder="যেমন: ড. মুহাম্মদ শফিকুর রহমান"
+                    placeholder="e.g. Dr. Muhammad Shafiqur Rahman"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
@@ -333,40 +333,40 @@ export default function ManageTeachers() {
 
                 {/* Designation */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">পদবি *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Designation *</label>
                   <select
                     value={formData.designation}
                     onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none bg-white font-medium cursor-pointer"
                   >
-                    <option value="প্রধান শিক্ষক">প্রধান শিক্ষক</option>
-                    <option value="সহকারী প্রধান শিক্ষক">সহকারী প্রধান শিক্ষক</option>
-                    <option value="সহকারী শিক্ষক">সহকারী শিক্ষক</option>
-                    <option value="সিনিয়র শিক্ষক">সিনিয়র শিক্ষক</option>
-                    <option value="জুনিয়র শিক্ষক">জুনিয়র শিক্ষক</option>
-                    <option value="অতিথি শিক্ষক">অতিথি শিক্ষক</option>
+                    <option value="Principal">Principal</option>
+                    <option value="Assistant Head Teacher">Assistant Head Teacher</option>
+                    <option value="Assistant Teacher">Assistant Teacher</option>
+                    <option value="Senior Teacher">Senior Teacher</option>
+                    <option value="Junior Teacher">Junior Teacher</option>
+                    <option value="Guest Teacher">Guest Teacher</option>
                   </select>
                 </div>
 
                 {/* Department */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">বিভাগ</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Department</label>
                   <select
                     value={formData.department}
                     onChange={(e) => setFormData({ ...formData, department: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none bg-white font-medium cursor-pointer"
                   >
-                    <option value="বিজ্ঞান বিভাগ">বিজ্ঞান বিভাগ</option>
-                    <option value="মানবিক বিভাগ">মানবিক বিভাগ</option>
-                    <option value="ব্যবসায় শিক্ষা বিভাগ">ব্যবসায় শিক্ষা বিভাগ</option>
-                    <option value="ভাষা ও সাহিত্য">ভাষা ও সাহিত্য</option>
-                    <option value="সাধারণ">সাধারণ</option>
+                    <option value="Science Department">Science Department</option>
+                    <option value="Arts Department">Arts Department</option>
+                    <option value="Business Studies Department">Business Studies Department</option>
+                    <option value="Language & Literature">Language & Literature</option>
+                    <option value="General">General</option>
                   </select>
                 </div>
 
                 {/* Teacher ID */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">শিক্ষক আইডি (Teacher ID) *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Teacher ID *</label>
                   <input
                     type="text"
                     required
@@ -379,7 +379,7 @@ export default function ManageTeachers() {
 
                 {/* Mobile Number */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">মোবাইল নম্বর *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Mobile Number *</label>
                   <input
                     type="text"
                     required
@@ -392,7 +392,7 @@ export default function ManageTeachers() {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">ইমেইল ঠিকানা *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Email Address *</label>
                   <input
                     type="email"
                     required
@@ -405,11 +405,11 @@ export default function ManageTeachers() {
 
                 {/* Education */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">শিক্ষাগত যোগ্যতা *</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Educational Qualification *</label>
                   <input
                     type="text"
                     required
-                    placeholder="এম.এস.সি (গণিত), বি.এড"
+                    placeholder="e.g. M.Sc (Mathematics), B.Ed"
                     value={formData.education}
                     onChange={(e) => setFormData({ ...formData, education: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
@@ -418,10 +418,10 @@ export default function ManageTeachers() {
 
                 {/* Experience */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1">অভিজ্ঞতা</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1">Experience</label>
                   <input
                     type="text"
-                    placeholder="৫+ বছর"
+                    placeholder="e.g. 5+ years"
                     value={formData.experience}
                     onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
@@ -432,7 +432,7 @@ export default function ManageTeachers() {
               {/* Subject Selection (Multi-select) */}
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-2">
-                  পাঠদানের বিষয়সমূহ নির্বাচন করুন *
+                  Select Teaching Subjects *
                 </label>
                 <div className="flex flex-wrap gap-2 p-3 bg-gray-50 rounded-2xl border border-gray-200 max-h-36 overflow-y-auto">
                   {availableSubjects.map((sub) => {
@@ -458,7 +458,7 @@ export default function ManageTeachers() {
               {/* Classes Selection (Multi-select) */}
               <div>
                 <label className="block text-xs font-bold text-gray-700 mb-2">
-                  পাঠদানের শ্রেণিসমূহ নির্বাচন করুন *
+                  Select Teaching Classes *
                 </label>
                 <div className="flex flex-wrap gap-2 p-3 bg-gray-50 rounded-2xl border border-gray-200">
                   {availableClasses.map((cls) => {
@@ -481,9 +481,9 @@ export default function ManageTeachers() {
                 </div>
               </div>
 
-              {/* Teacher Image Upload - No raw URL */}
+              {/* Teacher Image Upload */}
               <ImageUploadField
-                label="শিক্ষকের ছবি"
+                label="Teacher Photo"
                 value={formData.profileImage}
                 onChange={(url) => setFormData({ ...formData, profileImage: url })}
                 uploading={uploadingImage}
@@ -509,12 +509,12 @@ export default function ManageTeachers() {
 
               {/* Bio */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">সংক্ষিপ্ত পরিচিতি (Bio)</label>
+                <label className="block text-xs font-bold text-gray-700 mb-1">Short Bio</label>
                 <textarea
                   value={formData.bio}
                   onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                   rows={2}
-                  placeholder="শিক্ষকের সংক্ষিপ্ত পরিচিতি লিখুন..."
+                  placeholder="Write a short introduction about the teacher..."
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
                 ></textarea>
               </div>
@@ -526,13 +526,13 @@ export default function ManageTeachers() {
                   onClick={() => setIsModalOpen(false)}
                   className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  বাতিল
+                  Cancel
                 </button>
                 <button
                   type="submit"
                   className="px-6 py-2.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  {isEditing ? "আপডেট করুন" : "সংরক্ষণ করুন"}
+                  {isEditing ? "Update" : "Save"}
                 </button>
               </div>
             </form>

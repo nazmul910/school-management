@@ -18,9 +18,9 @@ export default function ImageUploadField({
   value,
   onChange,
   onFileUpload,
-  label = "ছবি আপলোড করুন",
+  label = "Upload Image",
   uploading = false,
-  helperText = "PNG, JPG, WEBP ফরম্যাট (সর্বোচ্চ ১০ এমবি)",
+  helperText = "PNG, JPG, WEBP formats (Max 10 MB)",
 }: ImageUploadFieldProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -69,7 +69,7 @@ export default function ImageUploadField({
           <div className="relative aspect-[16/9] max-h-56 group overflow-hidden bg-gray-950 flex items-center justify-center">
             <img
               src={value}
-              alt="আপলোড করা ছবি"
+              alt="Uploaded Preview"
               className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
             />
             {/* Overlay with actions on hover */}
@@ -79,7 +79,7 @@ export default function ImageUploadField({
                 type="button"
                 onClick={() => setIsPreviewOpen(true)}
                 className="w-10 h-10 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#1e3a5f] flex items-center justify-center backdrop-blur-sm transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
-                title="পূর্ণ ছবি দেখুন"
+                title="View Full Image"
               >
                 <LuEye size={18} />
               </button>
@@ -88,7 +88,7 @@ export default function ImageUploadField({
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 className="w-10 h-10 rounded-full bg-white/20 hover:bg-[#78A4CB] text-white flex items-center justify-center backdrop-blur-sm transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
-                title="ছবি পরিবর্তন করুন"
+                title="Change Image"
               >
                 <LuUpload size={18} />
               </button>
@@ -97,7 +97,7 @@ export default function ImageUploadField({
                 type="button"
                 onClick={() => onChange("")}
                 className="w-10 h-10 rounded-full bg-red-500/80 hover:bg-red-600 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95 cursor-pointer shadow-lg"
-                title="মুছে ফেলুন"
+                title="Remove Image"
               >
                 <LuX size={18} />
               </button>
@@ -105,7 +105,7 @@ export default function ImageUploadField({
 
             {/* Click to change label at bottom */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity text-center">
-              ছবি পরিবর্তন করতে ক্লিক করুন অথবা টেনে আনুন
+              Click or drag to replace image
             </div>
           </div>
         ) : (
@@ -119,7 +119,7 @@ export default function ImageUploadField({
             </div>
             <div>
               <p className="font-bold text-sm text-[#1e3a5f] group-hover:text-[#78A4CB] transition-colors">
-                {uploading ? "ক্লাউডিনারিতে আপলোড হচ্ছে..." : "ছবি আপলোড করতে ক্লিক করুন"}
+                {uploading ? "Uploading to Cloudinary..." : "Click or drag to upload image"}
               </p>
               <p className="text-xs text-gray-400 mt-1">{helperText}</p>
             </div>
@@ -130,7 +130,7 @@ export default function ImageUploadField({
             ) : (
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white border border-gray-200 text-xs font-bold text-gray-600 shadow-sm group-hover:border-[#78A4CB] group-hover:text-[#1e3a5f] transition-all">
                 <LuUpload size={13} />
-                <span>ফাইল নির্বাচন</span>
+                <span>Select File</span>
               </span>
             )}
           </div>
@@ -162,7 +162,7 @@ export default function ImageUploadField({
             {/* Modal Header */}
             <div className="px-6 py-4 bg-[#1e3a5f] text-white flex items-center justify-between">
               <span className="font-bold text-sm flex items-center gap-2">
-                <LuImage className="text-[#F9E8A2]" /> ছবির পূর্ণ প্রিভিউ
+                <LuImage className="text-[#F9E8A2]" /> Full Image Preview
               </span>
               <button
                 type="button"
@@ -177,7 +177,7 @@ export default function ImageUploadField({
             <div className="bg-gray-950 flex items-center justify-center max-h-[75vh] overflow-hidden p-2">
               <img
                 src={value}
-                alt="ছবির প্রিভিউ"
+                alt="Image Preview"
                 className="max-w-full max-h-[72vh] object-contain rounded-xl"
               />
             </div>
@@ -192,7 +192,7 @@ export default function ImageUploadField({
                 }}
                 className="px-4 py-2 rounded-xl bg-[#78A4CB] text-white text-xs font-bold hover:bg-[#6894bb] transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shadow-sm"
               >
-                <LuUpload size={13} /> পরিবর্তন করুন
+                <LuUpload size={13} /> Replace Image
               </button>
               <button
                 type="button"
@@ -202,7 +202,7 @@ export default function ImageUploadField({
                 }}
                 className="px-4 py-2 rounded-xl bg-red-50 text-red-600 text-xs font-bold hover:bg-red-600 hover:text-white transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer border border-red-200"
               >
-                <LuX size={13} /> মুছে ফেলুন
+                <LuX size={13} /> Remove
               </button>
             </div>
           </div>

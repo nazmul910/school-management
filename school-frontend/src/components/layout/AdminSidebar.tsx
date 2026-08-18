@@ -29,52 +29,52 @@ export default function AdminSidebar({
   const menuItems = [
     {
       href: "/admin/admin-home",
-      label: "ড্যাশবোর্ড",
+      label: "Dashboard",
       Icon: FaHome,
     },
     {
       href: "/admin/manage-students",
-      label: "শিক্ষার্থী ব্যবস্থাপনা",
+      label: "Manage Students",
       Icon: FaUserGraduate,
     },
     {
       href: "/admin/manage-teachers",
-      label: "শিক্ষক ব্যবস্থাপনা",
+      label: "Manage Teachers",
       Icon: FaChalkboardTeacher,
     },
     {
       href: "/admin/manage-notices",
-      label: "নোটিশ ব্যবস্থাপনা",
+      label: "Manage Notices",
       Icon: MdNotificationAdd,
     },
     {
       href: "/admin/manage-gallery",
-      label: "গ্যালারি ব্যবস্থাপনা",
+      label: "Manage Gallery",
       Icon: FaImages,
     },
     {
       href: "/admin/manage-results",
-      label: "ফলাফল ও টপ ১০",
+      label: "Results & Top 10",
       Icon: FaAward,
     },
     {
       href: "/admin/manage-reviews",
-      label: "মতামত / রিভিউ",
+      label: "Manage Reviews",
       Icon: MdOutlineRateReview,
     },
     {
       href: "/admin/all-users",
-      label: "ব্যবহারকারীগণ",
+      label: "All Users",
       Icon: IoMdPerson,
     },
     {
       href: "/admin/send-mail",
-      label: "ইমেইল পাঠান",
+      label: "Send Mail",
       Icon: IoMdMail,
     },
     {
       href: "/admin/change-password",
-      label: "পাসওয়ার্ড পরিবর্তন",
+      label: "Change Password",
       Icon: RiLockPasswordFill,
     },
   ];
@@ -95,8 +95,8 @@ export default function AdminSidebar({
                   <LuGraduationCap />
                 </div>
                 <div className="leading-tight">
-                  <span className="font-bold text-white text-sm block">আইডিয়াল মডেল স্কুল</span>
-                  <span className="text-[11px] text-[#F9E8A2]">অ্যাডমিন প্যানেল</span>
+                  <span className="font-bold text-white text-sm block">Ideal Model School</span>
+                  <span className="text-[11px] text-[#F9E8A2]">Admin Panel</span>
                 </div>
               </Link>
               <button
@@ -166,10 +166,10 @@ export default function AdminSidebar({
           >
             <FaHome size={18} className="text-[#F9E8A2] transition-transform group-hover:scale-110" />
             {isOpen ? (
-              <span className="text-sm font-medium">মূল ওয়েবসাইটে যান</span>
+              <span className="text-sm font-medium">Main Website</span>
             ) : (
               <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-[#1e3a5f] text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
-                মূল ওয়েবসাইট
+                Main Website
               </span>
             )}
           </Link>
@@ -184,10 +184,10 @@ export default function AdminSidebar({
           >
             <LuLogOut size={18} className="text-white transition-transform group-hover:scale-110" />
             {isOpen ? (
-              <span className="text-sm font-semibold">লগআউট</span>
+              <span className="text-sm font-semibold">Logout</span>
             ) : (
               <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-red-600 text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
-                লগআউট
+                Logout
               </span>
             )}
           </button>

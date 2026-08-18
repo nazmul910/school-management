@@ -38,8 +38,8 @@ export default function NoticeBoard() {
             <div className="w-16 h-16 rounded-2xl bg-[#B4E1EB]/30 text-[#78A4CB] flex items-center justify-center text-3xl mb-3">
               <IoNotificationsOutline />
             </div>
-            <h3 className="text-lg font-bold text-[#1e3a5f]">বর্তমানে কোনো নোটিশ নেই</h3>
-            <p className="text-xs text-gray-400 mt-1">বিদ্যালয়ের নতুন নোটিশ প্রকাশিত হলে এখানে দেখতে পাবেন।</p>
+            <h3 className="text-lg font-bold text-[#1e3a5f]">No notices at the moment</h3>
+            <p className="text-xs text-gray-400 mt-1">New school notices will appear here when published.</p>
           </div>
         )}
       </div>

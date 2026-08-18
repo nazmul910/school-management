@@ -62,7 +62,7 @@ export default function SendMail() {
       <div className="sm:flex justify-between items-center bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-[#B4E1EB]/60">
         <div>
           <DashboardTitle blackText="Send" greenText="Mail" />
-          <p className="text-xs text-gray-500 mt-1">শিক্ষার্থীদের প্রয়োজনীয় নোটিশ বা বার্তা ইমেইলে প্রেরণ করুন</p>
+          <p className="text-xs text-gray-500 mt-1">Send important notices or messages to students via email</p>
         </div>
         <button
           className="bg-[#78A4CB] hover:bg-[#6894bb] text-white px-5 py-3 rounded-2xl flex items-center gap-2 my-3 sm:my-0 shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer font-bold text-sm"
@@ -84,11 +84,11 @@ export default function SendMail() {
             </div>
 
             <h3 className="text-xl font-bold text-[#1e3a5f] mb-1">
-              কোনো মেইল পাওয়া যায়নি
+              No mails found
             </h3>
 
             <p className="text-gray-500 text-xs max-w-md">
-              এখনো কোনো মেইল পাঠানো হয়নি। উপরের &quot;Send Mail&quot; বাটনে ক্লিক করে শিক্ষার্থীদের নতুন মেইল পাঠান।
+              No mails have been sent yet. Click the &quot;Send Mail&quot; button above to send a new email to students.
             </p>
           </div>
         )}
@@ -101,16 +101,16 @@ export default function SendMail() {
         >
           <form onSubmit={handleSubmit(onMailSubmit)} className="space-y-4">
             <h3 className="font-bold text-lg text-[#1e3a5f]">
-              সকল শিক্ষার্থীর কাছে ইমেইল পাঠান
+              Send Email to All Students
             </h3>
             <p className="border-t border-gray-100 mb-4"></p>
             <div>
               <label className="block text-xs font-bold text-gray-700 mb-1">
-                বিষয় (Subject) <span className="text-red-500">*</span>
+                Subject <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                placeholder="ইমেইলের বিষয়..."
+                placeholder="Email subject..."
                 {...register("subject", { required: true })}
                 className={`w-full border bg-white border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
                   errors.subject && "border-red-500"
@@ -121,10 +121,10 @@ export default function SendMail() {
 
             <div>
               <label className="block text-xs font-bold text-gray-700 mb-1">
-                বার্তার বিবরণ (Message) <span className="text-red-500">*</span>
+                Message <span className="text-red-500">*</span>
               </label>
               <textarea
-                placeholder="বার্তা বিস্তারিত লিখুন..."
+                placeholder="Write the message details..."
                 {...register("message", { required: true })}
                 className={`w-full border bg-white border-gray-200 p-3 rounded-xl text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
                   errors.message && "border-red-500"
@@ -141,7 +141,7 @@ export default function SendMail() {
                 onClick={() => setIsMailModalOpen(false)}
                 className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
               >
-                বাতিল
+                Cancel
               </button>
               <button
                 type="submit"

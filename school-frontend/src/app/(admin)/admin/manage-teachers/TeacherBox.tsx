@@ -75,7 +75,7 @@ const TeacherBox = ({ teacher, refetch }: ITeacherBox) => {
     {/* Subjects */}
     <div>
       <h3 className="font-semibold text-primary mb-2">
-        বিষয়সমূহ
+        Subjects
       </h3>
 
       {Array.isArray(teacher?.subject) ? (
@@ -85,13 +85,13 @@ const TeacherBox = ({ teacher, refetch }: ITeacherBox) => {
               key={index}
               className="text-sm text-gray-700"
             >
-              {new Intl.NumberFormat("bn-BD").format(index + 1)}. {item}
+              {index + 1}. {item}
             </li>
           ))}
         </ul>
       ) : (
         <p className="text-sm text-gray-700">
-          ১. {teacher?.subject}
+          1. {teacher?.subject}
         </p>
       )}
     </div>
@@ -99,7 +99,7 @@ const TeacherBox = ({ teacher, refetch }: ITeacherBox) => {
     {/* Contact */}
     <div className="border-t pt-4">
       <h3 className="font-semibold text-primary mb-2">
-        যোগাযোগ
+        Contact
       </h3>
 
       <div className="space-y-2 text-sm">

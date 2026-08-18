@@ -21,8 +21,8 @@ const AllUsersTableRow = ({ user, refetch, index }: IuserData) => {
         if (res.data.statusCode === 200 || res.status === 200) {
           Swal.fire({
             icon: "success",
-            title: "স্ট্যাটাস আপডেট হয়েছে",
-            text: `${user.name} এর অ্যাকাউন্ট ${newStatus === "approved" ? "সক্রিয়" : "ব্লক"} করা হয়েছে।`,
+            title: "Status Updated",
+            text: `${user.name}'s account has been ${newStatus === "approved" ? "activated" : "blocked"}.`,
             timer: 1500,
             showConfirmButton: false,
           });
@@ -30,7 +30,7 @@ const AllUsersTableRow = ({ user, refetch, index }: IuserData) => {
         }
       })
       .catch((error) => {
-        Swal.fire("ত্রুটি", error.response?.data?.message || "স্ট্যাটাস পরিবর্তন করা যায়নি।", "error");
+        Swal.fire("Error", error.response?.data?.message || "Could not update status.", "error");
       });
   };
 
@@ -47,12 +47,12 @@ const AllUsersTableRow = ({ user, refetch, index }: IuserData) => {
               : "bg-[#B4E1EB]/50 text-[#1e3a5f]"
           }`}
         >
-          {user.role === "admin" ? "অ্যাডমিন" : "শিক্ষার্থী"}
+          {user.role === "admin" ? "Admin" : "Student"}
         </span>
       </td>
       <td className="p-4 text-center">
         {user.role === "admin" ? (
-          <span className="text-xs text-gray-400 font-semibold">সুরক্ষিত (Protected)</span>
+          <span className="text-xs text-gray-400 font-semibold">Protected</span>
         ) : (
           <select
             value={isApproved ? "approved" : "blocked"}
@@ -63,8 +63,8 @@ const AllUsersTableRow = ({ user, refetch, index }: IuserData) => {
                 : "bg-red-100 text-red-800 border border-red-300"
             }`}
           >
-            <option value="approved">অনুমোদিত (Active)</option>
-            <option value="blocked">ব্লক (Blocked)</option>
+            <option value="approved">Active</option>
+            <option value="blocked">Blocked</option>
           </select>
         )}
       </td>
