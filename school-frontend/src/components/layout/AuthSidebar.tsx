@@ -60,7 +60,7 @@ export default function AuthSidebar() {
           <LuGraduationCap />
         </div>
         <h1 className="text-white font-bold text-2xl lg:text-3xl xl:text-4xl drop-shadow-lg">
-          Ideal Model School
+          Uttar Betdoba Fatema Halim High School
         </h1>
       </div>
 

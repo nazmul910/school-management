@@ -9,7 +9,7 @@ import ScrollToTop from "@/utils/ScrollButton";
 import SmoothScroll from "@/components/common/SmoothScroll";
 
 export const metadata: Metadata = {
-  title: "Ideal Model School & College | Excellence in Modern Education",
+  title: "Uttar Betdoba Fatema Halim High School & College | Excellence in Modern Education",
   description:
     "A premier educational institution dedicated to academic excellence, digital classrooms, experienced faculty, and comprehensive student development.",
 };

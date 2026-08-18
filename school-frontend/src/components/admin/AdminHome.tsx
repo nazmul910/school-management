@@ -33,7 +33,7 @@ export default function AdminHome() {
             Welcome to School Admin Dashboard
           </h1>
           <p className="text-sm text-gray-200 max-w-2xl">
-            Effortlessly manage students, teachers, notices, photo gallery, and exam results for Ideal Model School & College.
+            Effortlessly manage students, teachers, notices, photo gallery, and exam results for Uttar Betdoba Fatema Halim High School & College.
           </p>
         </div>
 

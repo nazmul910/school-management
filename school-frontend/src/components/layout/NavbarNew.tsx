@@ -12,6 +12,8 @@ import { useRouter, usePathname } from "next/navigation";
 import { handleLogout, useAuth } from "@/app/providers/AuthContext";
 import { useUser } from "@/app/providers/UserContext";
 import useOnlineCount from "@/hooks/useOnlineCount";
+import Image from "next/image";
+import logo from "@/assets/school-logo.png";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -54,46 +56,47 @@ export default function NavbarNew() {
       {/* ── Mobile Overlay ── */}
       <div
         onClick={() => setIsOpen(false)}
-        className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/50 z-40 xl:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       />
 
       {/* ── Mobile Drawer ── */}
       <aside
-        className={`fixed top-0 left-0 h-full w-[300px] bg-white z-50 lg:hidden shadow-2xl transform transition-transform duration-300 flex flex-col justify-between ${
+        className={`fixed top-0 left-0 h-full w-[300px] bg-white z-50 xl:hidden shadow-2xl transform transition-transform duration-300 flex flex-col justify-between ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div>
           {/* Drawer Header */}
-          <div className="flex items-center justify-between px-5 py-4 bg-[#78A4CB] text-white">
+          <div className="flex items-center relative justify-between px-5 py-4 bg-[#78A4CB] text-white">
             <Link
               href="/"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5"
+              className="flex flex-col items-center gap-2.5"
             >
-              <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white text-xl">
-                <LuGraduationCap />
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md shrink-0">
+                <Image
+                  src={logo}
+                  alt="School Logo"
+                  width={40}
+                  height={60}
+                  className="rounded-full"
+                />
               </div>
               <div className="leading-tight">
-                <span className="font-bold text-base block">Ideal Model School</span>
-                <span className="text-[11px] text-[#F9E8A2]">Education • Discipline • Ethics</span>
+                <span className="font-bold text-base text-center block">
+                  Uttar Betdoba Fatema Halim High School
+                </span>
               </div>
             </Link>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1.5 rounded-md hover:bg-white/10 text-white transition-colors"
+              className="p-1.5  absolute top-2 right-2 rounded-md hover:bg-red-500 text-white transition-colors"
               aria-label="close-menu"
             >
               <ImCross size={14} />
             </button>
-          </div>
-
-          {/* Online status indicator */}
-          <div className="bg-[#B4E1EB]/40 px-5 py-2 text-xs text-[#1e3a5f] flex items-center gap-2 font-medium">
-            <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-            <span>Online Students: <strong>{onlineCount} Active</strong></span>
           </div>
 
           {/* Nav Items */}
@@ -151,8 +154,10 @@ export default function NavbarNew() {
           <div className="flex items-center justify-between text-xs text-gray-500 pt-2">
             <span>Helpline: +880 1700-000000</span>
             <div className="flex items-center gap-2">
-              <a href="#" className="text-gray-400 hover:text-[#78A4CB]"><BsFacebook size={14} /></a>
-              <a href="#" className="text-gray-400 hover:text-red-500"><BsYoutube size={14} /></a>
+              <a href="#" className="text-gray-400 hover:text-[#78A4CB]">
+                <BsFacebook size={18} />
+              </a>
+
             </div>
           </div>
         </div>
@@ -167,57 +172,66 @@ export default function NavbarNew() {
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
                 <IoMdCall className="text-[#F9E8A2]" size={15} />
-                <span className="text-gray-200">+880 2-9876543, +880 1700-000000</span>
+                <span className="text-gray-200">
+                  +880 2-9876543, +880 1700-000000
+                </span>
               </div>
               <div className="hidden lg:flex items-center gap-2">
                 <IoMdMail className="text-[#F9E8A2]" size={15} />
-                <span className="text-gray-200">info@idealschool.edu.bd</span>
+                <span className="text-gray-200">
+                  info@uttarbetdobafatemahhs.edu.bd
+                </span>
               </div>
             </div>
 
             {/* Right: Online Students Badge + Social */}
             <div className="flex items-center gap-5">
-              <div className="flex items-center gap-2 bg-[#78A4CB]/25 px-3 py-0.5 rounded-full border border-[#95BDD7]/40 text-xs text-[#F9E8A2]">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="font-medium">Online Students: {onlineCount} Active</span>
-              </div>
               <div className="flex items-center gap-3 text-gray-300">
                 <span>Connect:</span>
-                <a href="#" className="hover:text-[#F9E8A2] transition-colors"><BsFacebook size={13} /></a>
-                <a href="#" className="hover:text-[#F9E8A2] transition-colors"><BsYoutube size={13} /></a>
+                <a href="#" className="hover:text-[#F9E8A2] transition-colors">
+                  <BsFacebook size={13} />
+                </a>
               </div>
             </div>
           </div>
         </div>
 
         {/* ── Main Navbar Row ── */}
-        <div className="max-w-[1400px] mx-auto px-4 md:px-6 flex items-center justify-between h-18 md:h-20">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 flex items-center justify-between h-20 ">
           {/* Logo & School Branding */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 md:w-13 md:h-13 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl md:text-3xl shadow-md border-2 border-white group-hover:scale-105 transition-transform">
-              <LuGraduationCap />
+            <div className="w-14 h-14 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md shrink-0">
+              <Image
+                src={logo}
+                alt="School Logo"
+                width={40}
+                height={60}
+                className="rounded-full"
+              />
             </div>
-            <div className="leading-tight">
-              <h1 className="text-[#1e3a5f] font-bold text-lg md:text-xl tracking-tight">
-                Ideal Model School & College
+            <div className="leading-tight hidden md:block">
+              <h1 className="text-[#1e3a5f] font-bold text-lg md:text-[20px] tracking-tight">
+                Uttar Betdoba Fatema Halim High School
               </h1>
               <p className="text-xs text-gray-500 font-medium flex items-center gap-2">
                 <span>Est. 1995</span>
                 <span className="text-[#78A4CB]">•</span>
-                <span className="text-[#78A4CB] font-semibold">EIIN: 123456</span>
+                <span className="text-[#78A4CB] font-semibold">
+                  EIIN: 123456
+                </span>
               </p>
             </div>
           </Link>
 
           {/* Desktop Menu */}
-          <nav className="hidden xl:flex items-center gap-6 2xl:gap-7">
+          <nav className="hidden xl:flex items-center gap-3 2xl:gap-4">
             {navItems.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-[15px] font-semibold transition-all py-1.5 px-1 relative ${
+                  className={`text-[12px] font-semibold transition-all py-1.5 px-1 relative ${
                     active
                       ? "text-[#78A4CB]"
                       : "text-gray-700 hover:text-[#78A4CB]"
@@ -233,15 +247,17 @@ export default function NavbarNew() {
           </nav>
 
           {/* Right Action: Auth / Dashboard / Contact CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-3">
             {isLoggedIn ? (
               <div className="flex items-center gap-2">
                 <button
                   onClick={goDashboard}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#78A4CB] text-white rounded-lg text-sm font-semibold hover:bg-[#6894bb] transition-all shadow-sm"
+                  className="flex items-center gap-2 px-4 md:py-2 bg-[#78A4CB] text-white rounded-lg text-sm font-semibold hover:bg-[#6894bb] transition-all shadow-sm"
                 >
                   <LuLayoutDashboard size={16} />
-                  <span>{auth?.user?.role === "admin" ? "Admin Panel" : "Dashboard"}</span>
+                  <span>
+                    {auth?.user?.role === "admin" ? "Admin Panel" : "Dashboard"}
+                  </span>
                 </button>
                 <button
                   onClick={() => handleLogout(router)}
@@ -270,15 +286,15 @@ export default function NavbarNew() {
           </div>
 
           {/* Mobile Right: Hamburger Menu */}
-          <div className="flex md:hidden items-center gap-2">
-            {isLoggedIn && (
+          <div className="flex xl:hidden items-center gap-2">
+            {/* {isLoggedIn && (
               <button
                 onClick={goDashboard}
                 className="p-2 bg-[#78A4CB] text-white rounded-md text-xs font-semibold"
               >
                 Dashboard
               </button>
-            )}
+            )} */}
             <button
               onClick={() => setIsOpen((o) => !o)}
               aria-label={isOpen ? "close-menu" : "open-menu"}

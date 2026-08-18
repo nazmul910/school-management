@@ -40,7 +40,7 @@ const Footer = () => {
             </div>
             <div>
               <h3 className="text-xl font-bold text-white leading-tight">
-                Ideal Model School & College
+                Uttar Betdoba Fatema Halim High School & College
               </h3>
               <p className="text-xs text-[#F9E8A2]">Education • Discipline • Ethics</p>
             </div>
@@ -153,7 +153,7 @@ const Footer = () => {
       <section className="border-t border-gray-800 bg-[#0a1523] py-5">
         <div className="max-w-[1400px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
           <p>
-            © {new Date().getFullYear()} Ideal Model School & College. All rights reserved.
+            © {new Date().getFullYear()} Uttar Betdoba Fatema Halim High School & College. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link href="/notices" className="hover:text-white transition-colors">Notices</Link>

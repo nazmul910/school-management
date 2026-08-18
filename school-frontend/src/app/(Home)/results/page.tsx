@@ -199,7 +199,7 @@ export default function ResultsPage() {
             {/* School Header */}
             <div className="text-center pb-6 border-b-2 border-[#78A4CB] space-y-1">
               <h2 className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">
-                Ideal Model School & College
+                Uttar Betdoba Fatema Halim High School & College
               </h2>
               <p className="text-xs text-gray-500">Mirpur-10, Dhaka-1216 • EIIN: 123456</p>
               <h3 className="text-lg font-bold text-[#78A4CB] pt-2">

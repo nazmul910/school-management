@@ -6,25 +6,29 @@ import { BsCheck2Circle, BsArrowRight } from "react-icons/bs";
 import { LuGraduationCap, LuAward, LuUsers, LuBookOpen, LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import useOnlineCount from "@/hooks/useOnlineCount";
 import useDashboardStats from "@/hooks/useDashboardStats";
+import img1 from "../../assets/Home-Hero/img1.jpeg";
+import img2 from "../../assets/Home-Hero/img2.jpeg";
+import img3 from "../../assets/Home-Hero/img3.jpeg";
+import img4 from "../../assets/Home-Hero/img4.jpeg";
 
 const heroSlides = [
   {
-    src: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=900&q=80",
+    src: "/Hero/img1.jpeg",
     label: "Creative Learning",
     caption: "Joyful and engaging educational environment",
   },
   {
-    src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=900&q=80",
+    src: "/Hero/img2.jpeg",
     label: "Modern Classrooms",
     caption: "Equipped with digital multimedia and interactive tools",
   },
   {
-    src: "https://images.unsplash.com/photo-1568792923760-d70635a89fdc?w=900&q=80",
+    src: "/Hero/img3.jpeg",
     label: "Science Laboratories",
     caption: "Practical hands-on experiments in high-tech labs",
   },
   {
-    src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80",
+    src: "/Hero/img4.jpeg",
     label: "Annual Sports Festival",
     caption: "Active participation in sports and extracurriculars",
   },
@@ -78,10 +82,7 @@ const HeroNew = () => {
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             {/* Badges */}
             <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1e3a5f] text-white text-xs md:text-sm font-medium shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span>Online Students: <strong className="text-[#F9E8A2]">{onlineCount} Active</strong></span>
-              </span>
+
               <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B4E1EB]/50 text-[#1e3a5f] text-xs md:text-sm font-semibold border border-[#95BDD7]/40">
                 <LuAward className="text-[#78A4CB]" />
                 <span>Recognized for Academic Excellence</span>

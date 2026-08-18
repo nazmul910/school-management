@@ -37,7 +37,7 @@ const StudentStatus = () => {
           <div className="bg-[#1e3a5f] rounded-3xl p-10 flex flex-col justify-between min-h-[340px]">
             <div>
               <p className="text-[10px] uppercase tracking-[3px] text-[#95BDD7] mb-3">
-                Ideal Model School & College
+                Uttar Betdoba Fatema Halim High School & College
               </p>
               <h3 className="text-2xl font-bold text-white leading-snug">
                 Building Global Standard<br />Education & Ethics
