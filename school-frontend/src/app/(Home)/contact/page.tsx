@@ -140,7 +140,7 @@ export default function ContactPage() {
             <div>
               <h3 className="font-bold text-lg text-[#1e3a5f]">Official Email</h3>
               <p className="text-xs text-gray-500 mt-1">info@idealschool.edu.bd</p>
-              <p className="text-sm font-bold text-[#78A4CB]">admission@idealschool.edu.bd</p>
+              <p className="text-sm font-bold text-[#78A4CB]">admission@fatemahalim.edu.bd</p>
             </div>
           </div>
 
