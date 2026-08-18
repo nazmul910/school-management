@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { LuKeyRound, LuCheck, LuLoader } from "react-icons/lu";
 
 interface IFormInput {
   oldPassword: string;
@@ -18,6 +19,8 @@ const ChangePassword = () => {
   const axiosSecure = useAxios();
   const router = useRouter();
   const [error, setError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -25,103 +28,134 @@ const ChangePassword = () => {
     formState: { errors },
   } = useForm<IFormInput>();
 
-  // Password Submit Function
-  const onPasswordSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onPasswordSubmit: SubmitHandler<IFormInput> = async (data) => {
     if (data.password !== data.confirm) {
       setError(true);
-      reset();
       return;
     }
+    setIsSubmitting(true);
     const updateData = {
       oldPassword: data.oldPassword,
       newPassword: data.confirm,
     };
 
     const token = localStorage.getItem("accessToken");
-    axiosSecure
-      .post("/auth/change-password", updateData, {
+    try {
+      const res = await axiosSecure.post("/auth/change-password", updateData, {
         headers: {
           Authorization: token,
           "Content-Type": "application/json",
         },
-      })
-      .then(({ data }) => {
-        toast.success(data.message);
-        reset();
-        handleLogout(router);
-        setTimeout(() => {
-          toast.success("Please login to continue!");
-        }, 2000);
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.response.data.message);
       });
+      toast.success(res.data.message || "পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!");
+      reset();
+      handleLogout(router);
+      setTimeout(() => {
+        toast.info("দয়া করে নতুন পাসওয়ার্ড দিয়ে লগইন করুন");
+      }, 1500);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "পাসওয়ার্ড পরিবর্তন করা সম্ভব হয়নি");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
-        <DashboardTitle blackText="Change" greenText="Password" className="text-center" />
+    <section className="min-h-[85vh] flex flex-col justify-center items-center px-4 py-8">
+      <DashboardTitle
+        blackText="Change"
+        greenText="Password"
+        className="text-center mb-6"
+      />
+
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-[#1e3a5f]/5 border border-[#B4E1EB]/60 p-6 sm:p-8">
+        <div className="flex items-center gap-3 pb-4 mb-6 border-b border-gray-100">
+          <div className="w-10 h-10 rounded-2xl bg-[#B4E1EB]/30 text-[#78A4CB] flex items-center justify-center text-xl">
+            <LuKeyRound />
+          </div>
+          <div>
+            <h3 className="font-bold text-base text-[#1e3a5f]">পাসওয়ার্ড পরিবর্তন</h3>
+            <p className="text-xs text-gray-400">আপনার শিক্ষার্থী অ্যাকাউন্টের নিরাপত্তা নিশ্চিত করুন</p>
+          </div>
+        </div>
 
         <form
           onClick={() => setError(false)}
           onSubmit={handleSubmit(onPasswordSubmit)}
-          className="mt-6 space-y-4"
+          className="space-y-4"
         >
           {/* Old Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Old Password <span className="text-red-500">*</span>
+            <label className="block text-xs font-bold text-gray-700 mb-1">
+              বর্তমান পাসওয়ার্ড (Old Password) <span className="text-red-500">*</span>
             </label>
             <input
               type="password"
+              placeholder="••••••••"
               {...register("oldPassword", { required: true })}
-              className={`mt-1 block w-full border ${
-                errors.oldPassword ? "border-red-500" : "border-gray-300"
-              } rounded-md bg-white p-2 text-gray-900 focus:border-primary focus:outline-none`}
+              className={`w-full px-4 py-2.5 rounded-xl border bg-white text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
+                errors.oldPassword ? "border-red-500" : "border-gray-200"
+              }`}
             />
           </div>
 
           {/* New Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              New Password <span className="text-red-500">*</span>
+            <label className="block text-xs font-bold text-gray-700 mb-1">
+              নতুন পাসওয়ার্ড (New Password) <span className="text-red-500">*</span>
             </label>
             <input
               type="password"
-              {...register("password", { required: true })}
-              className={`mt-1 block w-full border ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              } rounded-md bg-white p-2 text-gray-900 focus:border-primary focus:outline-none`}
+              placeholder="••••••••"
+              {...register("password", { required: true, minLength: 6 })}
+              className={`w-full px-4 py-2.5 rounded-xl border bg-white text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
+                errors.password ? "border-red-500" : "border-gray-200"
+              }`}
             />
           </div>
 
           {/* Confirm Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Confirm Password <span className="text-red-500">*</span>
+            <label className="block text-xs font-bold text-gray-700 mb-1">
+              পাসওয়ার্ড নিশ্চিত করুন (Confirm Password) <span className="text-red-500">*</span>
             </label>
             <input
               type="password"
+              placeholder="••••••••"
               {...register("confirm", { required: true })}
-              className={`mt-1 block w-full border ${
-                errors.confirm ? "border-red-500" : "border-gray-300"
-              } rounded-md bg-white p-2 text-gray-900 focus:border-primary focus:outline-none`}
+              className={`w-full px-4 py-2.5 rounded-xl border bg-white text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
+                errors.confirm ? "border-red-500" : "border-gray-200"
+              }`}
             />
           </div>
 
           {error && (
-            <p className="text-sm text-red-600 text-center">
-              Password did not match
+            <p className="text-xs font-bold text-red-500 bg-red-50 p-2.5 rounded-xl border border-red-200 text-center">
+              পাসওয়ার্ড মিলছে না! অনুগ্রহ করে পুনরায় যাচাই করুন।
             </p>
           )}
 
           <button
             type="submit"
-            className="w-full mt-4 py-2 bg-primary text-white rounded-md hover:bg-[#1d3d7c] transition"
+            disabled={isSubmitting}
+            className={`w-full mt-2 py-3 rounded-xl font-bold text-sm text-white shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-95 ${
+              isSubmitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#78A4CB] hover:bg-[#6894bb] hover:shadow-lg shadow-[#78A4CB]/30"
+            }`}
           >
-            Save Changes
+            {isSubmitting ? (
+              <>
+                <LuLoader className="animate-spin text-base" />
+                <span>সংরক্ষণ হচ্ছে...</span>
+              </>
+            ) : (
+              <>
+                <LuCheck size={16} />
+                <span>পাসওয়ার্ড পরিবর্তন করুন</span>
+              </>
+            )}
           </button>
         </form>
       </div>

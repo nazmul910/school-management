@@ -94,41 +94,39 @@ export default function StudentSidebar({
         {/* Navigation links */}
         <div
           className={`mt-6 transition-all duration-300 ease-in-out ${
-            isOpen ? "px-5" : "px-2"
+            isOpen ? "px-4" : "px-2"
           }`}
         >
-          <nav className="flex flex-col gap-0 xl:gap-2">
+          <nav className="flex flex-col gap-1.5">
             {navItems.map(({ href, label, Icon }, idx) => {
               const isActive = pathname === href;
               return (
                 <Link
                   key={idx}
                   href={href}
-                  className={`flex items-center w-full transition-all duration-200 rounded-md p-2 hover:bg-gray-900 relative group ${
+                  className={`flex items-center w-full transition-all duration-200 rounded-2xl p-3 relative group cursor-pointer hover:scale-[1.02] active:scale-95 ${
                     isOpen ? "justify-between" : "justify-center"
-                  } ${isActive ? "bg-gray-800 border-l-4 border-white" : ""}`}
+                  } ${
+                    isActive
+                      ? "bg-gray-900 text-white font-bold shadow-md"
+                      : "text-white/80 hover:bg-white/10 hover:text-white"
+                  }`}
                 >
                   {isOpen ? (
-                    <div className="flex items-center justify-center gap-2">
+                    <div className="flex items-center gap-3">
                       <Icon
                         size={20}
-                        className={`${isActive ? "text-light" : "text-white"}`}
+                        className={`transition-transform group-hover:scale-110 ${isActive ? "text-[#F9E8A2]" : "text-white"}`}
                       />
-                      <span
-                        className={`font-medium text-sm lg:text-sm xl:text-md ${
-                          isActive ? "text-light" : "text-white"
-                        }`}
-                      >
-                        {label}
-                      </span>
+                      <span className="font-medium text-sm text-white">{label}</span>
                     </div>
                   ) : (
                     <div className="relative">
                       <Icon
                         size={22}
-                        className={`${isActive ? "text-light" : "text-white"}`}
+                        className={`transition-transform group-hover:scale-110 ${isActive ? "text-[#F9E8A2]" : "text-white"}`}
                       />
-                      <span className="absolute top-1/2 left-full ml-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-gray-100 text-black text-sm rounded px-2 py-1 whitespace-nowrap">
+                      <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-[#1e3a5f] text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
                         {label}
                       </span>
                     </div>
@@ -137,49 +135,49 @@ export default function StudentSidebar({
               );
             })}
           </nav>
+
           {/* Section break */}
-          <div className="border-t border-gray-700"></div>
-          {/*  Go to Home Button */}
+          <div className="border-t border-white/10 my-4"></div>
+
+          {/* Go to Home Button */}
           <Link
             href="/"
-            className={`flex items-center w-full transition-all duration-200 mt-3 rounded-md p-2 bg-[#142a57] hover:bg-[#1d3d7c] text-primary relative group ${
+            className={`flex items-center w-full transition-all duration-200 rounded-2xl p-3 bg-white/10 hover:bg-white/20 text-white relative group cursor-pointer hover:scale-[1.02] active:scale-95 ${
               isOpen ? "justify-between" : "justify-center"
             }`}
           >
             {isOpen ? (
-              <div className="flex items-center justify-center gap-2">
-                <FaHome size={20} className="text-white" />
-                <span className="font-medium text-sm lg:text-sm xl:text-md text-white">
-                  Go to Home
-                </span>
+              <div className="flex items-center gap-3">
+                <FaHome size={18} className="text-[#F9E8A2] transition-transform group-hover:scale-110" />
+                <span className="font-medium text-sm text-white">Go to Home</span>
               </div>
             ) : (
               <div className="relative">
-                <FaHome size={22} className="text-white" />
-                <span className="absolute top-1/2 left-full ml-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-gray-100 text-black text-sm rounded px-2 py-1 whitespace-nowrap">
+                <FaHome size={20} className="text-[#F9E8A2]" />
+                <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-[#1e3a5f] text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
                   Go to Home
                 </span>
               </div>
             )}
           </Link>
+
           {/* Logout button */}
           <button
+            type="button"
             onClick={() => handleLogout(router)}
-            className={`flex items-center w-full transition-all duration-200 mt-3 rounded-md p-2 bg-red-500 hover:bg-red-600 text-white relative group ${
+            className={`flex items-center w-full transition-all duration-200 mt-2 rounded-2xl p-3 bg-red-600 hover:bg-red-700 text-white relative group cursor-pointer hover:scale-[1.02] active:scale-95 shadow-sm ${
               isOpen ? "justify-between" : "justify-center"
             }`}
           >
             {isOpen ? (
-              <div className="flex items-center justify-center gap-2">
-                <LuLogOut size={20} className="text-white" />
-                <span className="font-medium text-sm lg:text-sm xl:text-md text-white">
-                  Logout
-                </span>
+              <div className="flex items-center gap-3">
+                <LuLogOut size={18} className="text-white transition-transform group-hover:scale-110" />
+                <span className="font-semibold text-sm text-white">Logout</span>
               </div>
             ) : (
               <div className="relative">
-                <LuLogOut size={22} className="text-white" />
-                <span className="absolute top-1/2 left-full ml-2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-gray-100 text-black text-sm rounded px-2 py-1 whitespace-nowrap">
+                <LuLogOut size={20} className="text-white" />
+                <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-red-600 text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
                   Logout
                 </span>
               </div>

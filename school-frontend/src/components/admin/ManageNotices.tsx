@@ -315,20 +315,62 @@ export default function ManageNotices() {
                 ></textarea>
               </div>
 
-              {/* PDF URL / File Upload */}
+              {/* PDF File Upload - Clean Dropzone / File Picker (No raw URLs) */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">পিডিএফ সংযুক্তি (PDF File / URL)</label>
-                <div className="flex items-center gap-3">
-                  <input
-                    type="text"
-                    value={formData.pdfUrl}
-                    onChange={(e) => setFormData({ ...formData, pdfUrl: e.target.value })}
-                    placeholder="পিডিএফ লিংক লিখুন অথবা ফাইল আপলোড করুন"
-                    className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB]"
-                  />
-                  <label className="px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-xl cursor-pointer shrink-0 flex items-center gap-1.5 border border-red-200">
-                    <FaFilePdf />
-                    <span>{uploadingPdf ? "আপলোড হচ্ছে..." : "PDF আপলোড"}</span>
+                <label className="block text-xs font-bold text-gray-700 mb-1.5">
+                  পিডিএফ সংযুক্তি (PDF File)
+                </label>
+
+                {formData.pdfUrl ? (
+                  <div className="flex items-center justify-between p-3.5 bg-red-50/70 border border-red-200 rounded-2xl">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl shrink-0">
+                        <FaFilePdf />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-gray-800 truncate">পিডিএফ ফাইল সংযুক্ত করা হয়েছে</p>
+                        <a
+                          href={formData.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[11px] text-red-600 hover:underline font-semibold flex items-center gap-1 mt-0.5"
+                        >
+                          <FaEye size={10} /> দেখুন
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <label className="px-3 py-1.5 bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 text-xs font-bold rounded-xl cursor-pointer transition-all hover:scale-105 active:scale-95 shadow-sm">
+                        {uploadingPdf ? "আপলোড হচ্ছে..." : "পরিবর্তন"}
+                        <input
+                          type="file"
+                          accept=".pdf,application/pdf"
+                          onChange={handlePdfUpload}
+                          className="hidden"
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, pdfUrl: "" })}
+                        className="p-2 text-red-600 hover:bg-red-100 rounded-xl transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
+                        title="ফাইল মুছে ফেলুন"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label className="border-2 border-dashed border-gray-300 hover:border-[#78A4CB] bg-gray-50 hover:bg-[#B4E1EB]/10 rounded-2xl p-5 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all duration-200 group">
+                    <div className="w-10 h-10 rounded-xl bg-red-50 text-red-500 group-hover:scale-110 transition-transform flex items-center justify-center text-xl">
+                      <FaFilePdf />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xs font-bold text-[#1e3a5f]">
+                        {uploadingPdf ? "পিডিএফ আপলোড হচ্ছে..." : "পিডিএফ ফাইল নির্বাচন করতে ক্লিক করুন"}
+                      </p>
+                      <p className="text-[11px] text-gray-400 mt-0.5">সর্বোচ্চ ১৫ এমবি (.pdf)</p>
+                    </div>
                     <input
                       type="file"
                       accept=".pdf,application/pdf"
@@ -336,7 +378,7 @@ export default function ManageNotices() {
                       className="hidden"
                     />
                   </label>
-                </div>
+                )}
               </div>
 
               {/* Action Buttons */}
@@ -344,13 +386,14 @@ export default function ManageNotices() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50"
+                  className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   বাতিল
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md"
+                  disabled={uploadingPdf}
+                  className="px-6 py-2.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   {isEditing ? "আপডেট করুন" : "প্রকাশ করুন"}
                 </button>

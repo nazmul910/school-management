@@ -224,7 +224,7 @@ export default function ManageResults() {
 
         <button
           onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all shrink-0"
+          className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer shrink-0"
         >
           <FaPlus />
           <span>নতুন ফলাফল যোগ করুন</span>
@@ -314,9 +314,9 @@ export default function ManageResults() {
                     <td className="p-4 text-center">
                       <button
                         onClick={() => handleToggleTop10(item)}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer ${
                           item.isTop10Eligible
-                            ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                            ? "bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm"
                             : "bg-gray-100 text-gray-500 border border-gray-200"
                         }`}
                       >
@@ -328,14 +328,14 @@ export default function ManageResults() {
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleOpenEdit(item)}
-                          className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors"
+                          className="p-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
                           title="সম্পাদনা"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(item._id, item.studentName)}
-                          className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors"
+                          className="p-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
                           title="মুছুন"
                         >
                           <FaTrash />
@@ -571,13 +571,13 @@ export default function ManageResults() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50"
+                  className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   বাতিল
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md"
+                  className="px-6 py-2.5 rounded-xl bg-[#78A4CB] text-white font-bold text-sm hover:bg-[#6894bb] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   {isEditing ? "আপডেট করুন" : "সংরক্ষণ করুন"}
                 </button>

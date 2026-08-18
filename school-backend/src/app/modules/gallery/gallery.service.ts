@@ -3,7 +3,15 @@ import httpStatus from "http-status";
 import { IGallery } from "./gallery.interface";
 import { Gallery } from "./gallery.model";
 
-const createGalleryItemToDB = async (payload: IGallery) => {
+const createGalleryItemToDB = async (payload: IGallery | IGallery[] | { items: IGallery[] }) => {
+  if (Array.isArray(payload)) {
+    const result = await Gallery.insertMany(payload);
+    return result;
+  }
+  if ((payload as any).items && Array.isArray((payload as any).items)) {
+    const result = await Gallery.insertMany((payload as any).items);
+    return result;
+  }
   const result = await Gallery.create(payload);
   return result;
 };

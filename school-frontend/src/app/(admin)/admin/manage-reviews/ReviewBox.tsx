@@ -108,14 +108,14 @@ export default function ReviewBox({ review, refetch }: IReviewBox) {
         {!isApproved ? (
           <button
             onClick={() => handleToggleStatus("approved")}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
             <FaCheck /> অনুমোদন করুন
           </button>
         ) : (
           <button
             onClick={() => handleToggleStatus("pending")}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl shadow-sm transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl shadow-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
             <FaTimes /> অননুমোদিত করুন
           </button>
@@ -123,7 +123,7 @@ export default function ReviewBox({ review, refetch }: IReviewBox) {
 
         <button
           onClick={handleDelete}
-          className="p-2.5 bg-red-50 hover:bg-red-600 text-red-600 hover:text-white rounded-xl transition-colors text-xs"
+          className="p-2.5 bg-red-50 hover:bg-red-600 text-red-600 hover:text-white rounded-xl transition-all hover:scale-110 active:scale-95 cursor-pointer text-xs"
           title="মুছে ফেলুন"
         >
           <FaTrash />

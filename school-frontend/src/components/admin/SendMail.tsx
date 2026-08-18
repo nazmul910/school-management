@@ -58,34 +58,37 @@ export default function SendMail() {
 
   if (mailsLoading) return <LoadingSpinner />;
   return (
-    <section>
-      <div className="sm:flex justify-between items-center mt-10">
-        <DashboardTitle blackText="Send" greenText="Mail" />
+    <section className="max-w-5xl mx-auto px-4 py-8 space-y-6">
+      <div className="sm:flex justify-between items-center bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-[#B4E1EB]/60">
+        <div>
+          <DashboardTitle blackText="Send" greenText="Mail" />
+          <p className="text-xs text-gray-500 mt-1">শিক্ষার্থীদের প্রয়োজনীয় নোটিশ বা বার্তা ইমেইলে প্রেরণ করুন</p>
+        </div>
         <button
-          className="bg-primary hover:bg-lightduration-300 text-white px-4 py-2 rounded-md flex items-center gap-2 my-3 sm:my-0"
+          className="bg-[#78A4CB] hover:bg-[#6894bb] text-white px-5 py-3 rounded-2xl flex items-center gap-2 my-3 sm:my-0 shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer font-bold text-sm"
           onClick={() => setIsMailModalOpen(true)}
         >
           <AiOutlinePlus /> Send Mail
         </button>
       </div>
-      <div className="my-5 space-y-5">
+
+      <div className="my-5 space-y-4">
         {mailsData.data && mailsData.data.length > 0 ? (
           mailsData.data.map((mail: TMail) => (
             <MailBox key={mail?._id} mail={mail} />
           ))
         ) : (
           <div className="flex flex-col items-center justify-center text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300">
-            <div className="bg-primary/10 p-6 rounded-full mb-6">
-              <MdOutlineMailOutline className="text-5xl text-primary" />
+            <div className="bg-[#B4E1EB]/30 p-6 rounded-full mb-4">
+              <MdOutlineMailOutline className="text-5xl text-[#78A4CB]" />
             </div>
 
-            <h3 className="text-2xl font-bold text-primary mb-2">
+            <h3 className="text-xl font-bold text-[#1e3a5f] mb-1">
               কোনো মেইল পাওয়া যায়নি
             </h3>
 
-            <p className="text-gray-500 max-w-md leading-7">
-              এখনো কোনো মেইল পাঠানো হয়নি। উপরের &quot;Send Mail&quot; বাটনে
-              ক্লিক করে নতুন মেইল পাঠান।
+            <p className="text-gray-500 text-xs max-w-md">
+              এখনো কোনো মেইল পাঠানো হয়নি। উপরের &quot;Send Mail&quot; বাটনে ক্লিক করে শিক্ষার্থীদের নতুন মেইল পাঠান।
             </p>
           </div>
         )}
@@ -96,65 +99,69 @@ export default function SendMail() {
           isModalOpen={isMailModalOpen}
           setIsModalOpen={setIsMailModalOpen}
         >
-          <form onSubmit={handleSubmit(onMailSubmit)}>
-            <h3 className="font-bold text-xl mb-2">
-              Send mail to all students
+          <form onSubmit={handleSubmit(onMailSubmit)} className="space-y-4">
+            <h3 className="font-bold text-lg text-[#1e3a5f]">
+              সকল শিক্ষার্থীর কাছে ইমেইল পাঠান
             </h3>
-            <p className="border-t border-dark mb-5"></p>
-            <div className="sm:flex gap-3">
-              {/* Subject */}
-              <div className="w-full">
-                <label className="text-dark text-sm">
-                  Subject <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  {...register("subject", { required: true })}
-                  className={`w-full border text-black bg-white border-dark/40 p-2 rounded-md  focus:outline-none focus:border-primary mb-3 ${
-                    errors.subject && "border border-red-500"
-                  }`}
-                  disabled={isLoading}
-                />
-              </div>
+            <p className="border-t border-gray-100 mb-4"></p>
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                বিষয় (Subject) <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="ইমেইলের বিষয়..."
+                {...register("subject", { required: true })}
+                className={`w-full border bg-white border-gray-200 px-4 py-2.5 rounded-xl text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
+                  errors.subject && "border-red-500"
+                }`}
+                disabled={isLoading}
+              />
             </div>
 
-            <div className="sm:flex gap-3">
-              {/* Message*/}
-              <div className="w-full">
-                <label className="text-dark text-sm">
-                  Message <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  placeholder="type here..."
-                  {...register("message", { required: true })}
-                  className={`w-full border text-black bg-white border-dark/40 p-2 rounded-md focus:outline-none focus:border-primary mb-3 ${
-                    errors.message && "border border-red-500"
-                  }`}
-                  rows={4}
-                  disabled={isLoading}
-                />
-              </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">
+                বার্তার বিবরণ (Message) <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                placeholder="বার্তা বিস্তারিত লিখুন..."
+                {...register("message", { required: true })}
+                className={`w-full border bg-white border-gray-200 p-3 rounded-xl text-sm focus:outline-none focus:border-[#78A4CB] transition-colors ${
+                  errors.message && "border-red-500"
+                }`}
+                rows={5}
+                disabled={isLoading}
+              />
             </div>
 
             {/* Submit */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`text-center px-3 md:px-5 py-1 md:py-3 rounded-lg cursor-pointer transition-all duration-300 flex items-center justify-center gap-2 ${
-                isLoading
-                  ? "bg-gray-400 cursor-not-allowed text-white"
-                  : "bg-primary hover:bg-lighttext-white"
-              }`}
-            >
-              {isLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  Sending...
-                </>
-              ) : (
-                <p className="text-white">Send Mail</p>
-              )}
-            </button>
+            <div className="flex items-center justify-end gap-3 pt-3">
+              <button
+                type="button"
+                onClick={() => setIsMailModalOpen(false)}
+                className="px-5 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                বাতিল
+              </button>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`px-6 py-2.5 rounded-xl font-bold text-sm text-white shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95 ${
+                  isLoading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#78A4CB] hover:bg-[#6894bb] shadow-[#78A4CB]/30"
+                }`}
+              >
+                {isLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <span>Send Mail</span>
+                )}
+              </button>
+            </div>
           </form>
         </CustomModal>
       )}

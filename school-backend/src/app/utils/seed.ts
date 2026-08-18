@@ -12,7 +12,7 @@ export const seedDatabase = async () => {
   try {
     const userCount = await User.countDocuments();
     if (userCount > 0) {
-      // Check if we need to seed students, teachers, notices, gallery, results
+  
       const studentCount = await Student.countDocuments();
       if (studentCount >= 10) {
         console.log("Database already has records. Skipping initial seeding.");
@@ -52,7 +52,7 @@ export const seedDatabase = async () => {
       });
     }
 
-    // 2. Teachers
+
     const teachersData = [
       {
         name: "ড. মোহাম্মাদ রফিকুল ইসলাম",

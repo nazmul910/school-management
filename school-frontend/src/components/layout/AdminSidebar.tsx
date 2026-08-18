@@ -130,7 +130,7 @@ export default function AdminSidebar({
                 <Link
                   key={idx}
                   href={href}
-                  className={`flex items-center w-full transition-all duration-200 rounded-xl p-3 relative group ${
+                  className={`flex items-center w-full transition-all duration-200 rounded-2xl p-3 relative group cursor-pointer hover:scale-[1.02] active:scale-95 ${
                     isOpen ? "justify-start gap-3" : "justify-center"
                   } ${
                     isActive
@@ -140,10 +140,10 @@ export default function AdminSidebar({
                 >
                   <Icon
                     size={20}
-                    className={`shrink-0 ${isActive ? "text-white" : "text-[#95BDD7]"}`}
+                    className={`shrink-0 transition-transform group-hover:scale-110 ${isActive ? "text-white" : "text-[#95BDD7]"}`}
                   />
                   {isOpen ? (
-                    <span className="text-sm truncate">{label}</span>
+                    <span className="text-sm truncate font-medium">{label}</span>
                   ) : (
                     <span className="absolute top-1/2 left-full ml-3 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-[#1e3a5f] text-white text-xs font-semibold rounded-lg px-3 py-1.5 whitespace-nowrap shadow-xl z-50 pointer-events-none">
                       {label}
@@ -160,11 +160,11 @@ export default function AdminSidebar({
           {/* Go to Home */}
           <Link
             href="/"
-            className={`flex items-center w-full transition-all duration-200 rounded-xl p-3 bg-white/5 hover:bg-white/10 text-gray-300 relative group ${
+            className={`flex items-center w-full transition-all duration-200 rounded-2xl p-3 bg-white/5 hover:bg-white/10 text-gray-300 relative group cursor-pointer hover:scale-[1.02] active:scale-95 ${
               isOpen ? "justify-start gap-3" : "justify-center"
             }`}
           >
-            <FaHome size={18} className="text-[#F9E8A2]" />
+            <FaHome size={18} className="text-[#F9E8A2] transition-transform group-hover:scale-110" />
             {isOpen ? (
               <span className="text-sm font-medium">মূল ওয়েবসাইটে যান</span>
             ) : (
@@ -176,12 +176,13 @@ export default function AdminSidebar({
 
           {/* Logout button */}
           <button
+            type="button"
             onClick={() => handleLogout(router)}
-            className={`flex items-center w-full transition-all duration-200 rounded-xl mt-2 p-3 bg-red-600/80 hover:bg-red-600 text-white relative group ${
+            className={`flex items-center w-full transition-all duration-200 rounded-2xl mt-2 p-3 bg-red-600/80 hover:bg-red-600 text-white relative group cursor-pointer hover:scale-[1.02] active:scale-95 ${
               isOpen ? "justify-start gap-3" : "justify-center"
             }`}
           >
-            <LuLogOut size={18} className="text-white" />
+            <LuLogOut size={18} className="text-white transition-transform group-hover:scale-110" />
             {isOpen ? (
               <span className="text-sm font-semibold">লগআউট</span>
             ) : (

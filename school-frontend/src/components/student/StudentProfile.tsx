@@ -1,4 +1,5 @@
 "use client";
+
 import useAxios from "@/hooks/useAxios";
 import { jwtDecode } from "jwt-decode";
 import Image, { StaticImageData } from "next/image";
@@ -6,8 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import {
   AiOutlineCheckCircle,
   AiOutlineEdit,
-  AiOutlineUpload,
 } from "react-icons/ai";
+import { LuCamera, LuArrowLeft, LuCheck, LuLoader } from "react-icons/lu";
 import { toast } from "react-toastify";
 import avatar from "@/assets/Avatar/male_avatar.png";
 import { useRouter } from "next/navigation";
@@ -26,6 +27,7 @@ export default function StudentProfile() {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const axiosSecure = useAxios();
 
@@ -42,10 +44,13 @@ export default function StudentProfile() {
     address: "",
     avatar: avatar,
   });
+
   const [decoded, setDecoded] = useState({
     userId: "",
   });
+
   const router = useRouter();
+
   const fetchProfile = () => {
     setIsLoading(true);
     const token = localStorage.getItem("accessToken");
@@ -54,19 +59,18 @@ export default function StudentProfile() {
       axiosSecure
         .get(`/users/${userId}`)
         .then(({ data }) => {
-          console.log(data);
           setDecoded({ userId });
           setProfile({
             name: data.data.name,
             email: data.data.email,
-            contact: data.data?.contact,
-            address: data.data?.address,
+            contact: data.data?.contact || "",
+            address: data.data?.address || "",
             avatar: data.data?.image || avatar,
           });
         })
         .catch((err) => {
           console.error(err);
-          toast.error("Failed to load profile data");
+          toast.error("প্রোফাইল তথ্য লোড করা যায়নি");
         })
         .finally(() => {
           setIsLoading(false);
@@ -75,6 +79,7 @@ export default function StudentProfile() {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -83,65 +88,59 @@ export default function StudentProfile() {
     setProfile((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
-    const { avatar, ...safeProfile } = profile;
-    axiosSecure
-      .patch(`/users/update-user/${decoded.userId}`, safeProfile)
-      .then(({ data }) => {
-        if (data.success) {
-          toast.success("Student Profile updated");
-          router.push("/student/student-dashboard");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Failed to update profile");
-      })
-      .finally(() => {
-        setIsSaving(false);
-      });
-    setIsEditing(false);
+    const { avatar: _, ...safeProfile } = profile;
+    try {
+      const { data } = await axiosSecure.patch(`/users/update-user/${decoded.userId}`, safeProfile);
+      if (data.success) {
+        toast.success("প্রোফাইল তথ্য সফলভাবে আপডেট হয়েছে!");
+        setIsEditing(false);
+        fetchProfile();
+      }
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "প্রোফাইল আপডেট ব্যর্থ হয়েছে");
+    } finally {
+      setIsSaving(false);
+    }
   };
+
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
-  
+
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const previewUrl = URL.createObjectURL(file);
-    setProfile((prev) => ({ ...prev, avatar: previewUrl }));
-
+    setIsUploadingPhoto(true);
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("file", file);
+    formData.append("folder", "school_users");
 
     try {
-      const apiKey = process.env.NEXT_PUBLIC_IMG_BB_API_KEY;
-      const response = await fetch(
-        `https://api.imgbb.com/1/upload?key=${apiKey}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      // Upload to Cloudinary via backend
+      const { data } = await axiosSecure.post("/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      const data = await response.json();
-
-      if (data.success) {
+      if (data.success && data.data?.url) {
         const uploadedImageUrl = data.data.url;
-        toast.success("Image uploaded successfully!");
         await axiosSecure.patch(`/users/update-user/${decoded.userId}`, {
           image: uploadedImageUrl,
         });
         setProfile((prev) => ({ ...prev, avatar: uploadedImageUrl }));
+        toast.success("প্রোফাইল ছবি সফলভাবে আপডেট হয়েছে!");
       } else {
-        toast.error("Image upload failed. Please try again.");
+        toast.error("ছবি আপলোড ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
       }
-    } catch (error) {
-      console.log("Upload error:", error);
+    } catch (error: any) {
+      console.error("Upload error:", error);
+      toast.error(error.response?.data?.message || "ছবি আপলোড করা যায়নি।");
+    } finally {
+      setIsUploadingPhoto(false);
     }
   };
 
@@ -150,100 +149,121 @@ export default function StudentProfile() {
   };
 
   return (
-    <section>
+    <section className="min-h-screen py-10 px-4">
       <DashboardTitle
         blackText="Student"
         greenText="Profile"
-        className="text-center mt-10"
+        className="text-center"
       />
 
       {isLoading ? (
-        <LoadingSpinner />
+        <div className="mt-12 flex justify-center">
+          <LoadingSpinner />
+        </div>
       ) : (
-        <div className="container max-w-2xl mx-auto ">
+        <div className="max-w-2xl mx-auto mt-8">
           {!isEditing ? (
-            // VIEW MODE
-            <section className="container mx-auto shadow-lg rounded-lg p-4 sm:p-6 mt-6">
-              <div className="w-2xl flex items-end justify-end mb-4">
+            /* VIEW MODE */
+            <div className="bg-white rounded-3xl shadow-xl shadow-[#1e3a5f]/5 border border-[#B4E1EB]/60 p-6 sm:p-8 relative overflow-hidden">
+              <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
+                <div>
+                  <h2 className="text-xl font-extrabold text-[#1e3a5f]">শিক্ষার্থী প্রোফাইল</h2>
+                  <p className="text-xs text-gray-500 mt-0.5">আপনার ব্যক্তিগত তথ্য ও পরিচিতি</p>
+                </div>
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="mt-2 sm:mt-0 flex items-center gap-1 text-primary"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#B4E1EB]/30 text-[#1e3a5f] hover:bg-[#78A4CB] hover:text-white transition-all duration-200 text-xs font-bold cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
                 >
-                  <AiOutlineEdit size={20} />
-                  Edit
+                  <AiOutlineEdit size={16} />
+                  <span>সম্পাদনা করুন</span>
                 </button>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-6">
-                <div className="w-24 h-24 relative mx-auto sm:mx-0">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8">
+                {/* Avatar Display */}
+                <div className="relative w-28 h-28 shrink-0 rounded-full ring-4 ring-[#B4E1EB] ring-offset-4 overflow-hidden bg-gray-100 shadow-md">
                   <Image
-                    src={profile?.avatar || avatar}
+                    src={typeof profile?.avatar === "string" ? profile.avatar : profile.avatar?.src || avatar.src}
                     alt="avatar"
                     fill
-                    className="rounded-full object-cover border shadow"
+                    className="object-cover"
                     onError={(e) => {
-                      e.currentTarget.src = avatar.src;
+                      (e.currentTarget as any).src = avatar.src;
                     }}
                   />
                 </div>
 
-                <div className="flex-1 space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Name
+                {/* Profile Details List */}
+                <div className="flex-1 w-full space-y-4">
+                  <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
+                      শিক্ষার্থীর নাম
                     </label>
-                    <p className="mt-1 text-gray-900">{profile.name}</p>
+                    <p className="text-base font-bold text-[#1e3a5f] mt-0.5">{profile.name || "—"}</p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Email
+
+                  <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
+                      ইমেইল ঠিকানা
                     </label>
-                    <p className="mt-1 text-gray-900">{profile.email}</p>
+                    <p className="text-sm font-semibold text-gray-800 mt-0.5 font-mono">{profile.email || "—"}</p>
                   </div>
-                  {profile.contact && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Contact
-                      </label>
-                      <p className="mt-1 text-gray-900">{profile.contact}</p>
-                    </div>
-                  )}
-                  {profile.address && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">
-                        Address
-                      </label>
-                      <p className="mt-1 text-gray-900">{profile.address}</p>
-                    </div>
-                  )}
+
+                  <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
+                      মোবাইল নম্বর
+                    </label>
+                    <p className="text-sm font-semibold text-gray-800 mt-0.5">{profile.contact || "প্রদান করা হয়নি"}</p>
+                  </div>
+
+                  <div className="p-3.5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider">
+                      বর্তমান ঠিকানা
+                    </label>
+                    <p className="text-sm font-semibold text-gray-800 mt-0.5">{profile.address || "প্রদান করা হয়নি"}</p>
+                  </div>
                 </div>
               </div>
-            </section>
+            </div>
           ) : (
-            // EDIT MODE
-            <section className="w-3xl mx-auto bg-white p-6 rounded-lg shadow-xl shadow-[#3748688c] mt-6">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-                Edit Profile
-              </h2>
+            /* EDIT MODE */
+            <div className="bg-white rounded-3xl shadow-xl shadow-[#1e3a5f]/5 border border-[#B4E1EB]/60 p-6 sm:p-8">
+              <div className="border-b border-gray-100 pb-4 mb-6">
+                <h2 className="text-xl font-extrabold text-[#1e3a5f]">প্রোফাইল সম্পাদনা</h2>
+                <p className="text-xs text-gray-500 mt-0.5">নতুন তথ্য দিয়ে আপনার প্রোফাইল আপডেট করুন</p>
+              </div>
 
-              <div className="flex flex-col items-center mb-6">
-                <div className="relative w-24 h-24">
-                  <Image
-                    src={profile?.avatar || avatar}
-                    alt="Profile Avatar"
-                    fill
-                    className="rounded-full object-cover border"
-                    onError={(e) => {
-                      e.currentTarget.src = avatar.src;
-                    }}
-                  />
+              {/* Avatar Upload with Cloudinary */}
+              <div className="flex flex-col items-center mb-8">
+                <div className="relative w-28 h-28 group">
+                  <div className="w-28 h-28 rounded-full ring-4 ring-[#78A4CB] ring-offset-4 overflow-hidden bg-gray-100 shadow-md relative">
+                    <Image
+                      src={typeof profile?.avatar === "string" ? profile.avatar : profile.avatar?.src || avatar.src}
+                      alt="Profile Avatar"
+                      fill
+                      className="object-cover"
+                      onError={(e) => {
+                        (e.currentTarget as any).src = avatar.src;
+                      }}
+                    />
+                    {isUploadingPhoto && (
+                      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center text-white text-xs gap-1">
+                        <LuLoader className="animate-spin text-xl text-[#F9E8A2]" />
+                        <span>আপলোড হচ্ছে...</span>
+                      </div>
+                    )}
+                  </div>
+
                   <button
                     type="button"
                     onClick={handleAvatarClick}
-                    className="absolute bottom-0 right-0 p-1 bg-white rounded-full shadow"
+                    disabled={isUploadingPhoto}
+                    className="absolute bottom-0 right-0 p-2.5 bg-[#78A4CB] text-white rounded-full shadow-lg hover:bg-[#1e3a5f] hover:scale-110 active:scale-95 transition-all cursor-pointer border-2 border-white"
+                    title="ছবি পরিবর্তন করুন"
                   >
-                    <AiOutlineUpload size={16} />
+                    <LuCamera size={16} />
                   </button>
+
                   <input
                     type="file"
                     accept="image/*"
@@ -252,70 +272,80 @@ export default function StudentProfile() {
                     className="hidden"
                   />
                 </div>
+                <p className="text-xs text-gray-400 mt-3 font-medium">ক্যামেরা আইকনে ক্লিক করে নতুন ছবি সিলেক্ট করুন</p>
               </div>
 
               <form className="space-y-4" onSubmit={handleSave}>
                 {/* Full Name */}
                 <InputField
-                  label="Full Name"
+                  label="পূর্ণ নাম"
                   value={profile.name}
                   onChange={(v) => handleChange("name", v)}
+                  required
                 />
 
                 {/* Email */}
                 <InputField
-                  label="Email"
+                  label="ইমেইল ঠিকানা"
                   type="email"
                   value={profile.email}
                   onChange={(v) => handleChange("email", v)}
                   icon
+                  required
                 />
 
-                {/* Number */}
+                {/* Contact */}
                 <InputField
-                  label="Contact"
+                  label="যোগাযোগের নম্বর"
                   value={profile.contact}
                   onChange={(v) => handleChange("contact", v)}
                   icon
+                  placeholder="01XXXXXXXXX"
                 />
 
-                {/* City */}
+                {/* Address */}
                 <InputField
-                  label="Address"
+                  label="বর্তমান ঠিকানা"
                   value={profile.address}
                   onChange={(v) => handleChange("address", v)}
+                  placeholder="যেমন: ঢাকা, বাংলাদেশ"
                 />
 
-                {/* Buttons */}
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
+                {/* Action Buttons */}
+                <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-3 pt-6 border-t border-gray-100">
                   <button
                     type="button"
                     onClick={handleBack}
-                    className="px-6 py-2 bg-[#dde1e7] rounded-md"
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-gray-200 text-gray-700 text-sm font-bold hover:bg-gray-100 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
                   >
-                    Back To Profile
+                    <LuArrowLeft size={16} />
+                    <span>ফিরে যান</span>
                   </button>
+
                   <button
                     type="submit"
-                    disabled={isSaving}
-                    className={`px-6 py-2 rounded-md transition-all duration-300 flex items-center justify-center gap-2 ${
-                      isSaving
-                        ? "bg-gray-400 cursor-not-allowed text-white"
-                        : "bg-primary text-white hover:bg-[#1d3d7c]"
+                    disabled={isSaving || isUploadingPhoto}
+                    className={`w-full sm:w-auto px-7 py-2.5 rounded-xl text-white text-sm font-bold shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.03] active:scale-95 ${
+                      isSaving || isUploadingPhoto
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-[#78A4CB] hover:bg-[#6894bb] hover:shadow-lg shadow-[#78A4CB]/30"
                     }`}
                   >
                     {isSaving ? (
                       <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                        Saving...
+                        <LuLoader className="animate-spin text-base" />
+                        <span>সংরক্ষণ হচ্ছে...</span>
                       </>
                     ) : (
-                      "Save Changes"
+                      <>
+                        <LuCheck size={16} />
+                        <span>পরিবর্তন সংরক্ষণ করুন</span>
+                      </>
                     )}
                   </button>
                 </div>
               </form>
-            </section>
+            </div>
           )}
         </div>
       )}
@@ -329,6 +359,8 @@ function InputField({
   onChange,
   type = "text",
   icon = false,
+  placeholder = "",
+  required = false,
   className = "",
 }: {
   label: string;
@@ -336,20 +368,26 @@ function InputField({
   onChange: (val: string) => void;
   type?: string;
   icon?: boolean;
+  placeholder?: string;
+  required?: boolean;
   className?: string;
 }) {
   return (
     <div className={className}>
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+      <label className="block text-xs font-bold text-gray-700 mb-1">
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
       <div className="relative">
         <input
           type={type}
           value={value}
+          required={required}
+          placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
-          className="mt-1 block w-full border rounded-md p-2 pr-8"
+          className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#78A4CB] bg-white transition-colors"
         />
-        {icon && (
-          <AiOutlineCheckCircle className="absolute top-3 right-2 text-primary" />
+        {icon && value && (
+          <AiOutlineCheckCircle className="absolute top-3.5 right-3 text-emerald-500 text-base" />
         )}
       </div>
     </div>

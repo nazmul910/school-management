@@ -8,7 +8,7 @@ let server: Server;
 async function main() {
   try {
     await connectDB();
-    await seedDatabase();
+  
     server = app.listen(config.port, () => {
       console.log(`✅ Server is running on port ${config.port}`);
     });

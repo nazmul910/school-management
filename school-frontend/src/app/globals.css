@@ -91,3 +91,33 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #78A4CB;
 }
+
+/* Button & Interactive Animations */
+button,
+[role="button"],
+a,
+select {
+  cursor: pointer;
+}
+
+.btn-hover-effect {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(120, 164, 203, 0.4);
+}
+
+.btn-hover-effect:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.card-hover-effect {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px -6px rgba(30, 58, 95, 0.12);
+}
