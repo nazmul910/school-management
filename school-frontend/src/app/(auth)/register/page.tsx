@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/assets/logo1.jpeg";
+import logo from "@/assets/school-logo.png";
 import useAxios from "@/hooks/useAxios";
 import { TRegisterFormValues } from "@/types/registerForm.type";
 import Image from "next/image";

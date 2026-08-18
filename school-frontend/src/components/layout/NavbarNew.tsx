@@ -275,12 +275,7 @@ export default function NavbarNew() {
                 >
                   Login
                 </Link>
-                <Link
-                  href="/contact"
-                  className="px-4.5 py-2 rounded-lg bg-gradient-to-r from-[#78A4CB] to-[#95BDD7] text-white text-sm font-semibold hover:opacity-95 shadow-sm transition-opacity"
-                >
-                  Admissions & Info
-                </Link>
+
               </div>
             )}
           </div>

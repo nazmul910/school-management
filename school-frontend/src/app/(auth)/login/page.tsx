@@ -1,6 +1,6 @@
 "use client";
 
-import logo from "@/assets/logo1.jpeg";
+
 import useAxios from "@/hooks/useAxios";
 import { TLoginFormInputs } from "@/types/loginForm.type";
 import Image from "next/image";
@@ -19,6 +19,8 @@ import {
   MdLogin,
 } from "react-icons/md";
 import AuthSidebar from "@/components/layout/AuthSidebar";
+
+import logo from "@/assets/school-logo.png";
 
 export default function LoginPage() {
   const {
