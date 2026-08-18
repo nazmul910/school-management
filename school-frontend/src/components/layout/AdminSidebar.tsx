@@ -13,6 +13,9 @@ import {
 } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { handleLogout } from "@/app/providers/AuthContext";
+import Image from "next/image";
+
+import logo from "@/assets/school-logo.png"
 
 interface AdminSidebarProps {
   isOpen: boolean;
@@ -90,13 +93,13 @@ export default function AdminSidebar({
           {/* Sidebar Header */}
           {isOpen ? (
             <div className="flex pt-6 pb-4 items-center justify-between relative border-b border-gray-800">
-              <Link href="/" className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md shrink-0">
-                  <LuGraduationCap />
+              <Link href="/" className="flex flex-col items-center gap-3">
+                <div className="w-20 h-20 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md shrink-0">
+                  <Image src={logo} alt="School Logo" width={60} height={60} className="rounded-full" />
                 </div>
-                <div className="leading-tight">
-                  <span className="font-bold text-white text-sm block">Ideal Model School</span>
-                  <span className="text-[11px] text-[#F9E8A2]">Admin Panel</span>
+                <div className="leading-tight text-center">
+                  <span className="font-bold text-white text-sm block ">Uttar Betdoba Fatema Halim High School</span>
+                  <span className="text-[11px] text-[#F9E8A2] ">Admin Panel</span>
                 </div>
               </Link>
               <button
@@ -108,9 +111,9 @@ export default function AdminSidebar({
             </div>
           ) : (
             <div className="pt-6 pb-4 flex flex-col items-center gap-3 border-b border-gray-800">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-xl shadow-md">
-                <LuGraduationCap />
-              </div>
+               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md shrink-0">
+                  <Image src={logo} alt="School Logo" width={30} height={30} className="rounded-full" />
+                </div>
               <button
                 onClick={() => setIsOpen(true)}
                 className="bg-[#1e3a5f] border border-[#78A4CB] text-[#F9E8A2] rounded-full p-1 text-base hover:bg-[#78A4CB] hover:text-white transition-colors"

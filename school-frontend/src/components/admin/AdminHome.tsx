@@ -37,17 +37,6 @@ export default function AdminHome() {
           </p>
         </div>
 
-        {/* Quick Online Badge */}
-        <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 text-center shrink-0 shadow-lg">
-          <div className="flex items-center justify-center gap-2 text-emerald-300 text-xs font-bold mb-1">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-            <span>Online Active</span>
-          </div>
-          <p className="text-3xl font-extrabold text-[#F9E8A2]">
-            {stats.onlineStudents || 25}
-          </p>
-          <span className="text-xs text-gray-300">Students Present</span>
-        </div>
       </div>
 
       {/* Main Stats Cards Grid */}

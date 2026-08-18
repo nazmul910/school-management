@@ -45,7 +45,7 @@ export default function AdminLayout({
                         isOpen ? "ml-64" : "ml-28"
                       }`}
                     >
-                      <div className="container mx-auto">
+                      <div className="container mx-auto pt-20">
                         {children}
                         <ToastContainer />
                       </div>
