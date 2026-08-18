@@ -58,12 +58,12 @@ export default function AdmissionProcess() {
                 className="bg-[#F3F8FC] p-8 rounded-2xl border border-[#B4E1EB]/60 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group flex flex-col justify-between"
               >
                 {/* Step Number Top Right */}
-                <div className="absolute top-4 right-4 text-2xl font-extrabold text-[#78A4CB]/40 group-hover:text-[#78A4CB] transition-colors">
+                <div className="absolute top-4 right-4 text-2xl font-extrabold text-[#78A4CB]/80 group-hover:text-[#78A4CB] transition-colors">
                   {item.step}
                 </div>
 
                 <div>
-                  <div className="w-13 h-13 rounded-xl bg-white text-[#78A4CB] shadow-sm flex items-center justify-center text-2xl mb-6 group-hover:bg-[#78A4CB] group-hover:text-white transition-all">
+                  <div className="w-12 h-12 rounded-xl bg-white text-[#78A4CB] shadow-sm flex items-center justify-center text-2xl mb-6 group-hover:bg-[#78A4CB] group-hover:text-white transition-all">
                     <Icon />
                   </div>
                   <h3 className="text-lg font-bold text-[#1e3a5f] mb-2.5">

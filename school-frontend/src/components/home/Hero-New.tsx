@@ -32,6 +32,16 @@ const heroSlides = [
     label: "Annual Sports Festival",
     caption: "Active participation in sports and extracurriculars",
   },
+  {
+    src: "/Hero/img5.jpeg",
+    label: "Annual Sports Festival",
+    caption: "Active participation in sports and extracurriculars",
+  },
+  {
+    src: "/Hero/img6.jpeg",
+    label: "Annual Sports Festival",
+    caption: "Active participation in sports and extracurriculars",
+  },
 ];
 
 const HeroNew = () => {
@@ -165,12 +175,12 @@ const HeroNew = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#102033]/80 via-[#102033]/10 to-transparent" />
 
                     {/* Slide Caption */}
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                    {/* <div className="absolute bottom-4 left-4 right-4 text-white">
                       <span className="inline-block px-2.5 py-1 bg-[#F9E8A2] text-[#5c4300] font-bold text-xs rounded-md mb-1.5">
                         {slide.label}
                       </span>
                       <h3 className="text-base md:text-lg font-bold leading-snug">{slide.caption}</h3>
-                    </div>
+                    </div> */}
                   </div>
                 ))}
 
@@ -208,7 +218,7 @@ const HeroNew = () => {
               </div>
 
               {/* Floating Stat Card */}
-              <div className="absolute -top-5 -right-4 sm:-right-6 bg-white p-4 rounded-2xl shadow-xl border border-[#F9E8A2] flex items-center gap-3.5 z-30">
+              {/* <div className="absolute -top-5 -right-4 sm:-right-6 bg-white p-4 rounded-2xl shadow-xl border border-[#F9E8A2] flex items-center gap-3.5 z-30">
                 <div className="w-12 h-12 rounded-xl bg-[#F9E8A2]/50 text-[#5c4300] flex items-center justify-center text-2xl">
                   <LuGraduationCap />
                 </div>
@@ -216,7 +226,7 @@ const HeroNew = () => {
                   <p className="text-xs text-gray-500 font-medium">Board Exam Pass Rate</p>
                   <p className="text-xl font-extrabold text-emerald-600">100% Success</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

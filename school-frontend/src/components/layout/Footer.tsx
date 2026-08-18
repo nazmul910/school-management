@@ -5,6 +5,8 @@ import { BsFacebook, BsYoutube, BsTwitter, BsLinkedin } from "react-icons/bs";
 import { IoLocationSharp } from "react-icons/io5";
 import { IoMdCall, IoMdMail } from "react-icons/io";
 import { LuGraduationCap } from "react-icons/lu";
+import Image from "next/image";
+import logo from "@/assets/school-logo.png";
 
 const quickLinks = [
   { name: "Home Page", href: "/" },
@@ -35,14 +37,20 @@ const Footer = () => {
         {/* School Info */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md">
-              <LuGraduationCap />
-            </div>
+             <div className="w-14 h-14 rounded-xl bg-gradient-to-tr from-[#78A4CB] to-[#B4E1EB] flex items-center justify-center text-white text-2xl shadow-md shrink-0">
+                <Image
+                  src={logo}
+                  alt="School Logo"
+                  width={40}
+                  height={60}
+                  className="rounded-full"
+                />
+              </div>
             <div>
               <h3 className="text-xl font-bold text-white leading-tight">
-                Uttar Betdoba Fatema Halim High School & College
+                Uttar Betdoba Fatema Halim High School
               </h3>
-              <p className="text-xs text-[#F9E8A2]">Education • Discipline • Ethics</p>
+
             </div>
           </div>
 
@@ -56,12 +64,6 @@ const Footer = () => {
               className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-[#78A4CB] hover:text-white transition-colors"
             >
               <BsFacebook size={16} />
-            </a>
-            <a
-              href="#"
-              className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-red-600 hover:text-white transition-colors"
-            >
-              <BsYoutube size={16} />
             </a>
             <a
               href="#"
@@ -125,7 +127,7 @@ const Footer = () => {
           <div className="space-y-3 text-sm text-gray-300">
             <div className="flex items-start gap-3">
               <IoLocationSharp className="text-[#F9E8A2] text-xl shrink-0 mt-0.5" />
-              <span>House #12, Road #5, Block-B, Mirpur-10, Dhaka-1216, Bangladesh.</span>
+              <span>Hamidpur,Tangail.</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -135,7 +137,7 @@ const Footer = () => {
 
             <div className="flex items-center gap-3">
               <IoMdMail className="text-[#F9E8A2] text-lg shrink-0" />
-              <span>info@idealschool.edu.bd</span>
+              <span>info@uttarbetdobafatemahhs.edu.bd</span>
             </div>
           </div>
 
@@ -151,17 +153,17 @@ const Footer = () => {
 
       {/* Bottom Copyright */}
       <section className="border-t border-gray-800 bg-[#0a1523] py-5">
-        <div className="max-w-[1400px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
-          <p>
-            © {new Date().getFullYear()} Uttar Betdoba Fatema Halim High School & College. All rights reserved.
+        <div className="max-w-[1400px] mx-auto px-6 gap-3 text-xs text-gray-400">
+          <p className="text-center">
+            © {new Date().getFullYear()} <span className=" font-bold text-white">MD.Nazmul Hasan.</span> All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <Link href="/notices" className="hover:text-white transition-colors">Notices</Link>
             <span>•</span>
             <Link href="/results" className="hover:text-white transition-colors">Results</Link>
             <span>•</span>
             <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-          </div>
+          </div> */}
         </div>
       </section>
     </footer>
