@@ -1,8 +1,8 @@
 "use client";
 
-
 import useAxios from "@/hooks/useAxios";
 import { TLoginFormInputs } from "@/types/loginForm.type";
+import AuthSidebar from "@/components/layout/AuthSidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,11 +14,12 @@ import {
   MdLock,
   MdVisibility,
   MdVisibilityOff,
-  MdError,
+  MdErrorOutline,
   MdVpnKey,
   MdLogin,
+  MdArrowForward,
+  MdCheckCircle,
 } from "react-icons/md";
-import AuthSidebar from "@/components/layout/AuthSidebar";
 
 import logo from "@/assets/school-logo.png";
 
@@ -28,14 +29,12 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<TLoginFormInputs>();
+
   const axiosSecure = useAxios();
   const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   const onSubmit: SubmitHandler<TLoginFormInputs> = (data) => {
     setIsLoading(true);
@@ -43,18 +42,20 @@ export default function LoginPage() {
     axiosSecure
       .post("/auth/login", data)
       .then(({ data }) => {
-        // console.log(res) ;
         if (data.success) {
           toast.success(data.message);
+
           localStorage.setItem("accessToken", data.data.accessToken);
+
           data?.data.userRole === "student"
             ? router.push("student/student-dashboard")
             : router.push("admin/admin-home");
         }
       })
       .catch((error) => {
-        toast.error(error.response.data?.message);
-        // console.log(error);\
+        toast.error(
+          error?.response?.data?.message || "Invalid email or password!"
+        );
       })
       .finally(() => {
         setIsLoading(false);
@@ -62,147 +63,214 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-primary via-primary to-teal-600 flex flex-col md:flex-row items-center justify-center overflow-y-hidden">
-      {/* Left Panel - Auth Sidebar */}
-      <AuthSidebar />
+    <main className="min-h-screen bg-[#f5f8fa] flex items-center justify-center p-0 md:p-5 lg:p-8">
+      <div className="w-full max-w-[1450px] min-h-screen md:min-h-[calc(100vh-40px)] lg:min-h-[calc(100vh-64px)] bg-white md:rounded-[32px] overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.10)] flex flex-col lg:flex-row">
 
-      {/* Right Panel */}
-      <div className="flex-1 w-full flex flex-col items-center justify-evenly md:justify-center bg-gradient-to-br from-white to-gray-50 h-screen max-w-[38rem] md:rounded-l-3xl relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 right-10 w-32 h-32 border border-gray-300 rounded-full"></div>
-          <div className="absolute bottom-20 left-10 w-24 h-24 border border-gray-300 rounded-full"></div>
-        </div>
+        {/* ================= LEFT SIDE ================= */}
+        <section className="hidden lg:block lg:w-[48%] xl:w-[52%] relative overflow-hidden bg-gradient-to-br from-primary via-primary to-[#087f78]">
+          <AuthSidebar />
+        </section>
 
-        {/* Mobile Logo */}
-        <div className="flex md:hidden items-center gap-3 z-10 transform hover:scale-105 transition-transform duration-300">
-          <div className="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center">
-            <Image className="w-8 h-8" src={logo} alt="Logo" />
-          </div>
-          <h1 className="text-darker font-bold text-2xl">
-            Dawah Quran Academy
-          </h1>
-        </div>
+        {/* ================= RIGHT SIDE ================= */}
+        <section className="relative flex-1 flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-[#fdfefe] to-[#f3f8f9] px-5 py-8 sm:px-8 md:px-12 lg:px-10 xl:px-16">
 
-        {/* Login Form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="p-6 md:px-8 lg:px-12 xl:px-16 rounded-2xl w-full z-10 bg-white bg-opacity-50 backdrop-blur-sm border border-white border-opacity-30 mx-4 md:mx-0"
-        >
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl text-darker font-bold mb-2">
-              Welcome Back
-            </h2>
-            <p className="text-gray-600 text-sm">
-              Please sign in to your account
-            </p>
-          </div>
+          {/* Background decorations */}
+          <div className="absolute -top-32 -right-32 w-80 h-80 rounded-full bg-primary/10 blur-3xl" />
+          <div className="absolute -bottom-40 -left-32 w-96 h-96 rounded-full bg-teal-200/20 blur-3xl" />
 
-          {/* Email Field */}
-          <div className="mb-6 group">
-            <label className="block mb-2 text-darker text-sm font-semibold">
-              Email Address
-            </label>
-            <div className="relative">
-              <input
-                type="email"
-                {...register("email", { required: "Email is required" })}
-                className="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl outline-none focus:border-primary transition-all duration-300 bg-white bg-opacity-80 hover:border-gray-300 group-hover:shadow-md"
-                placeholder="Enter your email address"
-                disabled={isLoading}
-              />
-              <MdEmail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors duration-300" />
+          <div className="absolute top-8 right-8 w-20 h-20 border border-primary/10 rounded-full" />
+          <div className="absolute bottom-10 left-8 w-24 h-24 border border-primary/10 rounded-full" />
+
+          <div className="relative z-10 w-full max-w-[560px]">
+
+            {/* Mobile Brand */}
+            <div className="lg:hidden flex flex-col text-center items-center justify-center gap-3 mb-8">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shadow-sm">
+                <Image
+                  src={logo}
+                  alt="School Logo"
+                  width={34}
+                  height={34}
+                  className="object-contain"
+                />
+              </div>
+
+              <div>
+                <h1 className="text-lg font-extrabold text-darker leading-tight">
+                  Uttar Betdoba Fatema Halim High School
+                </h1>
+                <p className="text-xs text-gray-500">
+                  Learn • Grow • Succeed
+                </p>
+              </div>
             </div>
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-2 flex items-center">
-                <MdError className="mr-1" />
-                {errors.email.message}
-              </p>
-            )}
-          </div>
 
-          {/* Password Field */}
-          <div className="group">
-            <label className="block mb-2 text-darker text-sm font-semibold">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                {...register("password", {
-                  required: "Password is required",
-                })}
-                className="w-full p-4 pl-12 border-2 border-gray-200 rounded-xl outline-none focus:border-primary transition-all duration-300 bg-white bg-opacity-80 hover:border-gray-300 group-hover:shadow-md"
-                placeholder="Enter your password"
-                disabled={isLoading}
-              />
-              <MdLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-primary transition-colors duration-300" />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors duration-300"
-                disabled={isLoading}
-              >
-                {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-              </button>
+            {/* Login Card */}
+            <div className="bg-white/80 backdrop-blur-xl border border-white rounded-[28px] p-6 sm:p-8 md:p-10 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
+
+              {/* Header */}
+              <div className="mb-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4">
+                  <MdLogin />
+                  Student Portal
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-darker tracking-tight">
+                  Welcome back
+                </h2>
+
+                <p className="mt-2 text-gray-500 text-sm sm:text-base">
+                  Sign in to access your account and continue learning.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+
+                {/* Email */}
+                <div>
+                  <label className="block text-sm font-bold text-darker mb-2">
+                    Email Address
+                  </label>
+
+                  <div className="relative">
+                    <MdEmail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
+
+                    <input
+                      type="email"
+                      {...register("email", {
+                        required: "Email is required",
+                      })}
+                      placeholder="Enter your email address"
+                      disabled={isLoading}
+                      className={`w-full h-14 rounded-2xl border bg-gray-50/70 pl-12 pr-4 text-sm text-darker outline-none transition-all duration-200 placeholder:text-gray-400
+                        ${
+                          errors.email
+                            ? "border-red-400 focus:ring-4 focus:ring-red-100"
+                            : "border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 hover:border-gray-300"
+                        }`}
+                    />
+                  </div>
+
+                  {errors.email && (
+                    <p className="mt-2 flex items-center gap-1 text-xs font-medium text-red-500">
+                      <MdErrorOutline />
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Password */}
+                <div>
+                  <label className="block text-sm font-bold text-darker mb-2">
+                    Password
+                  </label>
+
+                  <div className="relative">
+                    <MdLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
+
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      {...register("password", {
+                        required: "Password is required",
+                      })}
+                      placeholder="Enter your password"
+                      disabled={isLoading}
+                      className={`w-full h-14 rounded-2xl border bg-gray-50/70 pl-12 pr-12 text-sm text-darker outline-none transition-all duration-200 placeholder:text-gray-400
+                        ${
+                          errors.password
+                            ? "border-red-400 focus:ring-4 focus:ring-red-100"
+                            : "border-gray-200 focus:border-primary focus:ring-4 focus:ring-primary/10 hover:border-gray-300"
+                        }`}
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      disabled={isLoading}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors"
+                    >
+                      {showPassword ? (
+                        <MdVisibilityOff className="text-xl" />
+                      ) : (
+                        <MdVisibility className="text-xl" />
+                      )}
+                    </button>
+                  </div>
+
+                  {errors.password && (
+                    <p className="mt-2 flex items-center gap-1 text-xs font-medium text-red-500">
+                      <MdErrorOutline />
+                      {errors.password.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Forgot Password */}
+                <div className="flex justify-end">
+                  <Link
+                    href="/forget-password"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-500 hover:text-primary transition-colors"
+                  >
+                    <MdVpnKey />
+                    Forgot Password?
+                  </Link>
+                </div>
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`group w-full h-14 rounded-2xl flex items-center justify-center gap-2 font-bold text-white text-base transition-all duration-300
+                    ${
+                      isLoading
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-gradient-to-r from-primary to-[#07877f] hover:shadow-[0_12px_30px_rgba(0,150,136,0.25)] hover:-translate-y-0.5 active:translate-y-0"
+                    }`}
+                >
+                  {isLoading ? (
+                    <>
+                      <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Signing In...
+                    </>
+                  ) : (
+                    <>
+                      Sign In
+                      <MdArrowForward className="text-xl transition-transform group-hover:translate-x-1" />
+                    </>
+                  )}
+                </button>
+
+                {/* Continue */}
+                <Link
+                  href="/"
+                  className="flex justify-center text-sm font-semibold text-gray-500 hover:text-primary transition-colors"
+                >
+                  Continue without Login
+                </Link>
+              </form>
+
+              {/* Footer */}
+              <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+                <p className="text-sm text-gray-500">
+                  Don't have an account?{" "}
+                  <Link
+                    href="/register"
+                    className="font-bold text-primary hover:underline"
+                  >
+                    Create Account
+                  </Link>
+                </p>
+              </div>
             </div>
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-2 flex items-center">
-                <MdError className="mr-1" />
-                {errors.password.message}
-              </p>
-            )}
+
+            {/* Security */}
+            <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-400">
+              <MdCheckCircle className="text-green-500" />
+              Secure login • Your account is protected
+            </div>
           </div>
-          <Link href="/forget-password" className="mb-8 flex justify-end">
-            <p className="text-darker hover:text-primary transition-colors duration-300 flex items-center gap-2">
-              <MdVpnKey className="text-sm" />
-              Forgot Password?
-            </p>
-          </Link>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full py-4 rounded-xl font-semibold text-lg shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group ${
-              isLoading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-primary to-primary hover:from-primary hover:to-primary text-white hover:shadow-xl transform hover:-translate-y-1"
-            }`}
-          >
-            {isLoading ? (
-              <>
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                Signing In...
-              </>
-            ) : (
-              <>
-                <MdLogin className="group-hover:translate-x-1 transition-transform duration-300" />
-                Sign In to Your Account
-              </>
-            )}
-          </button>
-          {/* Continue without Login Link */}
-          <Link className="flex justify-center mt-8" href="/">
-            <span className="text-primary font-semibold text-sm cursor-pointer">
-              Continue without Login
-            </span>
-          </Link>
-        </form>
-
-        {/* Footer Links */}
-        <div className="flex flex-col items-center gap-4 px-6 md:px-8 lg:px-12 xl:px-16 w-full z-10">
-          <p className="text-sm text-darker text-center">
-            Don't have an account?{" "}
-            <Link href="/register" className="group">
-              <span className="text-primary font-bold hover:text-primary transition-colors duration-300 relative">
-                Create Account
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
-              </span>
-            </Link>
-          </p>
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }

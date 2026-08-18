@@ -10,6 +10,8 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 
+import logo1 from "@/assets/school-logo.png";
+
 const educationalQuotes = [
   {
     quote:
@@ -55,11 +57,17 @@ export default function AuthSidebar() {
       </div>
 
       {/* Logo and Title */}
-      <div className="flex items-center gap-4 mb-8 z-10 transform hover:scale-105 transition-transform duration-300">
-        <div className="w-16 h-16 lg:w-20 lg:h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow duration-300 text-white text-3xl">
-          <LuGraduationCap />
-        </div>
-        <h1 className="text-white font-bold text-2xl lg:text-3xl xl:text-4xl drop-shadow-lg">
+      <div className="flex flex-col items-center gap-4 mb-8 z-10 transform hover:scale-105 transition-transform duration-300">
+              <div className=" bg-primary/10 flex items-center justify-center ">
+                <Image
+                  src={logo1}
+                  alt="School Logo"
+                  width={70}
+                  height={70}
+                  className="object-contain rounded-full"
+                />
+              </div>
+        <h1 className="text-white text-center font-bold text-2xl lg:text-3xl drop-shadow-lg">
           Uttar Betdoba Fatema Halim High School
         </h1>
       </div>
