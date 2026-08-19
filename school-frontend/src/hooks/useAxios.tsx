@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: "https://school-management-h9j9.onrender.com/api/v1",
 });
+
+//https://school-management-h9j9.onrender.com/    http://localhost:5000
 
 const useAxios = () => {
   return axiosSecure;
