@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { AiOutlineCheckCircle, AiOutlineEdit } from "react-icons/ai";
 import { LuCamera, LuArrowLeft, LuCheck, LuLoader } from "react-icons/lu";
 import { toast } from "react-toastify";
-import avatarPlaceholder from "@/assets/Avatar/male_avatar.png";
+
 import LoadingSpinner from "@/utils/LoadingSpinner";
 
 type JwtPayload = {
@@ -26,6 +26,9 @@ export default function AdminProfile() {
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const axiosSecure = useAxios();
+
+    const DEFAULT_AVATAR =
+  "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   const [profile, setProfile] = useState({
     name: "",
@@ -136,7 +139,7 @@ export default function AdminProfile() {
     }
   };
 
-  const currentAvatarSrc = profile.avatar || avatarPlaceholder.src;
+  const currentAvatarSrc = profile.avatar || DEFAULT_AVATAR;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -171,7 +174,7 @@ export default function AdminProfile() {
                 fill
                 className="object-cover"
                 onError={(e) => {
-                  (e.currentTarget as any).src = avatarPlaceholder.src;
+                  (e.currentTarget as any).src = DEFAULT_AVATAR;
                 }}
               />
             </div>
@@ -226,7 +229,7 @@ export default function AdminProfile() {
                   fill
                   className="object-cover"
                   onError={(e) => {
-                    (e.currentTarget as any).src = avatarPlaceholder.src;
+                    (e.currentTarget as any).src = DEFAULT_AVATAR;
                   }}
                 />
                 {isUploadingPhoto && (

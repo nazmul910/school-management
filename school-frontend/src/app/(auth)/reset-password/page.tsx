@@ -1,7 +1,7 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import logo from "@/assets/removedBgLogo.png";
+import logo from "@/assets/school-logo.png";
 import useAxios from "@/hooks/useAxios";
 import { TForgetPasswordFormInput } from "@/types/forget-password.type";
 import Image from "next/image";
