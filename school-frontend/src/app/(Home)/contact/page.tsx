@@ -150,9 +150,8 @@ export default function ContactPage() {
               <FaMapMarkerAlt />
             </div>
             <div>
-              <h3 className="font-bold text-lg text-[#1e3a5f]">Campus Address</h3>
-              <p className="text-xs text-gray-500 mt-1">House #12, Road #5, Block-B</p>
-              <p className="text-sm font-bold text-gray-700">Mirpur-10, Dhaka-1216</p>
+              <h3 className="font-bold text-lg text-[#1e3a5f]">School Address</h3>
+              <p className="text-sm font-bold text-gray-700">Hamidpur, Tangail</p>
             </div>
           </div>
         </div>
@@ -318,7 +317,7 @@ export default function ContactPage() {
         <div className="rounded-3xl overflow-hidden shadow-lg border-2 border-white aspect-[21/9] w-full">
           <iframe
             className="w-full h-full"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14602.700319488313!2d90.3654215!3d23.8043977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c0d6f6b8b0e7%3A0x7d94f29235e1975e!2sMirpur-10%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1680000000000!5m2!1sen!2sbd"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1108.310005728464!2d89.9949186!3d24.3935397!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fdf626015a42f5%3A0x83c4acee64dbc15!2s9XVW%2BP8M%20Uttar%20Betdoba%20Fatema%20Halim%20High%20School%2C%20Joydevpur%20-%20Tangail%20-%20Jamalpur%20Hwy%2C%20Kalihati%201970!5e1!3m2!1sen!2sbd!4v1787144799212!5m2!1sen!2sbd"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"

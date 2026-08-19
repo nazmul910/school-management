@@ -201,7 +201,7 @@ export default function ResultsPage() {
               <h2 className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">
                 Uttar Betdoba Fatema Halim High School & College
               </h2>
-              <p className="text-xs text-gray-500">Mirpur-10, Dhaka-1216 • EIIN: 123456</p>
+              <p className="text-xs text-gray-500">Hamidpur,Tangail • EIIN: 114280</p>
               <h3 className="text-lg font-bold text-[#78A4CB] pt-2">
                 Academic Transcript & Marksheet ({resultData.examType} - {resultData.examYear})
               </h3>

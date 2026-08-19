@@ -217,43 +217,257 @@ const HeroNew = () => {
                 </div>
               </div>
 
-              {/* Floating Stat Card */}
-              {/* <div className="absolute -top-5 -right-4 sm:-right-6 bg-white p-4 rounded-2xl shadow-xl border border-[#F9E8A2] flex items-center gap-3.5 z-30">
-                <div className="w-12 h-12 rounded-xl bg-[#F9E8A2]/50 text-[#5c4300] flex items-center justify-center text-2xl">
-                  <LuGraduationCap />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500 font-medium">Board Exam Pass Rate</p>
-                  <p className="text-xl font-extrabold text-emerald-600">100% Success</p>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
 
         {/* Stats Counter Bar */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl bg-white shadow-md border border-[#B4E1EB]/60">
-          <div className="text-center p-3 border-r border-gray-100">
-            <div className="flex justify-center text-[#78A4CB] text-2xl mb-1"><LuUsers /></div>
-            <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">{totalStudents}+</p>
-            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">Active Students</p>
-          </div>
-          <div className="text-center p-3 border-r border-gray-100">
-            <div className="flex justify-center text-[#78A4CB] text-2xl mb-1"><LuBookOpen /></div>
-            <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">{totalTeachers}+</p>
-            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">Faculty Members</p>
-          </div>
-          <div className="text-center p-3 border-r border-gray-100">
-            <div className="flex justify-center text-[#78A4CB] text-2xl mb-1"><LuAward /></div>
-            <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">98.5%</p>
-            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">GPA 5.0 & Merit Rate</p>
-          </div>
-          <div className="text-center p-3">
-            <div className="flex justify-center text-[#78A4CB] text-2xl mb-1"><LuGraduationCap /></div>
-            <p className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">30+ Years</p>
-            <p className="text-xs md:text-sm text-gray-500 font-medium mt-0.5">Academic Legacy</p>
+{/* ================= MODERN STATS SECTION ================= */}
+<div className="mt-16 md:mt-20">
+  {/* Section Header */}
+  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-6">
+    <div>
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#B4E1EB]/40 border border-[#95BDD7]/40 text-[#1e3a5f] text-xs font-bold mb-2">
+        <LuGraduationCap className="text-[#78A4CB]" />
+        <span>Our Institution at a Glance</span>
+      </div>
+
+      <h2 className="text-2xl md:text-3xl font-extrabold text-[#1e3a5f]">
+        Growing Together, Achieving More
+      </h2>
+    </div>
+
+    <p className="text-sm text-gray-500 max-w-md md:text-right leading-relaxed">
+      A strong academic community built on excellence, discipline,
+      innovation, and continuous learning.
+    </p>
+  </div>
+
+  {/* Stats Cards */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+    
+    {/* Students */}
+    <div
+      className="
+        group relative overflow-hidden
+        bg-white
+        rounded-2xl
+        border border-[#B4E1EB]/70
+        p-5 md:p-6
+        shadow-sm
+        hover:shadow-xl
+        hover:-translate-y-1
+        transition-all duration-300
+      "
+    >
+      {/* Decorative Shape */}
+      <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-[#B4E1EB]/30 group-hover:scale-125 transition-transform duration-500" />
+
+      <div className="relative z-10 flex items-start justify-between">
+        <div>
+          <p className="text-xs md:text-sm font-semibold text-gray-500">
+            Total Students
+          </p>
+
+          <p className="mt-2 text-3xl md:text-4xl font-extrabold text-[#1e3a5f] tracking-tight">
+            {totalStudents}+
+          </p>
+
+          <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-[#78A4CB]">
+            <BsCheck2Circle />
+            <span>Active Learners</span>
           </div>
         </div>
+
+        <div
+          className="
+            w-12 h-12 md:w-14 md:h-14
+            rounded-2xl
+            bg-[#B4E1EB]/40
+            border border-[#95BDD7]/40
+            flex items-center justify-center
+            text-[#78A4CB]
+            group-hover:bg-[#78A4CB]
+            group-hover:text-white
+            group-hover:rotate-3
+            transition-all duration-300
+          "
+        >
+          <LuUsers className="text-2xl md:text-3xl" />
+        </div>
+      </div>
+
+      {/* Bottom Line */}
+      <div className="relative z-10 mt-5 h-1 w-full bg-[#F3F8FC] rounded-full overflow-hidden">
+        <div className="h-full w-[85%] bg-[#78A4CB] rounded-full" />
+      </div>
+    </div>
+
+    {/* Faculty */}
+    <div
+      className="
+        group relative overflow-hidden
+        bg-white
+        rounded-2xl
+        border border-[#B4E1EB]/70
+        p-5 md:p-6
+        shadow-sm
+        hover:shadow-xl
+        hover:-translate-y-1
+        transition-all duration-300
+      "
+    >
+      <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-[#95BDD7]/20 group-hover:scale-125 transition-transform duration-500" />
+
+      <div className="relative z-10 flex items-start justify-between">
+        <div>
+          <p className="text-xs md:text-sm font-semibold text-gray-500">
+            Faculty Members
+          </p>
+
+          <p className="mt-2 text-3xl md:text-4xl font-extrabold text-[#1e3a5f] tracking-tight">
+            {totalTeachers}+
+          </p>
+
+          <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-[#78A4CB]">
+            <BsCheck2Circle />
+            <span>Expert Educators</span>
+          </div>
+        </div>
+
+        <div
+          className="
+            w-12 h-12 md:w-14 md:h-14
+            rounded-2xl
+            bg-[#95BDD7]/30
+            border border-[#95BDD7]/40
+            flex items-center justify-center
+            text-[#78A4CB]
+            group-hover:bg-[#78A4CB]
+            group-hover:text-white
+            group-hover:rotate-3
+            transition-all duration-300
+          "
+        >
+          <LuBookOpen className="text-2xl md:text-3xl" />
+        </div>
+      </div>
+
+      <div className="relative z-10 mt-5 h-1 w-full bg-[#F3F8FC] rounded-full overflow-hidden">
+        <div className="h-full w-[78%] bg-[#78A4CB] rounded-full" />
+      </div>
+    </div>
+
+    {/* GPA / Merit */}
+    <div
+      className="
+        group relative overflow-hidden
+        bg-white
+        rounded-2xl
+        border border-[#F9E8A2]/80
+        p-5 md:p-6
+        shadow-sm
+        hover:shadow-xl
+        hover:-translate-y-1
+        transition-all duration-300
+      "
+    >
+      <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-[#F9E8A2]/30 group-hover:scale-125 transition-transform duration-500" />
+
+      <div className="relative z-10 flex items-start justify-between">
+        <div>
+          <p className="text-xs md:text-sm font-semibold text-gray-500">
+            GPA 5.0 & Merit Rate
+          </p>
+
+          <p className="mt-2 text-3xl md:text-4xl font-extrabold text-[#1e3a5f] tracking-tight">
+            38.5%
+          </p>
+
+          <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-[#8a6b00]">
+            <BsCheck2Circle />
+            <span>Academic Excellence</span>
+          </div>
+        </div>
+
+        <div
+          className="
+            w-12 h-12 md:w-14 md:h-14
+            rounded-2xl
+            bg-[#F9E8A2]/50
+            border border-[#F9E8A2]
+            flex items-center justify-center
+            text-[#8a6b00]
+            group-hover:bg-[#F9E8A2]
+            group-hover:rotate-3
+            transition-all duration-300
+          "
+        >
+          <LuAward className="text-2xl md:text-3xl" />
+        </div>
+      </div>
+
+      <div className="relative z-10 mt-5 h-1 w-full bg-[#F3F8FC] rounded-full overflow-hidden">
+        <div className="h-full w-[38%] bg-[#F0CE59] rounded-full" />
+      </div>
+    </div>
+
+    {/* Legacy */}
+    <div
+      className="
+        group relative overflow-hidden
+        bg-[#1e3a5f]
+        rounded-2xl
+        border border-[#1e3a5f]
+        p-5 md:p-6
+        shadow-lg
+        hover:shadow-2xl
+        hover:-translate-y-1
+        transition-all duration-300
+      "
+    >
+      <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-white/10 group-hover:scale-125 transition-transform duration-500" />
+
+      <div className="relative z-10 flex items-start justify-between">
+        <div>
+          <p className="text-xs md:text-sm font-semibold text-white/60">
+            Academic Legacy
+          </p>
+
+          <p className="mt-2 text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+            25+
+          </p>
+
+          <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-[#F9E8A2]">
+            <BsCheck2Circle />
+            <span>Years of Excellence</span>
+          </div>
+        </div>
+
+        <div
+          className="
+            w-12 h-12 md:w-14 md:h-14
+            rounded-2xl
+            bg-white/10
+            border border-white/10
+            flex items-center justify-center
+            text-[#F9E8A2]
+            group-hover:bg-[#F9E8A2]
+            group-hover:text-[#1e3a5f]
+            group-hover:rotate-3
+            transition-all duration-300
+          "
+        >
+          <LuGraduationCap className="text-2xl md:text-3xl" />
+        </div>
+      </div>
+
+      <div className="relative z-10 mt-5 h-1 w-full bg-white/10 rounded-full overflow-hidden">
+        <div className="h-full w-[92%] bg-[#F9E8A2] rounded-full" />
+      </div>
+    </div>
+  </div>
+</div>
       </div>
     </section>
   );

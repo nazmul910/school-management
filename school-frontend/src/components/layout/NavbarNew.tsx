@@ -214,10 +214,10 @@ export default function NavbarNew() {
                 Uttar Betdoba Fatema Halim High School
               </h1>
               <p className="text-xs text-gray-500 font-medium flex items-center gap-2">
-                <span>Est. 1995</span>
+                <span>Est. 1999</span>
                 <span className="text-[#78A4CB]">•</span>
                 <span className="text-[#78A4CB] font-semibold">
-                  EIIN: 123456
+                  EIIN: 114280
                 </span>
               </p>
             </div>

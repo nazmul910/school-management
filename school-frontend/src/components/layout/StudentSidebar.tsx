@@ -1,8 +1,10 @@
 "use client";
 import { handleLogout } from "@/app/providers/AuthContext";
 import { useUser } from "@/app/providers/UserContext";
-import logo from "@/assets/logo.jpg";
+
+
 import Image from "next/image";
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
@@ -15,6 +17,8 @@ import {
   MdRateReview,
 } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+
+import logo from "@/assets/school-logo.png"
 
 interface StudentSidebarProps {
   isOpen: boolean;

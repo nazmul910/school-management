@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuUsers, LuSearch, LuGraduationCap, LuFilter } from "react-icons/lu";
 import useStudent from "@/hooks/useStudent";
 import EmptyState from "@/components/common/EmptyState";
@@ -34,15 +34,33 @@ export default function StudentsPage() {
   const [selectedSection, setSelectedSection] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
+  const ITEMS_PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
   const { studentData, isLoading } = useStudent({
     class: selectedClass !== "all" ? selectedClass : undefined,
-    group: selectedGroup !== "all" && (selectedClass === "Class 9" || selectedClass === "Class 10") ? selectedGroup : undefined,
+    group:
+      selectedGroup !== "all" &&
+      (selectedClass === "Class 9" || selectedClass === "Class 10")
+        ? selectedGroup
+        : undefined,
     section: selectedSection !== "all" ? selectedSection : undefined,
     searchTerm: searchTerm.trim() || undefined,
   });
 
   const students = studentData?.data || [];
-  const isGroupVisible = selectedClass === "Class 9" || selectedClass === "Class 10";
+  const isGroupVisible =
+    selectedClass === "Class 9" || selectedClass === "Class 10";
+
+  const totalPages = Math.ceil(students.length / ITEMS_PER_PAGE);
+  const paginatedStudents = students.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedClass, selectedGroup, selectedSection, searchTerm]);
 
   const handleResetFilters = () => {
     setSelectedClass("all");
@@ -64,7 +82,8 @@ export default function StudentsPage() {
             Student Directory (Classes 6 – 10)
           </h1>
           <p className="text-sm md:text-base text-gray-200 mt-2 max-w-2xl">
-            Search and filter enrolled students across classes, sections, academic study groups, and rolls.
+            Search and filter enrolled students across classes, sections,
+            academic study groups, and rolls.
           </p>
         </div>
 
@@ -94,7 +113,10 @@ export default function StudentsPage() {
                 value={selectedClass}
                 onChange={(e) => {
                   setSelectedClass(e.target.value);
-                  if (e.target.value !== "Class 9" && e.target.value !== "Class 10") {
+                  if (
+                    e.target.value !== "Class 9" &&
+                    e.target.value !== "Class 10"
+                  ) {
                     setSelectedGroup("all");
                   }
                 }}
@@ -148,7 +170,10 @@ export default function StudentsPage() {
 
         {/* Results Counter */}
         <div className="flex items-center justify-between text-sm text-gray-600 mb-6">
-          <p>Total Students Found: <strong className="text-[#1e3a5f]">{students.length}</strong></p>
+          <p>
+            Total Students Found:{" "}
+            <strong className="text-[#1e3a5f]">{students.length}</strong>
+          </p>
         </div>
 
         {/* Student Cards Grid */}
@@ -157,56 +182,152 @@ export default function StudentsPage() {
             Loading students...
           </div>
         ) : students.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {students.map((student: any, idx: number) => (
-              <div
-                key={student._id || idx}
-                className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-[#B4E1EB]/60 flex flex-col items-center text-center relative group"
-              >
-                {/* Roll Badge Top Right */}
-                <div className="absolute top-4 right-4 px-2.5 py-1 bg-[#1e3a5f] text-[#F9E8A2] font-bold text-xs rounded-lg">
-                  Roll: {student.roll}
-                </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6">
+              {paginatedStudents.map((student: any, idx: number) => (
+                <div
+                  key={student._id || idx}
+                  className="group relative overflow-hidden rounded-[24px] bg-white border border-[#B4E1EB]/70 shadow-[0_8px_30px_rgba(30,58,95,0.06)] hover:shadow-[0_18px_45px_rgba(30,58,95,0.12)] transition-all duration-300 hover:-translate-y-1"
+                >
+                  {/* Top Gradient */}
+                  <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-br from-[#78A4CB]/20 via-[#B4E1EB]/20 to-transparent" />
 
-                {/* Photo */}
-                <div className="w-22 h-22 rounded-full overflow-hidden border-4 border-[#B4E1EB] mb-4 group-hover:scale-105 transition-transform bg-gray-100">
-                  <img
-                    src={student.image || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80"}
-                    alt={student.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                  {/* Decorative Circle */}
+                  <div className="absolute -top-10 -right-10 w-28 h-28 rounded-full bg-[#78A4CB]/10 group-hover:scale-125 transition-transform duration-500" />
 
-                {/* Info */}
-                <h3 className="font-bold text-base text-[#1e3a5f] group-hover:text-[#78A4CB] transition-colors">
-                  {student.name}
-                </h3>
-                <p className="text-xs text-gray-400 font-mono mt-0.5">
-                  ID: {student.studentId}
-                </p>
+                  <div className="relative p-5">
+                    {/* Top Row */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-xl bg-[#F3F8FC] flex items-center justify-center text-[#78A4CB]">
+                          <LuGraduationCap size={17} />
+                        </div>
 
-                {/* Class & Section Details */}
-                <div className="mt-4 w-full pt-3 border-t border-gray-100 space-y-1.5 text-xs text-gray-600">
-                  <div className="flex items-center justify-between">
-                    <span>Class:</span>
-                    <strong className="text-[#1e3a5f]">{student.class}</strong>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Section:</span>
-                    <strong className="text-[#1e3a5f]">{student.section || "A"}</strong>
-                  </div>
-                  {student.group && (
-                    <div className="flex items-center justify-between">
-                      <span>Group:</span>
-                      <span className="px-2 py-0.5 rounded bg-[#B4E1EB]/30 text-[#1e3a5f] font-bold text-[11px]">
-                        {student.group}
+                        <div>
+                          <p className="text-[10px] uppercase tracking-wider font-bold text-gray-400">
+                            Student
+                          </p>
+                          <p className="text-xs font-bold text-[#1e3a5f]">
+                            {student.studentId || "N/A"}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Roll */}
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-[#1e3a5f] text-[#F9E8A2] text-[11px] font-bold shadow-sm">
+                        Roll: {student.roll}
                       </span>
                     </div>
-                  )}
+
+                    {/* Student Image - large rounded-square */}
+                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-[#F3F8FC] border border-[#B4E1EB]/50 shadow-sm mb-4">
+                      <img
+                        src={
+                          student.image ||
+                          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80"
+                        }
+                        alt={student.name || "Student"}
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#1e3a5f]/70 to-transparent" />
+                    </div>
+
+                    {/* Student Name */}
+                    <div className="text-center">
+                      <h3 className="text-[17px] font-extrabold text-[#1e3a5f] truncate group-hover:text-[#78A4CB] transition-colors duration-300">
+                        {student.name}
+                      </h3>
+
+                      <p className="mt-1 text-xs text-gray-400 font-medium">
+                        Student ID:{" "}
+                        <span className="text-gray-500 font-semibold">
+                          {student.studentId || "N/A"}
+                        </span>
+                      </p>
+                    </div>
+
+                    {/* Academic Information */}
+                    <div className="mt-5 pt-4 border-t border-gray-100">
+                      <div className="grid grid-cols-2 gap-2">
+                        {/* Class */}
+                        <div className="rounded-xl bg-[#F7FAFC] px-3 text-center py-2.5">
+                          <p className="text-[10px] uppercase tracking-wide text-gray-400 font-semibold">
+                            Class
+                          </p>
+
+                          <p className="mt-0.5 text-xs font-bold text-[#1e3a5f] truncate">
+                            {student.class || "N/A"}
+                          </p>
+                        </div>
+
+                        {/* Section */}
+                        <div className="rounded-xl bg-[#F7FAFC] px-3 text-center py-2.5">
+                          <p className="text-[10px] uppercase tracking-wide text-gray-400 font-semibold">
+                            Section
+                          </p>
+
+                          <p className="mt-0.5 text-xs font-bold text-[#1e3a5f]">
+                            {student.section || "A"}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Group */}
+                      {student.group && (
+                        <div className="mt-2 flex items-center justify-between rounded-xl bg-[#B4E1EB]/15 border border-[#B4E1EB]/40 px-3 py-2.5">
+                          <span className="text-[10px] uppercase tracking-wide text-gray-400 font-semibold">
+                            Group
+                          </span>
+
+                          <span className="text-[11px] font-bold text-[#1e3a5f]">
+                            {student.group}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Bottom Accent */}
+                  <div className="h-1 w-full bg-gradient-to-r from-[#78A4CB] via-[#95BDD7] to-[#B4E1EB] opacity-80" />
                 </div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-10">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 rounded-xl bg-white border border-[#B4E1EB] text-[#1e3a5f] text-sm font-semibold cursor-pointer transition-all duration-300 hover:bg-[#1e3a5f] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-[#1e3a5f]"
+                >
+                  Prev
+                </button>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`w-9 h-9 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-300 ${
+                      currentPage === page
+                        ? "bg-[#1e3a5f] text-white shadow-md"
+                        : "bg-white border border-[#B4E1EB] text-[#1e3a5f] hover:bg-[#B4E1EB]/40"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 rounded-xl bg-white border border-[#B4E1EB] text-[#1e3a5f] text-sm font-semibold cursor-pointer transition-all duration-300 hover:bg-[#1e3a5f] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-[#1e3a5f]"
+                >
+                  Next
+                </button>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         ) : (
           <EmptyState
             icon="users"

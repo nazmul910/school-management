@@ -10,7 +10,7 @@ import {
 } from "react-icons/ai";
 import { LuCamera, LuArrowLeft, LuCheck, LuLoader } from "react-icons/lu";
 import { toast } from "react-toastify";
-import avatar from "@/assets/Avatar/male_avatar.png";
+
 import { useRouter } from "next/navigation";
 import DashboardTitle from "@/utils/DashboardTitle";
 import LoadingSpinner from "@/utils/LoadingSpinner";
@@ -31,6 +31,10 @@ export default function StudentProfile() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const axiosSecure = useAxios();
 
+
+  const DEFAULT_AVATAR =
+  "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+
   const [profile, setProfile] = useState<{
     name: string;
     email: string;
@@ -42,7 +46,7 @@ export default function StudentProfile() {
     email: "",
     contact: "",
     address: "",
-    avatar: avatar,
+    avatar: DEFAULT_AVATAR,
   });
 
   const [decoded, setDecoded] = useState({
@@ -65,7 +69,7 @@ export default function StudentProfile() {
             email: data.data.email,
             contact: data.data?.contact || "",
             address: data.data?.address || "",
-            avatar: data.data?.image || avatar,
+            avatar: data.data?.image || DEFAULT_AVATAR,
           });
         })
         .catch((err) => {
@@ -183,12 +187,12 @@ export default function StudentProfile() {
                 {/* Avatar Display */}
                 <div className="relative w-28 h-28 shrink-0 rounded-full ring-4 ring-[#B4E1EB] ring-offset-4 overflow-hidden bg-gray-100 shadow-md">
                   <Image
-                    src={typeof profile?.avatar === "string" ? profile.avatar : profile.avatar?.src || avatar.src}
+                    src={typeof profile?.avatar === "string" ? profile.avatar : profile.avatar?.src || DEFAULT_AVATAR}
                     alt="avatar"
                     fill
                     className="object-cover"
                     onError={(e) => {
-                      (e.currentTarget as any).src = avatar.src;
+                      (e.currentTarget as any).src = DEFAULT_AVATAR;
                     }}
                   />
                 </div>
@@ -238,12 +242,12 @@ export default function StudentProfile() {
                 <div className="relative w-28 h-28 group">
                   <div className="w-28 h-28 rounded-full ring-4 ring-[#78A4CB] ring-offset-4 overflow-hidden bg-gray-100 shadow-md relative">
                     <Image
-                      src={typeof profile?.avatar === "string" ? profile.avatar : profile.avatar?.src || avatar.src}
+                      src={typeof profile?.avatar === "string" ? profile.avatar : profile.avatar?.src || DEFAULT_AVATAR}
                       alt="Profile Avatar"
                       fill
                       className="object-cover"
                       onError={(e) => {
-                        (e.currentTarget as any).src = avatar.src;
+                        (e.currentTarget as any).src = DEFAULT_AVATAR;
                       }}
                     />
                     {isUploadingPhoto && (
