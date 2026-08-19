@@ -224,7 +224,7 @@ export default function StudentsPage() {
                       <img
                         src={
                           student.image ||
-                          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80"
+                          "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                         }
                         alt={student.name || "Student"}
                         className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
